@@ -17,6 +17,7 @@
     "esm": "^3.2.25",
     "express": "^4.17.1",
     "mongoose": "^5.8.9",
-    "validation": "0.0.1"
+    "validation": "0.0.1",
+    "nodemon": "^2.0.2"
   }
 }
