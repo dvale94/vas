@@ -20,4 +20,6 @@ app.get('/', (req, res) => {
 
 app.listen(port, () => {
     log(`VAS server now up on http://localhost:${port}`, Severity.Success);
+    const dbUri = 'mongodb+srv://dvale030:senproj123@vas-pldhv.mongodb.net/test?retryWrites=true&w=majority'
+    db.connect(dbUri);
 });

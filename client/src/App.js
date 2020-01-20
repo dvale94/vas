@@ -2,6 +2,7 @@ import React,{Component,Fragment} from 'react';
 import {BrowserRouter, Route,Switch} from 'react-router-dom'
 import './App.css';
 import Login from './pages/Login'
+import NavBar from './components/NavBar';
 
 class App extends Component {
 
@@ -10,12 +11,12 @@ class App extends Component {
 			<div className="container">
         <BrowserRouter>
           <Fragment>
-
-              <Switch>
-                <Route exact path="/" component={Login} />
-              </Switch>
+            <NavBar/>
+            <Switch>
+              <Route exact path="/" component={Login} />
+            </Switch>
           </Fragment>
-      </BrowserRouter>
+        </BrowserRouter>
 			</div>
 		);
 	}
