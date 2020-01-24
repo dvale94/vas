@@ -1,11 +1,16 @@
 import express from 'express';
+import jwt from 'jsonwebtoken';
 
 const User = require('../models/user')
 const UserSession = require('../models/userSessions')
+
+// input validation
+import validateLoginInput from '../validation/login';
+
 const router = new express.Router();
 
 router.post('/signup', signUp);
-router.post('/signin', signIn);
+router.post('/login', login);
 router.get('/verify', verify);
 router.get('/logout', logout);
 
@@ -87,7 +92,7 @@ function signUp (req, res) {
     });
 }
 
-function signIn (req, res) {
+function login (req, res) {
     const { body } = req;
     const { 
         password,
@@ -185,10 +190,12 @@ function verify (req, res) {
 
 function logout (req, res) {
     const { query } = req;
-    const { token } = query;
+    //const { token } = query;
+
+    console.log(req.body)
 
     UserSession.findOneAndUpdate({
-        _id: token,
+        //_id: token,
         isDeleted: false
     }, {
         $set:{
