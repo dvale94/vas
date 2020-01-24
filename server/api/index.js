@@ -1,13 +1,13 @@
 import express from 'express';
-import user from './signup';
+import account from './account';
 
 const router = new express.Router();
 
-router.use('/account', user.router);
+router.use('/account', account.router);
 
 router.all('*', (req, res) => {
 	res.status(400).json({
-		error: 'invalid resource',
+		Error: 'Invalid resource',
 	});
 });
 

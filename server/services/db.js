@@ -8,7 +8,7 @@ const onError = (error) => {
 
 const connect = (uri) => {
 	mongoose.connection.on('error', onError);
-	return mongoose.connect(uri, {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true})
+	return mongoose.connect(uri, {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true, useFindAndModify: false})
 		.then(() => {
 			log('Mongo successfully connected', Severity.Success);
 		});
