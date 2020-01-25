@@ -5,7 +5,7 @@ const User = require('../models/user')
 const UserSession = require('../models/userSessions')
 
 // input validation
-import validateLoginInput from '../validation/login';
+//import validateLoginInput from '../validation/login';
 
 const router = new express.Router();
 
@@ -104,13 +104,13 @@ function login (req, res) {
     if (!email) {
         return res.send({
             success: false,
-            message: 'Error: Email cannot be blank.'
+            emailError: 'Enter a valid email'
         });
     }
     if (!password) {
         return res.send({
             success: false,
-            message: 'Error: Password cannot be blank'
+            passwordError: 'Enter a valid password'
         });
     }
 
