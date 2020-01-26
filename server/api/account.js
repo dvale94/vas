@@ -1,5 +1,7 @@
 import express from 'express';
 import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
+import config from '../config/config'
 
 const User = require('../models/user')
 const UserSession = require('../models/userSessions')
@@ -93,70 +95,55 @@ function signUp (req, res) {
 }
 
 function login (req, res) {
-    const { body } = req;
-    const { 
-        password,
-        } = body;
-        let {
-            email
-        } = body;
 
-    if (!email) {
-        return res.send({
-            success: false,
-            message: 'Error: Email cannot be blank.'
-        });
-    }
-    if (!password) {
-        return res.send({
-            success: false,
-            message: 'Error: Password cannot be blank'
-        });
-    }
+    // form validation
+    const { errors, isValid } = validateLoginInput(req.body);
 
-    email = email.toLowerCase();
+    // check validation
+	if (!isValid) {
+		return res.status(400).json(errors);
+	}
 
-    User.find({
-        email: email
-    }, (err, users) => {
-        if (err) {
-            return res.send({
-                success: false,
-                message: 'Error: Server error'
-            });
-        }
-        if (users.length != 1) {
-            return res.send({
-                success: false,
-                message: 'Error: Invalid'
-            });
-        }
+    const email = req.body.email;
+    const password = req.body.password;
 
-        const user = users[0];
-        if (!user.validPassword(password)) {
-            return res.send({
-                success: false,
-                message: 'Error: Invalid'
-            });
-        }
-
-        const userSession = new UserSession();
-        userSession.userId = user.id;
-        userSession.save((err, doc) => {
-            if (err) {
-                return res.send({
-                    success: false,
-                    message: 'Error: Server error'
-                });
-            }
-            
-            return res.send({
-                success: true,
-                message: 'Valid Signin',
-                token: doc._id
-            });
-        });
-    })
+    // find user by email
+	User.findOne({ email }).then(user => {
+		if (!user) {
+			return res.status(404).json({ email: 'Email not found' });
+		}
+		else {
+			// check password
+			bcrypt.compare(password, user.password).then(isMatch => {
+				if (isMatch) {
+					// user matched
+					// create JWT Payload
+					const payload = {
+						id: user.id
+					};
+					// sign token
+					jwt.sign(
+						payload,
+						config.secretOrKey,
+						{
+							expiresIn: 86400 // 1 day in seconds
+						},
+						(err, token) => {
+							res.json({
+								success: true,
+								token: 'Bearer ' + token
+							});
+						}
+					);
+				}
+				else {
+					return res
+						.status(400)
+						.json({ password: 'Password incorrect' });
+				}
+			});
+		}
+	});
 }
 
 function verify (req, res) {

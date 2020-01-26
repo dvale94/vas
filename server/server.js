@@ -4,21 +4,22 @@ import cors from 'cors';
 import {Severity, log} from './utils/logger';
 import db from './services/db.js';
 import api from './api';
-import dotenv from 'dotenv';
+import config from './config/config';
+import passport from './config/passport'
 
 const app = express();
 
-dotenv.config();
+// passport middleware
+app.use(passport.initialize());
 
 app.use(cors());
 app.use(bodyParser.json());
-
-const port = process.env.PORT || 4000;
+app.use(bodyParser.urlencoded({extended: false}));
 
 app.use('/api', api);
 
-app.listen(port, () => {
-    log(`VAS server now up on http://localhost:${port}`, Severity.Success);
+app.listen(config.port, () => {
+    log(`VAS server now up on http://localhost:${config.port}`, Severity.Success);
     //const dbUri = 'mongodb+srv://dvale030:senproj123@vas-pldhv.mongodb.net/test?retryWrites=true&w=majority' // OLD Cluster
     const dbUri = 'mongodb+srv://dvale030:senproj123@vas-cluster-pldhv.azure.mongodb.net/test?retryWrites=true&w=majority'
     db.connect(dbUri);
