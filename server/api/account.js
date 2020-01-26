@@ -7,7 +7,7 @@ const User = require('../models/user')
 const UserSession = require('../models/userSessions')
 
 // input validation
-import validateLoginInput from '../validation/login';
+//import validateLoginInput from '../validation/login';
 
 const router = new express.Router();
 
