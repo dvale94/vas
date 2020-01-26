@@ -95,8 +95,6 @@ class LoginForm extends Component {
       if(response.success) {
 
         localStorage.setItem('token', response.token)
-        this.props.update()
-        this.context.router.history.push("/") 
       }
     });
   }
