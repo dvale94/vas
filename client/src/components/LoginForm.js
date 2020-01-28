@@ -13,6 +13,10 @@ import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import { api } from '../api/ApiProvider'
 import './LoginForm.css';
+import { withRouter } from 'react-router-dom';
+import { connect } from "react-redux";
+import { loginUser } from "../../actions/authActions";
+
 
 
 // Login Styling
@@ -60,10 +64,21 @@ class LoginForm extends Component {
       email: '',
       password: '',
       submitted: false,
-      loginError: '',
-      server: {}
+      errors: {}
     };
   }  
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.auth.isAuthenticated) {
+      // push user to dashboard when they login
+      this.props.history.push("/dashboard"); 
+    }
+    if (nextProps.errors) {
+      this.setState({
+        errors: nextProps.errors
+      });
+    }
+  }
 
 
   handleInput = (e) =>{
@@ -79,31 +94,20 @@ class LoginForm extends Component {
   submitLogin = async (e) =>{
     e.preventDefault()
 
-    api.login(this.state, (result) => {
-      let response = JSON.parse(result);
-      console.log(result)
-      console.log(response)
+    const userData = {
+      email: this.state.email,
+      password: this.state.password
+    };
 
-      this.setState(
-        {
-          submitted: true, 
-          server: response,
-          loginError: response
-        }
-      )
-
-      if(response.success) {
-
-        localStorage.setItem('token', response.token)
-      }
-    });
+    //redirect is handled within loginUser()
+    this.props.loginUser(userData); 
   }
 
   inputError = (error) => {
     return (
       <div className="logIn-input-message">
-          ^ {error}
-        </div>
+        {error}
+      </div>
     )
   };
 
@@ -136,7 +140,7 @@ class LoginForm extends Component {
               onChange={this.handleInput}
               value={this.state.email}
             />
-            {this.state.server.hasOwnProperty("emailError") && this.inputError(this.state.server.emailError)}
+            {this.state.error.hasOwnProperty("email") && this.inputError(this.state.error.email)}
             <TextField
               variant="outlined"
               margin="normal"
@@ -150,7 +154,7 @@ class LoginForm extends Component {
               onChange={this.handleInput}
               value={this.state.password}
             />
-            {this.state.server.hasOwnProperty("passwordError") && this.inputError(this.state.server.passwordError)}
+            {this.state.error.hasOwnProperty("password") && this.inputError(this.state.error.password)}
             </div>
             <Button
               type="submit"
@@ -170,9 +174,21 @@ class LoginForm extends Component {
   }
 }
 
+// define types
 LoginForm.propTypes = {
-	classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired,
+  loginUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
 };
 
+// allows us to get our state from Redux and map it to props
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors
+});
 
-export default withStyles(useStyles)(LoginForm);
+export default connect (
+  mapStateToProps,
+  { loginUser }  
+)(withRouter(withStyles(useStyles)(LoginForm)));
