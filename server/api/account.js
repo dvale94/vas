@@ -3,8 +3,7 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import config from '../config/config'
 
-const User = require('../models/user')
-const UserSession = require('../models/userSessions')
+const User = require('../models/Users/user_Auth')
 
 // input validation
 import validateLoginInput from '../validation/login';
@@ -174,6 +173,7 @@ function verify (req, res) {
         }
     });
 }
+
 
 function logout (req, res) {
     const { query } = req;

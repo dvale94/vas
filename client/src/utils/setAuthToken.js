@@ -9,7 +9,9 @@ const setAuthToken = token => {
   } 
   else {
     // Delete auth header
-    delete request.headers.Authorization
+
+    // ERROR is i leave this and Logout
+    //delete request.headers.Authorization
   }
 };
 
