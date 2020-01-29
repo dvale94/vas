@@ -58,58 +58,66 @@ const useStyles = {
 
 class LoginForm extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: '',
-      password: '',
-      submitted: false,
-      errors: {}
-    };
-  }  
+    constructor(props) {
+        super(props);
+        this.state = {
+        email: '',
+        password: '',
+        submitted: false,
+        errors: {}
+        };
+    }  
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.auth.isAuthenticated) {
-      // push user to dashboard when they login
-      this.props.history.push("/dashboard"); 
+    componentDidMount() {
+
+        // If logged in and user navigates to Login page, should redirect them to dashboard
+        if (this.props.auth.isAuthenticated) {
+            this.props.history.push("/dashboard");
+        }
     }
-    if (nextProps.errors) {
-      this.setState({
-        errors: nextProps.errors
-      });
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.auth.isAuthenticated) {
+        // push user to dashboard when they login
+        this.props.history.push("/dashboard"); 
+        }
+        if (nextProps.errors) {
+        this.setState({
+            errors: nextProps.errors
+        });
+        }
     }
-  }
 
 
-  handleInput = (e) =>{
-    const value = e.target.value
-    const name = e.target.name
+    handleInput = (e) =>{
+        const value = e.target.value
+        const name = e.target.name
 
-    this.setState({
-      [name]: value 
-    })
-  }
+        this.setState({
+        [name]: value 
+        })
+    }
 
 
-  submitLogin = async (e) =>{
-    e.preventDefault()
+    submitLogin = async (e) =>{
+        e.preventDefault()
 
-    const userData = {
-      email: this.state.email,
-      password: this.state.password
+        const userData = {
+        email: this.state.email,
+        password: this.state.password
+        };
+
+        //redirect is handled within loginUser()
+        this.props.loginUser(userData); 
+    }
+
+    inputError = (error) => {
+        return (
+        <div className="logIn-input-message">
+            {error}
+        </div>
+        )
     };
-
-    //redirect is handled within loginUser()
-    this.props.loginUser(userData); 
-  }
-
-  inputError = (error) => {
-    return (
-      <div className="logIn-input-message">
-        {error}
-      </div>
-    )
-  };
 
   render(){   
     
