@@ -11,18 +11,17 @@ export const loginUser = form => dispatch => {
 
     request.post(endpoint, { form }, (error, response, body) => {
         
-        if (error) {
+        const res = JSON.parse(body);
+        const token = res.token
+
+        if (error || !res.token) {
             dispatch({
                 type: GET_ERRORS,
-                payload: error.response.data
+                payload: res
               })
         }
         else {
             // save token to localStorage
-            const res = JSON.parse(body);
-            
-            const token = res.token
-
             localStorage.setItem('jwt', token);
             
             // set token to auth header
