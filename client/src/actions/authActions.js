@@ -5,11 +5,11 @@ import serverConf from '../config'
 import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING } from './types';
 
 // login - get user token
-export const loginUser = userData => dispatch => {
+export const loginUser = form => dispatch => {
 
     const endpoint = `${serverConf.uri}${serverConf.endpoints.account.login}`;
 
-    request.post(endpoint, userData, (error, response, body) => {
+    request.post(endpoint, { form }, (error, response, body) => {
         
         if (error) {
             dispatch({
@@ -19,9 +19,12 @@ export const loginUser = userData => dispatch => {
         }
         else {
             // save token to localStorage
-            const {token} = response.data;
-            localStorage.setItem('jwt', token);
+            const res = JSON.parse(body);
+            
+            const token = res.token
 
+            localStorage.setItem('jwt', token);
+            
             // set token to auth header
             setAuthToken(token);
 

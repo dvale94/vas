@@ -10,7 +10,7 @@ import { setCurrentUser, logoutUser } from "./actions/authActions";
 import Login from './pages/Login'
 import NavBar from './components/NavBar';
 import Dashboard from './pages/Dashboard';
-import PrivateRoute from "./components/private-route/PrivateRoute";
+import PrivateRoute from "./components/PrivateRoute";
 
 // check for token to keep user logged in
 if (localStorage.jwt) {
@@ -34,7 +34,7 @@ if (localStorage.jwt) {
         store.dispatch(logoutUser());
 
         // redirect to login
-        window.location.href = "./login";
+        window.location.href = "./";
     }
 }
 
@@ -49,6 +49,7 @@ class App extends Component {
               <NavBar/>
               <Switch>
                 <Route exact path='/' component={Login}/>
+                <Route exact path='/login' component={Login}/>
                 <PrivateRoute exact path="/dashboard" component={Dashboard} />
               </Switch>
             </Fragment>

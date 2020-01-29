@@ -11,11 +11,10 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-import { api } from '../api/ApiProvider'
 import './LoginForm.css';
 import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
-import { loginUser } from "../../actions/authActions";
+import { loginUser } from "../actions/authActions";
 
 
 
@@ -148,7 +147,7 @@ class LoginForm extends Component {
               onChange={this.handleInput}
               value={this.state.email}
             />
-            {this.state.error.hasOwnProperty("email") && this.inputError(this.state.error.email)}
+            {this.state.errors.hasOwnProperty("email") && this.inputError(this.state.errors.email)}
             <TextField
               variant="outlined"
               margin="normal"
@@ -162,7 +161,7 @@ class LoginForm extends Component {
               onChange={this.handleInput}
               value={this.state.password}
             />
-            {this.state.error.hasOwnProperty("password") && this.inputError(this.state.error.password)}
+            {this.state.errors.hasOwnProperty("password") && this.inputError(this.state.errors.password)}
             </div>
             <Button
               type="submit"
