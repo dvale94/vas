@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
-import LoginForm from '../components/LoginForm';
+import LoginForm from '../components/Login/LoginForm';
 
 class Login extends Component{
-    
+    constructor(props) {
+        super(props);
+
+    }
     render(){
         return (
             <div>
-                <LoginForm/>
+                <LoginForm update={this.props.update}/>
             </div>
         )
     }

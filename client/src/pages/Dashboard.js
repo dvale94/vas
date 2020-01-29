@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
+import LoginForm from '../components/Login/LoginForm';
 
-class DashBoard extends Component{
+class Dashboard extends Component{
     render(){
         return (
-            console.log('dashboard')
+            <div>
+                Hello!!
+            </div>
         )
     }
 }
