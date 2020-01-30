@@ -118,10 +118,6 @@ function adminSignUp (req, res) {
                     message: 'Error: Server error'
                 });
             }
-            return res.send({
-                success: true,
-                message: 'Signed up'
-            });
         });
     });
 }
@@ -257,10 +253,6 @@ function volunteerSignUp (req, res) {
                     message: 'Error: Server error'
                 });
             }
-            return res.send({
-                success: true,
-                message: 'Signed up'
-            });
         });
     });
 }
@@ -373,10 +365,6 @@ function schoolPersonnelSignUp (req, res) {
                     message: 'Error: Server error'
                 });
             }
-            return res.send({
-                success: true,
-                message: 'Signed up'
-            });
         });
     });
 }
