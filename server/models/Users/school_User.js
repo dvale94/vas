@@ -2,23 +2,28 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
 const SchoolPersonnelSchema = new mongoose.Schema({
-    schoolName: {
-        type: String,
-        default: ''
-    },
     schoolID: {
-        type: Schema.Types.ObjectId,
+        type: String,
         required: true
     },
-    address: {
+    firstName: {
         type: String,
         default: ''
     },
-    grade: { //Elem, K-8, etc.
+    lastName: {
         type: String,
         default: ''
     },
+    email: {
+        type: String,
+        default: ''
+    },
+    
     phoneNumber: {
+        type: String,
+        default: ''
+    },
+    title: {
         type: String,
         default: ''
     },
