@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { Component } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/core/styles';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
+import { withStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
+import { Link } from "react-router-dom";
+import { logoutUser } from "../../actions/authActions";
+import { withRouter } from 'react-router-dom';
+import { connect } from "react-redux";
 
 const theme = createMuiTheme({
     palette: {
@@ -17,61 +20,104 @@ const theme = createMuiTheme({
     }
   });
 
-const useStyles = makeStyles(theme => ({
+const useStyles = {
   root: {
     flexGrow: 1,
   },
   toolbar: {
-    minHeight: 45,
-     maxHeight:64,
+    display: 'felx',
+    minHeight: 50,
+    maxHeight:64,
     alignItems: 'flex-start',
+    justifyContent: 'space-between',
     paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(2),
   },
   title: {
     flexGrow: 1,
-    alignSelf: 'flex-end',
+    color: 'white',
   },
-}));
+  logout: {
+    color: 'white !important'
+  },
+  link: {
+    textDecoration: 'none'
+  }
+};
 
-export default function NavBar() {
-  const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const handleClick = event => {
-    setAnchorEl(event.currentTarget);
-  };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+class NavBar extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+    loggedIn: false,
+    };
+}  
+
+
+
+  submitLogout = async (e) =>{
+    e.preventDefault()
+  
+    this.props.logoutUser(); 
+    this.props.history.push("/login"); 
+  }
+
+  componentDidMount() {
+    if (this.props.auth.isAuthenticated) {
+      return this.setState({
+        loggedIn: true
+      })
+    }
+  }
+
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (nextProps.auth.isAuthenticated) {
+      return this.setState({
+        loggedIn: true
+      })
+    }
+  }
+
+  
+
+render(){
   return (
     <ThemeProvider theme={theme}>
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar className={classes.toolbar}>
-          <Typography className={classes.title} variant="h5" noWrap>
-           Volunteer Attendance System
-          </Typography>
-          <Button aria-label="display more actions" edge="end" color="inherit" aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+    <div className={this.props.classes.root} >
+      <AppBar position='static'>
+        <Toolbar className={this.props.classes.toolbar}>
+          <Link to='/' className={this.props.classes.link}>
+            <Typography className={this.props.classes.title} variant='h5'>
+            Volunteer Attendance System
+            </Typography>
+          </Link>
+          {this.state.loggedIn && <Button className={this.props.classes.logout} onClick={this.submitLogout}  >
               Logout
-          </Button>
-          <Menu
-            id="simple-menu"
-            anchorEl={anchorEl}
-            keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-        >
-            <MenuItem onClick={handleClose}>Action 1</MenuItem>
-            <MenuItem onClick={handleClose}>Action 2</MenuItem>
-            <MenuItem onClick={handleClose}>Action 3</MenuItem>
-        </Menu>
+          </Button>}
         </Toolbar>
       </AppBar>
     </div>
     </ThemeProvider>
   );
 }
+}
 
+// define types
+NavBar.propTypes = {
+  classes: PropTypes.object.isRequired,
+  logoutUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+};
+
+// allows us to get our state from Redux and map it to props
+const mapStateToProps = state => ({
+  auth: state.auth,
+});
+
+export default connect (
+  mapStateToProps,
+  { logoutUser }  
+)(withRouter(withStyles(useStyles)(NavBar)));

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { browserHistory} from 'react-router';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,8 +11,11 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-import { api } from '../../api/ApiProvider'
 import './LoginForm.css';
+import { withRouter } from 'react-router-dom';
+import { connect } from "react-redux";
+import { loginUser } from "../../actions/authActions";
+
 
 
 // Login Styling
@@ -55,67 +57,67 @@ const useStyles = {
 
 class LoginForm extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: '',
-      password: '',
-      submitted: false,
-      server: {},
-      
-    };
-  }  
+    constructor(props) {
+        super(props);
+        this.state = {
+        email: '',
+        password: '',
+        submitted: false,
+        errors: {}
+        };
+    }  
 
+    componentDidMount() {
 
-  static contextTypes = {
-    router: PropTypes.object,
-  }
-
-  goToDashboard(){
-    this.props.contextTypes.router.push("/")
-  }
-
-  handleInput = (e) =>{
-    const value = e.target.value
-    const name = e.target.name
-
-    this.setState({
-      [name]: value 
-    })
-  }
-
-
-  submitLogin = async (e) =>{
-    e.preventDefault()
-
-    api.login(this.state, (result) => {
-      let response = JSON.parse(result);
-      console.log(result)
-      console.log(response)
-
-      this.setState(
-        {
-          submitted: true, 
-          server: response
+        // If logged in and user navigates to Login page, should redirect them to dashboard
+        if (this.props.auth.isAuthenticated) {
+            this.props.history.push("/dashboard");
         }
-      )
+    }
 
-      if(response.success) {
-        localStorage.setItem('token', response.token)
-        console.log("Yes!")
-        this.props.update()
-        this.goToDashboard()
-      }
-    });
-  }
+    //Supress depricated warning use UNSAFE_
+    UNSAFE_componentWillReceiveProps(nextProps) {
+        if (nextProps.auth.isAuthenticated) {
+        // push user to dashboard when they login
+        this.props.history.push("/dashboard"); 
+        }
+        if (nextProps.errors) {
+        this.setState({
+            errors: nextProps.errors
+        });
+        }
+    }
 
-  inputError = (error) => {
-    return (
-      <div className="logIn-input-message">
-          <b> ^ </b> {error}
+
+    handleInput = (e) =>{
+        const value = e.target.value
+        const name = e.target.name
+
+        this.setState({
+        [name]: value 
+        })
+    }
+
+
+    submitLogin = async (e) =>{
+        e.preventDefault()
+
+        const userData = {
+        email: this.state.email,
+        password: this.state.password
+        };
+
+        //redirect is handled within loginUser()
+        this.props.loginUser(userData); 
+    }
+
+    inputError = (error) => {
+        return (
+        <div className="logIn-input-message">
+            {error}
         </div>
-    )
-  };
+        )
+    };
 
   render(){   
     
@@ -146,7 +148,7 @@ class LoginForm extends Component {
               onChange={this.handleInput}
               value={this.state.email}
             />
-            {this.state.server.hasOwnProperty("email") && this.inputError(this.state.server.email)}
+            {this.state.errors.hasOwnProperty("email") && this.inputError(this.state.errors.email)}
             <TextField
               variant="outlined"
               margin="normal"
@@ -160,7 +162,7 @@ class LoginForm extends Component {
               onChange={this.handleInput}
               value={this.state.password}
             />
-            {this.state.server.hasOwnProperty("password") && this.inputError(this.state.server.password)}
+            {this.state.errors.hasOwnProperty("password") && this.inputError(this.state.errors.password)}
             </div>
             <Button
               type="submit"
@@ -180,8 +182,21 @@ class LoginForm extends Component {
   }
 }
 
+// define types
 LoginForm.propTypes = {
-	classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired,
+  loginUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
 };
 
-export default withStyles(useStyles)(LoginForm);
+// allows us to get our state from Redux and map it to props
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors
+});
+
+export default connect (
+  mapStateToProps,
+  { loginUser }  
+)(withRouter(withStyles(useStyles)(LoginForm)));

@@ -1,68 +1,62 @@
 import React,{Component,Fragment} from 'react';
-import { browserHistory } from 'react-router';
-import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom'
+import {BrowserRouter, Route, Switch} from 'react-router-dom'
+import { Provider } from "react-redux";
+import store from "./store";
 import './App.css';
+import jwt_decode from "jwt-decode";
+import setAuthToken from "./utils/setAuthToken";
+import { setCurrentUser, logoutUser } from "./actions/authActions";
 import Login from './pages/Login'
 import NavBar from './components/NavBar/NavBar';
 import Dashboard from './pages/Dashboard';
-import PropTypes from 'prop-types';
+import PrivateRoute from "./components/PrivateRoute";
+
+// check for token to keep user logged in
+if (localStorage.jwt) {
+
+    // set auth token header 
+    const token = localStorage.jwt;
+    setAuthToken(token);
+
+    // decode token and get user info and expiration
+    const decoded = jwt_decode(token);
+
+    // set user and isAuthenticated
+    store.dispatch(setCurrentUser(decoded));
+
+    // check for expired token
+    // to get in milliseconds divide by 1000
+    const currentTime = Date.now() / 1000; 
+    if (decoded.exp < currentTime) {
+
+        // logout user
+        store.dispatch(logoutUser());
+
+        // redirect to login
+        window.location.href = "./";
+    }
+}
 
 class App extends Component {
 
-  constructor (props) {
-    super(props);
-    this.forceUpdate = this.forceUpdate.bind(this);
-    this.checkLogIn = this.checkLogIn.bind(this);
-    this.state = { loggedIn: false}
-  }
-
-
-  componentDidMount() {
-		this.checkLogIn()
-	}
-
-	componentWillUpdate() {
-		this.checkLogIn()
-	}
-
-  //if the user is already logged in.
-  checkLogIn() {
-    if (this.state.loggedIn && localStorage.getItem('token')) {
-      this.setState({
-        loggedIn: true
-      })
-    }
-  }
-
 	render() {
 		return (
-			<div className="container">
-        <Router history={browserHistory}>
-          {/* <Fragment>
-            <NavBar/>
-            <Redirect from="/" to="/login"/>
-            <Switch>
-              <Route path="/login" component={Login} />
-              <Route path="/dashboard" component={Dashboard}/>
-            </Switch>
-          </Fragment> */}
-          {/* <Redirect from="/" to="/login"/> */}
-          <NavBar/>
-          <Switch>
-            <Route path="/login" exact component={ () => <Login update={this.forceUpdate}/>} />
-            <Route path="/dashboard" component={Dashboard}/> 
-          </Switch>
-          
-
-        </Router>
-			</div>
+      <Provider store={store}>
+        <BrowserRouter>
+          <div className='.App'>
+            <Fragment>
+              <NavBar/>
+              <Switch>
+                <Route exact path='/' component={Login}/>
+                <Route path='/login' component={Login}/>
+                <PrivateRoute path="/dashboard" component={Dashboard} />
+              </Switch>
+            </Fragment>
+            </div>  
+        </BrowserRouter>
+      </Provider>  
 		);
 	}
 }
-
-
-App.propTypes = {
-	classes: PropTypes.object.isRequired,
-};
 
 export default App;
