@@ -68,8 +68,7 @@ class LoginForm extends Component {
     }  
 
     componentDidMount() {
-
-        // If logged in and user navigates to Login page, should redirect them to dashboard
+      // If logged in and user navigates to Login page, should redirect them to dashboard
         if (this.props.auth.isAuthenticated) {
             this.props.history.push("/dashboard");
         }
@@ -87,6 +86,10 @@ class LoginForm extends Component {
         });
         }
     }
+
+    // working on updating the UNSAFE_componentWillReceiveProps
+    static getDerivedStateFromProps(nextProps, prevState){
+   }
 
 
     handleInput = (e) =>{

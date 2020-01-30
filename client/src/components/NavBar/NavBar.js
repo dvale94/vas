@@ -14,11 +14,11 @@ import { connect } from "react-redux";
 
 const theme = createMuiTheme({
     palette: {
-      primary: {
-          main: "#455a64"
-      },
+        primary: {
+            main: "#455a64"
+        },
     }
-  });
+});
 
 const useStyles = {
   root: {

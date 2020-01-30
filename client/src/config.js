@@ -6,6 +6,12 @@ const config = {
 			register: '/account/register',
 			login: '/account/login',
 			update: '/account/update',
+		},
+		volunteers: {
+			signup: 'account/volunteer/signup',
+			fetch: '/volunteers',
+			register: '/volunteers/register',
+			update: '/volunteers/update',
 		}
 		
 	},
