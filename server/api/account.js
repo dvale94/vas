@@ -5,7 +5,7 @@ import config from '../config/config'
 
 const User = require('../models/Users/user_Auth')
 const Admin = require('../models/Users/admin_User')
-const Voluneteer = require('../models/Users/volunteer_User')
+const Volunteer = require('../models/Users/volunteer_User')
 const schPersonnel = require('../models/Users/school_User')
 
 // input validation
@@ -215,18 +215,18 @@ function volunteerSignUp (req, res) {
         }
 
         // Save new user to volunteer collection
-        const newVoluneteer = new Voluneteer();
+        const newVolunteer = new Volunteer();
 
-        newVoluneteer.firstName = firstName;
-        newVoluneteer.lastName = lastName;
-        newVoluneteer.email = email;
-        newVoluneteer.phoneNumber = phoneNumber;
-        newVoluneteer.pantherID = pantherID;
-        newVoluneteer.major = major;
-        newVoluneteer.carAvailable = carAvailable;
-        newVoluneteer.volunteerStatus = volunteerStatus;
+        newVolunteer.firstName = firstName;
+        newVolunteer.lastName = lastName;
+        newVolunteer.email = email;
+        newVolunteer.phoneNumber = phoneNumber;
+        newVolunteer.pantherID = pantherID;
+        newVolunteer.major = major;
+        newVolunteer.carAvailable = carAvailable;
+        newVolunteer.volunteerStatus = volunteerStatus;
 
-        newVoluneteer.save((err, volunteer) => {
+        newVolunteer.save((err, volunteer) => {
             if (err) {
                 return res.send({
                     success: false,
@@ -244,7 +244,7 @@ function volunteerSignUp (req, res) {
 
         newUser.email = email;
         newUser.password = newUser.generateHash(password);
-        newUser.role = 'Voluneteer'
+        newUser.role = 'Volunteer'
         
         newUser.save((err, user) => {
             if (err) {
