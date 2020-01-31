@@ -10,11 +10,16 @@ router.get('/', fetchVolunteers);
 function updateVolunteer(request, response) {
 	console.log(request.params);
 	console.log(request.body);
-	Volunteer.updateOne(request.params.id, request.body, (err, result) => {
+	Volunteer.updateOne({_id: request.params.id}, request.body, (err, result) => {
 		if (err) {
 			console.log(err);
 		  } else {
-			response.json(result);
+			if (result.n === 1) {
+				response.json('success');
+			}
+			else {
+				response.json('failed')
+			}
 		  }
 	});
 }
