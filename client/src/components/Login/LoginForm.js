@@ -88,8 +88,8 @@ class LoginForm extends Component {
     }
 
     // working on updating the UNSAFE_componentWillReceiveProps
-    static getDerivedStateFromProps(nextProps, prevState){
-   }
+    //static getDerivedStateFromProps(nextProps, prevState){
+   //}
 
 
     handleInput = (e) =>{

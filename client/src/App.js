@@ -11,6 +11,7 @@ import NavBar from './components/NavBar/NavBar';
 import Dashboard from './pages/Dashboard';
 import PrivateRoute from "./components/PrivateRoute";
 import VolunteerManagement from './pages/VolunteerManagement'
+import Profile from './pages/Profile'
 
 // check for token to keep user logged in
 if (localStorage.jwt) {
@@ -52,6 +53,7 @@ class App extends Component {
                 <Route path='/login' component={Login}/>
                 <PrivateRoute path="/dashboard" component={Dashboard}/>
                 <PrivateRoute path="/volunteermanagement" component={VolunteerManagement} />
+                <PrivateRoute path="/profile" component={Profile}/>
               </Switch>
             </Fragment>
             </div>  
