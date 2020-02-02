@@ -13,7 +13,11 @@ const UserSchema = new mongoose.Schema({
     role: {
         type: String,
         default: ''
-    }
+    },
+    isActive: {
+        type: Boolean,
+        default: true
+    },
 });
 
 UserSchema.methods.generateHash = function(password) {

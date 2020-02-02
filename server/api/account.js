@@ -110,6 +110,7 @@ function adminSignUp (req, res) {
         newUser.email = email;
         newUser.password = newUser.generateHash(password);
         newUser.role = 'Admin'
+        newUser.isActive = 'true'
         
         newUser.save((err, user) => {
             if (err) {

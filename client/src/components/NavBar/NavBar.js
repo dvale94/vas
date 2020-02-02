@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { withStyles } from '@material-ui/core/styles';
@@ -36,23 +35,22 @@ const useStyles = {
     
   },
   toolbar: {
-    display: 'felx',
-    // minHeight: 50,
-    // maxHeight:64,
-    //alignItems: 'flex-end',
+    display: 'flex',
     justifyContent: 'space-between',
-    //paddingTop: theme.spacing(1),
-    //paddingBottom: theme.spacing(2),
   },
   title: {
     flexGrow: 1,
     color: 'white',
+    //fontSize: '3vw'
   },
   logout: {
     color: 'white !important'
   },
   link: {
     textDecoration: 'none'
+  },
+  icon: {
+    color: 'white'
   }
 };
 
@@ -143,14 +141,14 @@ render(){
       <AppBar position='static'>
         <Toolbar className={this.props.classes.toolbar}>
           <Link to='/' className={this.props.classes.link}>
-            <Typography className={this.props.classes.title} variant='h5'>
+            <Typography className={this.props.classes.title} variant='h5' >
             Volunteer Attendance System
             </Typography>
           </Link>
-
+          
           {this.state.loggedIn &&
           <IconButton aria-owns={this.state.open ? 'fade-menu' : undefined} aria-haspopup="true" onClick={this.handleClick}>
-            <AccountCircle className="icon" color="secondary" />
+            <AccountCircle className={this.props.classes.icon} />
           </IconButton>}
           {this.renderMenu()}
 
