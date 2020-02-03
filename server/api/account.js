@@ -17,8 +17,6 @@ router.post('/admin/signup', adminSignUp);
 router.post('/volunteer/signup', volunteerSignUp);
 router.post('/schoolPersonnel/signup', schoolPersonnelSignUp);
 router.post('/login', login);
-//router.get('/verify', verify);
-//router.get('/logout', logout);
 
 function adminSignUp (req, res) {
     const { body } = req;
@@ -386,7 +384,7 @@ function login (req, res) {
     // find user by email
 	User.findOne({ email }).then(user => {
 		if (!user) {
-			return res.status(404).json({ email: 'Email not found' });
+			// return res.status(404).json({ email: 'Email not found' });
 		}
 		else {
 			// check password
@@ -415,69 +413,11 @@ function login (req, res) {
 				else {
 					return res
 						.status(400)
-						.json({ password: 'Password incorrect' });
+						.json({ password: 'Email and/or Password invalid' });
 				}
 			});
 		}
 	});
-}
-
-function verify (req, res) {
-    const { query } = req;
-    const { token } = query;
-
-    UserSession.find({
-        _id: token,
-        isDeleted: false
-    }, (err, sessions) => {
-        if (err) {
-            return res.send({
-                success: false,
-                message: 'Error: Server error'
-            });
-        }
-
-        if (sessions.length != 1) {
-            return res.send({
-                success: false,
-                message: 'Error: Invalid'
-            });
-        } else {
-            return res.send({
-                success: true,
-                message: 'Good'
-            });
-        }
-    });
-}
-
-
-function logout (req, res) {
-    const { query } = req;
-    //const { token } = query;
-
-    console.log(req.body)
-
-    UserSession.findOneAndUpdate({
-        //_id: token,
-        isDeleted: false
-    }, {
-        $set:{
-            isDeleted: true,
-        }
-    }, null, (err, sessions) => {
-        if (err) {
-            return res.send({
-                success: false,
-                message: 'Error: Server error'
-            });
-        }
-
-        return res.send({
-            success: true,
-            message: 'Good'
-        });
-    });
 }
 
 export default {router};

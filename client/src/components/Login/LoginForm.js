@@ -117,9 +117,6 @@ class LoginForm extends Component {
     inputError = (error) => {
         return (
         <Alert severity="error">{error}</Alert>
-        // <div className="logIn-input-message">
-        //     {error}
-        // </div>
         )
     };
 

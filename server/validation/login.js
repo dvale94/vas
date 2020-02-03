@@ -14,13 +14,14 @@ function validateLoginInput(data) {
 		errors.email = 'Email field is required';
     } 
     else if (!validator.isEmail(data.email)) {
-        errors.email = 'Email is invalid';
+        errors.password = 'Email and/or Password invalid';
     }
 
     // password checks
 	if (validator.isEmpty(data.password)) {
-		errors.password = 'Password field is required';
+		errors.password = 'Password field is required\n';
     }
+    
     
     return {
 		errors,
