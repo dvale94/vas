@@ -14,7 +14,8 @@ import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import { createMuiTheme } from '@material-ui/core/styles';
 import EditIcon from '@material-ui/icons/Edit';
-import Input from '@material-ui/core/Input';
+import SaveIcon from '@material-ui/icons/Save';
+
 
 
 //import Alert from '@material-ui/lab/Alert';
@@ -79,8 +80,12 @@ const useStyles = {
         '&:hover': {
             backgroundColor: blue[500],
         },
-        width: "70px"
-    }
+        width: "70px",
+        "&:disabled": {
+            backgroundColor: blueGrey[100],
+            color: "white",
+          }
+    },
 
   };
 // Login Styling END
@@ -227,8 +232,17 @@ class LoginForm extends Component {
                     className={this.props.classes.editButton}
                     onClick={this.editable} 
                     size="small"
+                    disabled={!this.state.editDisabled}
                     endIcon={<EditIcon />}>
                         Edit
+                    </Button>
+                    <Button 
+                    className={this.props.classes.editButton}
+                    onClick={this.editable}
+                    size="small"
+                    disabled={this.state.editDisabled}
+                    endIcon={<SaveIcon />}>
+                        Save
                     </Button>
                 </CardActions>
                 </div>
