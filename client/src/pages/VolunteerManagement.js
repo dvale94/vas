@@ -11,7 +11,7 @@ class VolunteerManagement extends Component{
                     <VolunteerList/>
                 </Grid>
                 <Grid item xs={6}>
-                    <VolunteerList/>
+                    
                 </Grid>
             </Grid>
         )

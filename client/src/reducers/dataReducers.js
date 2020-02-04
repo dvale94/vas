@@ -1,7 +1,8 @@
-import { SET_VOLUNTEERS} from '../actions/types';
+import { SET_VOLUNTEERS, VOLUNTEERS_LOADING} from '../actions/types';
 
   const initialState = {
-    volunteers: {}
+    volunteers: {},
+    loading: false
   };
 
   export default function(state = initialState, action) {
@@ -11,6 +12,11 @@ import { SET_VOLUNTEERS} from '../actions/types';
           ...state,
           volunteers: action.payload
         };
+      case VOLUNTEERS_LOADING:
+        return {
+          ...state,
+          loading: true
+        };  
       default:
         return state;
     }

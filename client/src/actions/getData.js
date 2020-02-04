@@ -1,9 +1,9 @@
 import request from 'request';
 import serverConf from '../config'
-import { GET_ERRORS, SET_VOLUNTEERS} from './types';
+import { GET_ERRORS, SET_VOLUNTEERS, VOLUNTEERS_LOADING} from './types';
 
 // get volunteers from database
-export const getVolunteers = dispatch => {
+export const getVolunteers = () => dispatch => {
 
     const endpoint = `${serverConf.uri}${serverConf.endpoints.volunteers.fetch}`;
 
@@ -11,7 +11,7 @@ export const getVolunteers = dispatch => {
         
         const res = JSON.parse(body);
 
-        if (error || !res.token) {
+        if (error) {
             dispatch({
                 type: GET_ERRORS,
                 payload: res
@@ -22,6 +22,13 @@ export const getVolunteers = dispatch => {
             dispatch(setCurrentVolunteers(res))
         }    
     });
+};
+
+// volunteers loading
+export const setVolunteersLoading = () => {
+    return {
+        type: VOLUNTEERS_LOADING
+    };
 };
 
 // set volunteers

@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import isEmpty from 'is-empty';
 import List from '@material-ui/core/List';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
@@ -20,17 +21,18 @@ class VolunteerList extends Component {
     componentDidMount() {
         this.props.getVolunteers();
     }
+   
+    renderVolunteers = () => {
 
-    renderVolunteers = ()=>{
-        let volunteers;
-    
-        volunteers = this.props.volunteers.map(
-            (volunteer)=>{
+        let list
+
+        list = this.props.volunteers.map(
+            (volunteer) => {
                 return <VolunteerInfo key={volunteer.id} info={volunteer}/>
             }
-        )
-         
-        return volunteers
+        );
+
+        return list
     }
 
     render() {
@@ -38,7 +40,7 @@ class VolunteerList extends Component {
             <Fragment>
                 <h3>Volunteer List</h3>
                 <List>
-                    {this.props.volunteers ? this.renderVolunteers() : ''}
+                    {isEmpty(this.props.volunteers) ? '' : this.renderVolunteers()}
                 </List>
             </Fragment>
         );
@@ -47,12 +49,12 @@ class VolunteerList extends Component {
 
 VolunteerList.propTypes = {
     getVolunteers: PropTypes.func.isRequired,
-    volunteers: PropTypes.object.isRequired,
+    volunteers: PropTypes.array.isRequired,
     errors: PropTypes.object.isRequired
   };
 
 const mapStateToProps = state => ({
-    volunteers: state.volunteers,
+    volunteers: state.data.volunteers,
     errors: state.errors
   });
 
