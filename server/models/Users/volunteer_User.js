@@ -36,7 +36,7 @@ const VolunteerSchema = new mongoose.Schema({
     MDCPS_ID: {
         type: String,
         default: ''
-    },
+    }
 });
 
 module.exports = mongoose.model('volunteer', VolunteerSchema);

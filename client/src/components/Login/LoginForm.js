@@ -15,8 +15,7 @@ import './LoginForm.css';
 import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
 import { loginUser } from "../../actions/authActions";
-
-
+import Alert from '@material-ui/lab/Alert';
 
 // Login Styling
 const theme = createMuiTheme({
@@ -88,8 +87,8 @@ class LoginForm extends Component {
     }
 
     // working on updating the UNSAFE_componentWillReceiveProps
-    static getDerivedStateFromProps(nextProps, prevState){
-   }
+    //static getDerivedStateFromProps(nextProps, prevState){
+   //}
 
 
     handleInput = (e) =>{
@@ -104,6 +103,7 @@ class LoginForm extends Component {
 
     submitLogin = async (e) =>{
         e.preventDefault()
+        
 
         const userData = {
         email: this.state.email,
@@ -116,9 +116,7 @@ class LoginForm extends Component {
 
     inputError = (error) => {
         return (
-        <div className="logIn-input-message">
-            {error}
-        </div>
+        <Alert severity="error">{error}</Alert>
         )
     };
 
@@ -128,7 +126,7 @@ class LoginForm extends Component {
       <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-        <div className={this.props.classes.paper} >
+        <div className={this.props.classes.paper}>
           <Avatar className={this.props.classes.avatar} >
           <LockRoundedIcon />
           </Avatar>
@@ -177,6 +175,7 @@ class LoginForm extends Component {
               Login
             </Button>
           </form>
+          
         </div>
       </Container>
       </ThemeProvider>

@@ -26,7 +26,7 @@ const SchoolPersonnelSchema = new mongoose.Schema({
     title: {
         type: String,
         default: ''
-    },
+    }
 });
 
 module.exports = mongoose.model('schoolPersonnel', SchoolPersonnelSchema);

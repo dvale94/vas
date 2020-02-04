@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { withStyles } from '@material-ui/core/styles';
@@ -11,37 +10,47 @@ import { Link } from "react-router-dom";
 import { logoutUser } from "../../actions/authActions";
 import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import Fade from '@material-ui/core/Fade';
+import IconButton from '@material-ui/core/IconButton';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+
 
 const theme = createMuiTheme({
     palette: {
         primary: {
             main: "#455a64"
         },
+        secondary: {
+          main: "#FFFFFF"
+        }
     }
 });
 
 const useStyles = {
   root: {
-    flexGrow: 1,
+    flexGrow: 0,
+    width: '100vw'
+    
   },
   toolbar: {
-    display: 'felx',
-    minHeight: 50,
-    maxHeight:64,
-    alignItems: 'flex-start',
+    display: 'flex',
     justifyContent: 'space-between',
-    paddingTop: theme.spacing(1),
-    paddingBottom: theme.spacing(2),
   },
   title: {
     flexGrow: 1,
     color: 'white',
+    //fontSize: '3vw'
   },
   logout: {
     color: 'white !important'
   },
   link: {
     textDecoration: 'none'
+  },
+  icon: {
+    color: 'white'
   }
 };
 
@@ -53,13 +62,30 @@ class NavBar extends Component {
     super(props);
     this.state = {
     loggedIn: false,
+    anchorEl : null,
+    open: false
     };
+    this.setAnchorEl = this.setAnchorEl.bind(this)
+    this.handleClick = this.handleClick.bind(this)
+    this.handleClose = this.handleClose.bind(this)
+    
 }  
 
+ handleClose = () => {
+  this.setAnchorEl(null);
+};
 
+redirect_to_Profile = () =>{
+  this.props.history.push("/profile"); 
+}
 
   submitLogout = async (e) =>{
     e.preventDefault()
+
+    // Hides logout button after being clicked
+    this.setState({
+      loggedIn: false
+    });
   
     this.props.logoutUser(); 
     this.props.history.push("/login"); 
@@ -81,7 +107,32 @@ class NavBar extends Component {
     }
   }
 
-  
+
+
+  handleClick(event) {
+    this.setAnchorEl(event.currentTarget);
+}
+    setAnchorEl(value){
+        this.setState({
+            anchorEl: value,
+            open: !this.state.open
+        })
+    }
+  handleClose() {
+    this.setAnchorEl(null);
+}
+
+renderMenu(){
+if(this.state.loggedIn){
+  return(
+  <Menu id="fade-menu" anchorEl={this.state.anchorEl} open={this.state.open} onClose={this.handleClose} TransitionComponent={Fade}>
+        <MenuItem onClick={this.handleClose && this.redirect_to_Profile}>Profile</MenuItem>
+        <MenuItem onClick={this.handleClose && this.submitLogout}>Logout</MenuItem>
+    </Menu>
+   )
+  } 
+}
+
 
 render(){
   return (
@@ -90,13 +141,17 @@ render(){
       <AppBar position='static'>
         <Toolbar className={this.props.classes.toolbar}>
           <Link to='/' className={this.props.classes.link}>
-            <Typography className={this.props.classes.title} variant='h5'>
+            <Typography className={this.props.classes.title} variant='h5' >
             Volunteer Attendance System
             </Typography>
           </Link>
-          {this.state.loggedIn && <Button className={this.props.classes.logout} onClick={this.submitLogout}  >
-              Logout
-          </Button>}
+          
+          {this.state.loggedIn &&
+          <IconButton aria-owns={this.state.open ? 'fade-menu' : undefined} aria-haspopup="true" onClick={this.handleClick}>
+            <AccountCircle className={this.props.classes.icon} />
+          </IconButton>}
+          {this.renderMenu()}
+
         </Toolbar>
       </AppBar>
     </div>
