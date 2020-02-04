@@ -7,26 +7,39 @@ import { connect } from "react-redux";
 import { getVolunteers } from "../../actions/getData";
 import VolunteerInfo from './VolunteerInfo'
 
-// renderVolunteers = ()=>{
-//     let volunteers;
-
-//     volunteers = .map(
-//                 (volunteer)=>{
-//                     return <VolunteerInfo key={volunteer.id} />
-//                 }
-//             )
-     
-//     return volunteers
-// }
-
 
 class VolunteerList extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+        }
+
+        this.renderVolunteers = this.renderVolunteers.bind(this);
+    }
+
+    componentDidMount() {
+        this.props.getVolunteers();
+    }
+
+    renderVolunteers = ()=>{
+        let volunteers;
+    
+        volunteers = this.props.volunteers.map(
+            (volunteer)=>{
+                return <VolunteerInfo key={volunteer.id} info={volunteer}/>
+            }
+        )
+         
+        return volunteers
+    }
+
     render() {
         return (
             <Fragment>
                 <h3>Volunteer List</h3>
                 <List>
-                     <VolunteerInfo/>
+                    {this.props.volunteers ? this.renderVolunteers() : ''}
                 </List>
             </Fragment>
         );

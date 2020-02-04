@@ -19,13 +19,13 @@ export const getVolunteers = dispatch => {
         }
         else {
             // set current volunteers
-            dispatch(getVolunteers(res))
+            dispatch(setCurrentVolunteers(res))
         }    
     });
 };
 
 // set volunteers
-export const setCurrentUser = volunteers => {
+export const setCurrentVolunteers = volunteers => {
     return {
         type: SET_VOLUNTEERS,
         payload: volunteers

@@ -1,5 +1,4 @@
 import { SET_VOLUNTEERS} from '../actions/types';
-import isEmpty from 'is-empty';
 
   const initialState = {
     volunteers: {}

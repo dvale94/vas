@@ -6,48 +6,51 @@ class VolunteerInfo extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            firstName: "cassandra",
-            lastName: "zuchini",
-            email: "cass@test.c'ossdm",
-            phoneNumber: "305-151-5685",
-            pantherID: "5986866",
-            major: "Computer science",
-            carAvailable: false,
-            MDPSPS_ID : "1234"
         }
     }
 
     render() {
+
+        const {
+            firstName, 
+            lastName, 
+            email,
+            phoneNumber,
+            pantherID,
+            major,
+            carAvailable,
+            MDPSPS_ID} = this.props.info;
+
         return (
             <ListItem>
                 <Grid container>
                     <Grid item xs={4}>
                         <p>
-                            Name: {this.state.firstName} {this.state.lastName}
+                            Name: {firstName} {lastName}
                         </p>
                     </Grid>
 
                     <Grid item xs={4}>
                         <p>
-                            Email: {this.state.email}
+                            Email: {email}
                         </p>
                         <p>
-                            Phone Number: {this.state.phoneNumber}
+                            Phone Number: {phoneNumber}
                         </p>
                         <p>
-                            PID: {this.state.pantherID}
+                            PID: {pantherID}
                         </p>
                     </Grid>
 
                     <Grid item xs={4}>
                         <p>
-                            Major: {this.state.major}
+                            Major: {major}
                         </p>
                         <p>    
-                            Car Available: {this.state.carAvailable ? "yes" : "no"}
+                            Car Available: {carAvailable ? "yes" : "no"}
                         </p>
                         <p>
-                            MDCPS ID: {this.state.MDPSPS_ID}
+                            MDCPS ID: {MDPSPS_ID}
                         </p>
                     </Grid>
                 </Grid>    
