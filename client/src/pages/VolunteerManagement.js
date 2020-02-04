@@ -8,6 +8,7 @@ class VolunteerManagement extends Component{
         return (
             <Grid container>
                 <Grid item xs={6}>
+                    <h3>Volunteer List</h3>
                     <VolunteerList/>
                 </Grid>
                 <Grid item xs={6}>

@@ -1,7 +1,7 @@
 import { SET_VOLUNTEERS, VOLUNTEERS_LOADING} from '../actions/types';
 
   const initialState = {
-    volunteers: {},
+    volunteers: [],
     loading: false
   };
 
