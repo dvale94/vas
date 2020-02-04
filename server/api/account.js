@@ -5,7 +5,7 @@ import config from '../config/config'
 
 const User = require('../models/Users/user_Auth')
 const Admin = require('../models/Users/admin_User')
-const Voluneteer = require('../models/Users/volunteer_User')
+const Volunteer = require('../models/Users/volunteer_User')
 const schPersonnel = require('../models/Users/school_User')
 
 // input validation
@@ -214,18 +214,18 @@ function volunteerSignUp (req, res) {
         }
 
         // Save new user to volunteer collection
-        const newVoluneteer = new Voluneteer();
+        const newVolunteer = new Volunteer();
 
-        newVoluneteer.firstName = firstName;
-        newVoluneteer.lastName = lastName;
-        newVoluneteer.email = email;
-        newVoluneteer.phoneNumber = phoneNumber;
-        newVoluneteer.pantherID = pantherID;
-        newVoluneteer.major = major;
-        newVoluneteer.carAvailable = carAvailable;
-        newVoluneteer.volunteerStatus = volunteerStatus;
+        newVolunteer.firstName = firstName;
+        newVolunteer.lastName = lastName;
+        newVolunteer.email = email;
+        newVolunteer.phoneNumber = phoneNumber;
+        newVolunteer.pantherID = pantherID;
+        newVolunteer.major = major;
+        newVolunteer.carAvailable = carAvailable;
+        newVolunteer.volunteerStatus = volunteerStatus;
 
-        newVoluneteer.save((err, volunteer) => {
+        newVolunteer.save((err, volunteer) => {
             if (err) {
                 return res.send({
                     success: false,
@@ -243,7 +243,7 @@ function volunteerSignUp (req, res) {
 
         newUser.email = email;
         newUser.password = newUser.generateHash(password);
-        newUser.role = 'Voluneteer'
+        newUser.role = 'Volunteer'
         
         newUser.save((err, user) => {
             if (err) {
@@ -385,30 +385,106 @@ function login (req, res) {
 	User.findOne({ email }).then(user => {
 		if (!user) {
 			// return res.status(404).json({ email: 'Email not found' });
-		}
+        }
 		else {
 			// check password
 			bcrypt.compare(password, user.password).then(isMatch => {
 				if (isMatch) {
-					// user matched
-					// create JWT Payload
-					const payload = {
-						id: user.id
-					};
-					// sign token
-					jwt.sign(
-						payload,
-						config.secretOrKey,
-						{
-							expiresIn: 86400 // 1 day in seconds
-						},
-						(err, token) => {
-							res.json({
-								success: true,
-								token: 'Bearer ' + token
-							});
-						}
-					);
+
+                    let payload = {};
+
+                    //retrieve users profile information by role
+                    if (user.role === 'Admin') {
+                        Admin.findOne({ email }).then(admin => {
+                            //create JWT payload
+                            payload = {
+                                role: 'Admin',
+                                id: admin.id,
+                                firstName: admin.firstName,
+                                lastName: admin.lastName,
+                                email: admin.email,
+                                phoneNumber: admin.phoneNumber
+                            }
+                            
+                            jwt.sign(
+                                payload,
+                                config.secretOrKey,
+                                {
+                                    expiresIn: 86400 // 1 day in seconds
+                                },
+                                (err, token) => {
+                                    res.json({
+                                        success: true,
+                                        token: 'Bearer ' + token
+                                    });
+                                }
+                            );
+                        
+                        });
+                    }
+                    else if (user.role === 'Volunteer') {
+                        Volunteer.findOne({ email }).then(volunteer => {
+                            //create JWT payload
+                            payload = {
+                                role: 'Volunteer',
+                                id: volunteer.id,
+                                firstName: volunteer.firstName,
+                                lastName: volunteer.lastname,
+                                email: volunteer.email,
+                                phoneNumber: volunteer.phoneNumber,
+                                major: volunteer.major,
+                                carAvailable: volunteer.carAvailable,
+                                volunteerStatus: volunteer.volunteerStatus,
+                                MDCPS_ID: volunteer.MDCPS_ID,
+                                pantherID: volunteer.pantherID
+                            }
+
+                            jwt.sign(
+                                payload,
+                                config.secretOrKey,
+                                {
+                                    expiresIn: 86400 // 1 day in seconds
+                                },
+                                (err, token) => {
+                                    res.json({
+                                        success: true,
+                                        token: 'Bearer ' + token
+                                    });
+                                }
+                            );
+                        
+                        });
+                    }
+                    else if (user.role === 'School Personnel') {
+                        schPersonnel.findOne({ email }).then(personnel => {
+                            //create JWT payload
+                            payload = {
+                                role: 'School Personnel',
+                                id: personnel.id,
+                                firstName: personnel.firstName,
+                                lastName: personnel.lastname,
+                                email: personnel.email,
+                                phoneNumber: personnel.phoneNumber,
+                                title: personnel.title,
+                                schoolID: personnel.schoolID
+                            }
+
+                            jwt.sign(
+                                payload,
+                                config.secretOrKey,
+                                {
+                                    expiresIn: 86400 // 1 day in seconds
+                                },
+                                (err, token) => {
+                                    res.json({
+                                        success: true,
+                                        token: 'Bearer ' + token
+                                    });
+                                }
+                            );
+                        
+                        });
+                    }
 				}
 				else {
 					return res
