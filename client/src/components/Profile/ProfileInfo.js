@@ -90,7 +90,7 @@ const useStyles = {
   };
 // Login Styling END
 
-class LoginForm extends Component {
+class ProfileInfo extends Component {
 
     constructor(props) {
         super(props);
@@ -256,7 +256,7 @@ class LoginForm extends Component {
 }
 
 // define types
-LoginForm.propTypes = {
+ProfileInfo.propTypes = {
   classes: PropTypes.object.isRequired,
   loginUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
@@ -271,4 +271,4 @@ const mapStateToProps = state => ({
 
 export default connect (
   mapStateToProps
-)(withRouter(withStyles(useStyles)(LoginForm)));
+)(withRouter(withStyles(useStyles)(ProfileInfo)));
