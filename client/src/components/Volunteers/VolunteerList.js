@@ -88,7 +88,7 @@ class VolunteerList extends Component {
 
     render() {
         return (
-            <Fragment className={this.props.classes.all}>
+            <Fragment>
                 <List>
                     {isEmpty(this.props.volunteers) ? '' : this.renderVolunteers()}
                 </List>
