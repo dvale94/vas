@@ -20,7 +20,8 @@ app.use('/api', api);
 
 app.listen(config.port, () => {
     log(`VAS server now up on http://localhost:${config.port}`, Severity.Success);
-    //const dbUri = 'mongodb+srv://dvale030:senproj123@vas-pldhv.mongodb.net/test?retryWrites=true&w=majority' // OLD Cluster
-    const dbUri = 'mongodb+srv://dvale030:senproj123@vas-cluster-pldhv.azure.mongodb.net/test?retryWrites=true&w=majority'
+    const dbUri = (config.db.username && config.db.password)
+		? `mongodb+srv://${config.db.username}:${config.db.password}@${config.db.url}/${config.db.name}`
+		: `mongodb+srv://${config.db.url}/${config.db.name}`;
     db.connect(dbUri);
 });

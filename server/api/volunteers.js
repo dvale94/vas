@@ -8,29 +8,39 @@ router.get('/:id', fetchVolunteerById);
 router.get('/', fetchVolunteers);
 
 function updateVolunteer(request, response) {
-	Volunteer.update(request.params.id, request.body, (result) => {
-		response.json({
-			success: result != null,
-			results: result,
-		});
+	console.log(request.params);
+	console.log(request.body);
+	Volunteer.updateOne({_id: request.params.id}, request.body, (err, result) => {
+		if (err) {
+			console.log(err);
+		  } else {
+			if (result.n === 1) {
+				response.json('success');
+			}
+			else {
+				response.json('failed')
+			}
+		  }
 	});
 }
 
 function fetchVolunteers(request, response) {
-	Volunteer.fetchAll(Object.assign({}, request.body, request.query), (result) => {
-		response.json({
-			success: result != null,
-			results: result,
-		});
+	Volunteer.find({}, (err, result) => {
+		if (err) {
+		  console.log(err);
+		} else {
+		  response.json(result);
+		}
 	});
 }
 
 function fetchVolunteerById(request, response) {
-	Volunteer.fetchById(request.params.id, (result) => {
-		response.json({
-			success: result != null,
-			results: result,
-		});
+	Volunteer.findById(request.params.id, (err, result) => {
+		if (err) {
+			console.log(err);
+		  } else {
+			response.json(result);
+		  }
 	});
 }
 

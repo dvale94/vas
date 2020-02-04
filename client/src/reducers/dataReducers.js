@@ -1,8 +1,8 @@
-import { SET_VOLUNTEERS} from '../actions/types';
-import isEmpty from 'is-empty';
+import { SET_VOLUNTEERS, VOLUNTEERS_LOADING} from '../actions/types';
 
   const initialState = {
-    volunteers: {}
+    volunteers: {},
+    loading: false
   };
 
   export default function(state = initialState, action) {
@@ -12,6 +12,11 @@ import isEmpty from 'is-empty';
           ...state,
           volunteers: action.payload
         };
+      case VOLUNTEERS_LOADING:
+        return {
+          ...state,
+          loading: true
+        };  
       default:
         return state;
     }
