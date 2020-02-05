@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
 import { blue, blueGrey } from '@material-ui/core/colors';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
@@ -9,17 +8,10 @@ import TextField from '@material-ui/core/TextField';
 import { connect } from "react-redux";
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import { createMuiTheme } from '@material-ui/core/styles';
-import EditIcon from '@material-ui/icons/Edit';
-import SaveIcon from '@material-ui/icons/Save';
-import { loginUser } from "../../actions/authActions";
 
-
-
-//import Alert from '@material-ui/lab/Alert';
 
 const theme = createMuiTheme({
     palette: {
@@ -66,47 +58,21 @@ const useStyles = {
     },
     form: {
         width: '100%',
-    },
-    Button: {
-        marginTop: theme.spacing(1),
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        marginBottom: 10,
-    },
-    editButton: {
-        backgroundColor: blueGrey[700],
-        color: "white",
-        fontWeight: "bold",
-        '&:hover': {
-            backgroundColor: blue[500],
-        },
-        width: "70px",
-        "&:disabled": {
-            backgroundColor: blueGrey[100],
-            color: "white",
-          }
-    },
-
+    }
   };
 // Login Styling END
 
-class ProfileInfo extends Component {
+class SchoolPersonnel_Profile extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             editDisabled: true,
-            hasAccess: false,
-            // isVolunteer: false,
-            // isSchoolPersonnel: false
         }
     }
 
     componentDidMount() {
-        console.log(this.state.isAdmin)
-        console.log(this.state.isVolunteer)
-        console.log(this.state.isSchoolPersonnel)
+
     }
 
     //Supress depricated warning use UNSAFE_
@@ -129,31 +95,10 @@ class ProfileInfo extends Component {
         })
     }
 
-    checkRole = (user) => {
-        if (user.role === "Admin") {
-            this.setState({
-                isAdmin: true
-            });
-        }
-        // else if (user.role === "Volunteer") {
-        //     this.setState({
-        //         isVolunteer: true
-        //     });
-        // }
-        // else if (user.role === "School Personnel") {
-        //     this.setState({
-        //         isSchoolPersonnel: true
-        //     });
-        // }
-    }
-
 
   render(){   
     const { user } = this.props.auth;
     var initials = (user.firstName.substring(0, 1) + user.lastName.substring(0, 1)).toUpperCase()
-
-    // Flags the type of user logged in
-    this.checkRole(user);
     
     
     return (
@@ -194,7 +139,7 @@ class ProfileInfo extends Component {
                         variant="standard"
                         //color= "primary"
                         margin="normal"
-                        disabled={ this.state.editDisabled && this.state.hasAccess}
+                        disabled={this.state.editDisabled}
                         fullWidth
                         id="email"
                         label="First Name"
@@ -249,30 +194,24 @@ class ProfileInfo extends Component {
                         onChange={this.handleInput}
                         value={user.phoneNumber}
                     />
+                     {/* Title */}
+                     <TextField
+                        variant="standard"
+                        color= "primary"
+                        margin="normal"
+                        disabled={this.state.editDisabled}
+                        fullWidth
+                        id="title"
+                        label="Title"
+                        name="title"
+                        autoComplete="name"
+                        autoFocus
+                        onChange={this.handleInput}
+                        value={user.title}
+                    />
                     </form>
                 </CardContent>
-                <div className={this.props.classes.Button}>
-                <CardActions>
-                    <Button 
-                    className={this.props.classes.editButton}
-                    onClick={this.editable} 
-                    size="small"
-                    disabled={!this.state.editDisabled}
-                    endIcon={<EditIcon />}>
-                        Edit
-                    </Button>
-                    <Button 
-                    className={this.props.classes.editButton}
-                    onClick={this.editable}
-                    size="small"
-                    disabled={this.state.editDisabled}
-                    endIcon={<SaveIcon />}>
-                        Save
-                    </Button>
-                </CardActions>
-                </div>
             </Card>
-
         </Grid>
         </div>
       
@@ -281,9 +220,8 @@ class ProfileInfo extends Component {
 }
 
 // define types
-ProfileInfo.propTypes = {
+SchoolPersonnel_Profile.propTypes = {
   classes: PropTypes.object.isRequired,
-  loginUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
 };
@@ -296,5 +234,4 @@ const mapStateToProps = state => ({
 
 export default connect (
   mapStateToProps,
-  { loginUser }
-)(withRouter(withStyles(useStyles)(ProfileInfo)));
+)(withRouter(withStyles(useStyles)(SchoolPersonnel_Profile)));
