@@ -10,7 +10,7 @@ import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
-import { getVolunteers } from "../../actions/getData";
+import { getVolunteers } from "../../actions/volunteerActions";
 import VolunteerInfo from './VolunteerInfo'
 import AddVolunteerDialog from './AddVolunteerDialog';
 

@@ -130,6 +130,7 @@ function volunteerSignUp (req, res) {
         phoneNumber,
         pantherID,
         major,
+        isActive,
         carAvailable,
         volunteerStatus,
         MDCPS_ID
@@ -224,12 +225,14 @@ function volunteerSignUp (req, res) {
         newVolunteer.major = major;
         newVolunteer.carAvailable = carAvailable;
         newVolunteer.volunteerStatus = volunteerStatus;
+        newVolunteer.isActive = isActive;
+        newVolunteer.MDCPS_ID = MDCPS_ID;
 
         newVolunteer.save((err, volunteer) => {
             if (err) {
                 return res.send({
                     success: false,
-                    message: 'Error: Server error'
+                    message: err
                 });
             }
             return res.send({

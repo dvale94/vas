@@ -8,7 +8,7 @@ const config = {
 			update: '/account/update',
 		},
 		volunteers: {
-			signup: 'account/volunteer/signup',
+			signup: '/account/volunteer/signup',
 			fetch: '/volunteers',
 			register: '/volunteers/register',
 			update: '/volunteers/update',
