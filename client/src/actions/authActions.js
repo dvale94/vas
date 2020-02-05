@@ -14,6 +14,9 @@ export const loginUser = form => dispatch => {
         const res = JSON.parse(body);
         const token = res.token
 
+        //REMOVE- only for debugging
+        console.log(res)
+
         if (error || !res.token) {
             dispatch({
                 type: GET_ERRORS,

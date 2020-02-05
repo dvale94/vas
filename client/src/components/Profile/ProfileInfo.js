@@ -15,6 +15,7 @@ import Grid from '@material-ui/core/Grid';
 import { createMuiTheme } from '@material-ui/core/styles';
 import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
+import { loginUser } from "../../actions/authActions";
 
 
 
@@ -95,18 +96,18 @@ class ProfileInfo extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            firstName: "Aurelien",
-            lastName: "Meray",
-            email: "aurie@test.com",
-            phoneNumber: "305-898-7898",
-            role: "Admin",
+            //firstName: "Aurelien"
+            //lastName: "Meray",
+            //email: "aurie@test.com",
+            //phoneNumber: "305-898-7898",
+            //role: "Admin",
 
             editDisabled: true
         }
     }
 
     componentDidMount() {
-      
+        
     }
 
     //Supress depricated warning use UNSAFE_
@@ -131,6 +132,9 @@ class ProfileInfo extends Component {
 
 
   render(){   
+    const { user } = this.props.auth;
+    var initials = (user.firstName.substring(0, 1) + user.lastName.substring(0, 1)).toUpperCase()
+    
     return (
         <div className={this.props.classes.all} >
         <Grid
@@ -152,11 +156,11 @@ class ProfileInfo extends Component {
                     alignItems="center"
                     justify="center"
                     >
-                        <Avatar className={this.props.classes.blue} >AM</Avatar>
+                        <Avatar className={this.props.classes.blue} >{initials}</Avatar>
                     </Grid>
                     <div className={this.props.classes.paper}>
                         <Typography className={this.props.classes.title} color="textPrimary" variant="h4" gutterBottom>
-                            {this.state.role}
+                            {user.role}
                         </Typography>
                     </div>
                     <Typography className={this.props.classes.title} color="textSecondary" variant="h4" gutterBottom>
@@ -177,7 +181,7 @@ class ProfileInfo extends Component {
                         autoComplete="name"
                         autoFocus
                         onChange={this.handleInput}
-                        value={this.state.firstName}
+                        value={user.firstName}
                     />
                     {/* Last Name */}
                     <TextField
@@ -192,7 +196,7 @@ class ProfileInfo extends Component {
                         autoComplete="name"
                         autoFocus
                         onChange={this.handleInput}
-                        value={this.state.lastName}
+                        value={user.lastName}
                     />
                     {/* Email */}
                     <TextField
@@ -207,7 +211,7 @@ class ProfileInfo extends Component {
                         autoComplete="email"
                         autoFocus
                         onChange={this.handleInput}
-                        value={this.state.email}
+                        value={user.email}
                     />
                     {/* Phone Number */}
                     <TextField
@@ -222,7 +226,7 @@ class ProfileInfo extends Component {
                         autoComplete="tel"
                         autoFocus
                         onChange={this.handleInput}
-                        value={this.state.phoneNumber}
+                        value={user.phoneNumber}
                     />
                     </form>
                 </CardContent>
@@ -270,5 +274,6 @@ const mapStateToProps = state => ({
 });
 
 export default connect (
-  mapStateToProps
+  mapStateToProps,
+  { loginUser }
 )(withRouter(withStyles(useStyles)(ProfileInfo)));
