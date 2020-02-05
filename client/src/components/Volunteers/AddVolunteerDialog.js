@@ -9,17 +9,22 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
+import { connect } from "react-redux";
+import { addVolunteer } from "../../actions/volunteerActions";
 
 class AddVolunteerDialog extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            role: 'Volunteer',
             firstName: '',
             lastName: '',
             email: '',
+            password: '',
             phoneNumber: '',
             major: '',
+            isActive: false,
             carAvailable: false,
             volunteerStatus: true,
             MDCPS_ID: '',
@@ -32,7 +37,9 @@ class AddVolunteerDialog extends Component {
     }    
 
     addVolunteer() {
+        this.props.addVolunteer(this.state);
 
+        this.props.close()
     }
 
     handleInput = (e) =>{
@@ -73,7 +80,7 @@ class AddVolunteerDialog extends Component {
                     <TextField 
                         style={{marginBottom : "15px"}}
                         margin="dense"
-                        name="first_name"
+                        name="firstName"
                         onChange={this.handleInput}
                         type="text"
                         fullWidth
@@ -82,7 +89,7 @@ class AddVolunteerDialog extends Component {
                     <TextField 
                         style={{marginBottom : "15px"}}
                         margin="dense"
-                        name="last_name"
+                        name="lastName"
                         onChange={this.handleInput}
                         type="text"
                         fullWidth
@@ -94,6 +101,15 @@ class AddVolunteerDialog extends Component {
                         name="email"
                         onChange={this.handleInput}
                         type="text"
+                        fullWidth
+                    />
+                    Password:
+                    <TextField 
+                        style={{marginBottom : "15px"}}
+                        margin="dense"
+                        name="password"
+                        onChange={this.handleInput}
+                        type="password"
                         fullWidth
                     />
                     Phone Number:
@@ -114,8 +130,29 @@ class AddVolunteerDialog extends Component {
                         type="text"
                         fullWidth
                     />
+                    Volunteer Status: 
+                    <Select
+                    style={{marginBottom : "15px"}}
+                    name='volunteerStatus'
+                    margin="dense"
+                    onChange={this.handleInput}
+                    fullWidth
+                    >
+                        <MenuItem value={true}>Yes</MenuItem>
+                        <MenuItem value={false}>No</MenuItem>
+                    </Select> 
+                    Is Active: 
+                    <Select
+                    style={{marginBottom : "15px"}}
+                    name='isActive'
+                    margin="dense"
+                    onChange={this.handleInput}
+                    fullWidth
+                    >
+                        <MenuItem value={true}>Yes</MenuItem>
+                        <MenuItem value={false}>No</MenuItem>
+                    </Select>    
                     Car Available:
-                    <br></br> 
                     <Select
                     style={{marginBottom : "15px"}}
                     name='carAvailable'
@@ -130,7 +167,7 @@ class AddVolunteerDialog extends Component {
                     <TextField 
                         style={{marginBottom : "15px"}}
                         margin="dense"
-                        name="PantherID"
+                        name="pantherID"
                         onChange={this.handleInput}
                         type="text"
                         fullWidth 
@@ -156,4 +193,16 @@ class AddVolunteerDialog extends Component {
     }
 }
 
-export default AddVolunteerDialog;
+AddVolunteerDialog.propTypes = {
+    addVolunteer: PropTypes.func.isRequired,
+    errors: PropTypes.object.isRequired
+  };
+
+const mapStateToProps = state => ({
+    errors: state.errors
+  });
+
+export default connect (
+    mapStateToProps,
+    { addVolunteer }  
+)(withRouter(AddVolunteerDialog));
