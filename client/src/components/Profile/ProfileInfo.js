@@ -96,18 +96,17 @@ class ProfileInfo extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            //firstName: "Aurelien"
-            //lastName: "Meray",
-            //email: "aurie@test.com",
-            //phoneNumber: "305-898-7898",
-            //role: "Admin",
-
-            editDisabled: true
+            editDisabled: true,
+            hasAccess: false,
+            // isVolunteer: false,
+            // isSchoolPersonnel: false
         }
     }
 
     componentDidMount() {
-        
+        console.log(this.state.isAdmin)
+        console.log(this.state.isVolunteer)
+        console.log(this.state.isSchoolPersonnel)
     }
 
     //Supress depricated warning use UNSAFE_
@@ -124,16 +123,38 @@ class ProfileInfo extends Component {
         })
     }
 
-    editable=()=> {
+    editable = () => {
         this.setState({
             editDisabled: !this.state.editDisabled
         })
+    }
+
+    checkRole = (user) => {
+        if (user.role === "Admin") {
+            this.setState({
+                isAdmin: true
+            });
+        }
+        // else if (user.role === "Volunteer") {
+        //     this.setState({
+        //         isVolunteer: true
+        //     });
+        // }
+        // else if (user.role === "School Personnel") {
+        //     this.setState({
+        //         isSchoolPersonnel: true
+        //     });
+        // }
     }
 
 
   render(){   
     const { user } = this.props.auth;
     var initials = (user.firstName.substring(0, 1) + user.lastName.substring(0, 1)).toUpperCase()
+
+    // Flags the type of user logged in
+    this.checkRole(user);
+    
     
     return (
         <div className={this.props.classes.all} >
@@ -173,7 +194,7 @@ class ProfileInfo extends Component {
                         variant="standard"
                         //color= "primary"
                         margin="normal"
-                        disabled={this.state.editDisabled}
+                        disabled={ this.state.editDisabled && this.state.hasAccess}
                         fullWidth
                         id="email"
                         label="First Name"
