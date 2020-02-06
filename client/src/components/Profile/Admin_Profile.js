@@ -15,6 +15,7 @@ import Grid from '@material-ui/core/Grid';
 import { createMuiTheme } from '@material-ui/core/styles';
 import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
+import { updateAdmin } from "../../actions/adminActions";
 
 
 const theme = createMuiTheme({
@@ -93,7 +94,12 @@ class Admin_Profile extends Component {
         super(props);
         this.state = {
             editDisabled: true,
+
+            firstName: "test",
         }
+
+        this.updateAdmin = this.updateAdmin.bind(this);
+        this.handleInput = this.handleInput.bind(this);
     }
 
     componentDidMount() {
@@ -105,6 +111,10 @@ class Admin_Profile extends Component {
         
     }
 
+    updateAdmin() {
+        this.props.updateAdmin(this.state);
+    }
+
     handleInput = (e) =>{
         const value = e.target.value
         const name = e.target.name
@@ -112,6 +122,8 @@ class Admin_Profile extends Component {
         this.setState({
         [name]: value 
         })
+
+        console.log(this.state)
     }
 
     editable = () => {
@@ -172,7 +184,7 @@ class Admin_Profile extends Component {
                         autoComplete="name"
                         autoFocus
                         onChange={this.handleInput}
-                        value={user.firstName}
+                        value={this.state.firstName}
                     />
                     {/* Last Name */}
                     <TextField
@@ -233,7 +245,7 @@ class Admin_Profile extends Component {
                     </Button>
                     <Button 
                     className={this.props.classes.editButton}
-                    onClick={this.editable}
+                    onClick={this.editable && this.updateAdmin}
                     size="small"
                     disabled={this.state.editDisabled}
                     endIcon={<SaveIcon />}>
@@ -252,9 +264,8 @@ class Admin_Profile extends Component {
 
 // define types
 Admin_Profile.propTypes = {
-  classes: PropTypes.object.isRequired,
-  auth: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired
+    updateAdmin: PropTypes.func.isRequired,
+    errors: PropTypes.object.isRequired
 };
 
 // allows us to get our state from Redux and map it to props
@@ -265,4 +276,5 @@ const mapStateToProps = state => ({
 
 export default connect (
   mapStateToProps,
+  { updateAdmin }
 )(withRouter(withStyles(useStyles)(Admin_Profile)));

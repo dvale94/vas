@@ -7,6 +7,9 @@ const config = {
 			login: '/account/login',
 			update: '/account/update',
 		},
+		admin: {
+			update: '/admin/update/:id',
+		},
 		volunteers: {
 			signup: '/account/volunteer/signup',
 			fetch: '/volunteers',

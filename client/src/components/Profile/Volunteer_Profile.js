@@ -99,7 +99,7 @@ class Volunteer_Profile extends Component {
 
   render(){   
     const { user } = this.props.auth;
-    var initials = (user.firstName.substring(0, 1) + user.lastName.substring(0, 1)).toUpperCase()
+    var initials = (user.firstName.substring(0, 1) + user.lastName.substring(0, 1)).toUpperCase();
     
     
     return (
