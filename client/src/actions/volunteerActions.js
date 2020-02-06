@@ -1,6 +1,6 @@
 import request from 'request';
 import serverConf from '../config'
-import { GET_ERRORS, SET_VOLUNTEERS, VOLUNTEERS_LOADING, ADD_VOLUNTEER} from './types';
+import { GET_ERRORS, SET_VOLUNTEERS, VOLUNTEERS_LOADING} from './types';
 
 // get volunteers from database
 export const getVolunteers = () => dispatch => {
@@ -19,7 +19,7 @@ export const getVolunteers = () => dispatch => {
         }
         else {
             // set current volunteers
-            dispatch(setCurrentVolunteers(res))
+            dispatch(setCurrentVolunteers(res));
         }    
     });
 };
@@ -44,7 +44,32 @@ export const addVolunteer = form => dispatch => {
         }
         else {
             // set current volunteers
-            dispatch(getVolunteers())
+            dispatch(getVolunteers());
+        }   
+    });
+ };
+
+ // make chanhes to volunteer in the database and refresh the store
+export const editVolunteer = (id, form) => dispatch => {
+
+    const endpoint = `${serverConf.uri}${serverConf.endpoints.volunteers.update}/${id}`;
+
+    request.post(endpoint, { form }, (error, response, body) => {
+        
+        const res = JSON.parse(body);
+
+        //REMOVE- only for debugging
+        console.log(res)
+
+        if (error) {
+            dispatch({
+                type: GET_ERRORS,
+                payload: res
+              })
+        }
+        else {
+            // get updated volunteers
+            dispatch(getVolunteers());
         }   
     });
  };

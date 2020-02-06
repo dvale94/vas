@@ -1,22 +1,28 @@
 import React, { Component } from 'react';
 import { Grid } from '@material-ui/core';
-import VolunteerList from '../components/Volunteers/VolunteerList'
+import { withStyles } from '@material-ui/core/styles';
+import VolunteerTable from '../components/Volunteers/VolunteerTable';
+
+const useStyles = {
+    all: {
+        backgroundColor: '#fafafa',
+        height: '100vh'
+    }
+}    
 
 class VolunteerManagement extends Component{
     
     render(){
         return (
-            <Grid container>
-                <Grid item xs={6}>
-                    <h3>Volunteer List</h3>
-                    <VolunteerList/>
+            <div className={this.props.classes.all}>
+                <Grid container direction="column" alignItems="center" justify="center">
+                    <Grid item>
+                        <VolunteerTable/>
+                    </Grid>    
                 </Grid>
-                <Grid item xs={6}>
-                    
-                </Grid>
-            </Grid>
+            </div>    
         )
     }
 }
 
-export default VolunteerManagement;
+export default (withStyles(useStyles)(VolunteerManagement));
