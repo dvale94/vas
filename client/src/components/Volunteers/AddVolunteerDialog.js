@@ -23,7 +23,6 @@ class AddVolunteerDialog extends Component {
             password: '',
             phoneNumber: '',
             major: '',
-            isActive: false,
             carAvailable: false,
             volunteerStatus: true,
             MDCPS_ID: '',
@@ -133,17 +132,6 @@ class AddVolunteerDialog extends Component {
                     <Select
                     style={{marginBottom : "15px"}}
                     name='volunteerStatus'
-                    margin="dense"
-                    onChange={this.handleInput}
-                    fullWidth
-                    >
-                        <MenuItem value={true}>Yes</MenuItem>
-                        <MenuItem value={false}>No</MenuItem>
-                    </Select> 
-                    Is Active: 
-                    <Select
-                    style={{marginBottom : "15px"}}
-                    name='isActive'
                     margin="dense"
                     onChange={this.handleInput}
                     fullWidth
