@@ -16,6 +16,7 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
 import { updateAdmin } from "../../actions/adminActions";
+import Alert from '@material-ui/lab/Alert';
 
 
 const theme = createMuiTheme({
@@ -95,7 +96,10 @@ class Admin_Profile extends Component {
         this.state = {
             editDisabled: true,
 
-            firstName: "test",
+            firstName: "",
+            lastName: "",
+            phoneNumber: ""
+
         }
 
         this.updateAdmin = this.updateAdmin.bind(this);
@@ -103,16 +107,31 @@ class Admin_Profile extends Component {
     }
 
     componentDidMount() {
+        this.setState({
+            firstName: this.props.auth.user.firstName,
+            lastName: this.props.auth.user.lastName,
+            phoneNumber: this.props.auth.user.phoneNumber
+        });
 
     }
 
     //Supress depricated warning use UNSAFE_
     UNSAFE_componentWillReceiveProps(nextProps) {
-        
+        if (nextProps.res) {
+            this.setState({
+                errors: nextProps.errors
+            });
+        }
     }
 
     updateAdmin() {
-        this.props.updateAdmin(this.state);
+        const form = this.state
+        this.props.updateAdmin(this.props.auth.user.id, form);
+        this.editable();
+
+        //update state
+        //this.props.auth.user.firstName = this.state.firstName;
+        
     }
 
     handleInput = (e) =>{
@@ -131,7 +150,6 @@ class Admin_Profile extends Component {
             editDisabled: !this.state.editDisabled
         })
     }
-
 
   render(){   
     const { user } = this.props.auth;
@@ -199,14 +217,14 @@ class Admin_Profile extends Component {
                         autoComplete="name"
                         autoFocus
                         onChange={this.handleInput}
-                        value={user.lastName}
+                        value={this.state.lastName}
                     />
                     {/* Email */}
                     <TextField
                         variant="standard"
                         color= "primary"
                         margin="normal"
-                        disabled={this.state.editDisabled}
+                        disabled //={this.state.editDisabled}
                         fullWidth
                         id="email"
                         label="Email Address"
@@ -229,7 +247,7 @@ class Admin_Profile extends Component {
                         autoComplete="tel"
                         autoFocus
                         onChange={this.handleInput}
-                        value={user.phoneNumber}
+                        value={this.state.phoneNumber}
                     />
                     </form>
                 </CardContent>

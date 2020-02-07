@@ -1,11 +1,37 @@
 import request from 'request';
 import serverConf from '../config'
-import { GET_ERRORS} from './types';
+import { GET_ERRORS, UPDATE_USER, SET_CURRENT_USER } from './types';
+import { loginUser } from './authActions'
 
-/* // get volunteers from database
-export const getVolunteers = () => dispatch => {
 
-    const endpoint = `${serverConf.uri}${serverConf.endpoints.volunteers.fetch}`;
+export const updateAdmin = (id, form) => dispatch => {
+
+    const endpoint = `${serverConf.uri}${serverConf.endpoints.admin.update}/${id}`;
+
+    request.put(endpoint, { form }, (error, response, body) => {
+        
+        const res = JSON.parse(body);
+
+
+        if (error) {
+            dispatch({
+                type: GET_ERRORS,
+                payload: res
+              })
+        }
+        else {
+            console.log("Hello there: " + res.id)
+            dispatch(getAdmin(res.id))
+            
+            
+        }   
+    });
+ };
+
+ // get volunteers from database
+export const getAdmin = (id) => dispatch => {
+
+    const endpoint = `${serverConf.uri}${serverConf.endpoints.admin.fetch}/${id}`;
 
     request.get(endpoint, (error, response, body) => {
         
@@ -16,38 +42,19 @@ export const getVolunteers = () => dispatch => {
                 type: GET_ERRORS,
                 payload: res
               })
+              console.log("HEREHEREHERE1 " + res);
         }
         else {
             // set current volunteers
-            dispatch(setCurrentVolunteers(res))
+            dispatch(setCurrentUser(res))
+            console.log("HEREHEREHERE2 " + res);
         }    
     });
 };
- */
-// add volunteer to database and refresh the store
-export const updateAdmin = form => dispatch => {
 
-    const endpoint = `${serverConf.uri}${serverConf.endpoints.admin.update}`;
-
-    request.put(endpoint, { form }, (error, response, body) => {
-        
-        const res = JSON.parse(body);
-         //REMOVE- only for debugging
-         console.log(res)
-
-        //REMOVE- only for debugging
-        //console.log(res)
-
-        if (error) {
-            dispatch({
-                type: GET_ERRORS,
-                payload: res
-              })
-        }
-        else {
-            // set current volunteers
-            //dispatch(getVolunteers())
-            console.log("here");
-        }   
-    });
- };
+export const setCurrentUser = user => {
+    return {
+        type: SET_CURRENT_USER,
+        payload: user
+    };
+};

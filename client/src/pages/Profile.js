@@ -16,7 +16,6 @@ class Profile extends Component{
     
     render(){
         const { user } = this.props.auth;
-        console.log(user.role);
 
         return (
             <div>
