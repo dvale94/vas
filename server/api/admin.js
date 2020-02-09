@@ -1,6 +1,7 @@
 import express from 'express';
 import Admin from '../models/Users/admin_User';
 
+
 const router = new express.Router();
 
 router.put('/update/:id', updateAdmin);
@@ -33,7 +34,16 @@ function fetchAdminById(request, response) {
 		if (err) {
 			console.log(err);
 		  } else {
-            response.json(result);
+            const payload = {
+                role: 'Admin',
+                id: result.id,
+                firstName: result.firstName,
+                lastName: result.lastName,
+                email: result.email,
+                phoneNumber: result.phoneNumber
+            }
+              console.log(payload);
+            response.json(payload);
 		  }
 	});
 }

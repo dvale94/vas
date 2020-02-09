@@ -59,6 +59,7 @@ class VolunteerList extends Component {
 
     componentDidMount() {
         this.props.getVolunteers();
+        console.log(this.props.volunteers)
     }
    
     // this function returns a new VolunteerInfo compononet for each volunteer 

@@ -10,10 +10,7 @@ import SchoolPersonnel_Profile from '../components/Profile/SchoolPersonnel_Profi
 
 
 class Profile extends Component{
-    /* constructor(props) {
-        super(props);
-    } */
-    
+ 
     render(){
         const { user } = this.props.auth;
 

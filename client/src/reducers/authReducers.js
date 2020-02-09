@@ -4,6 +4,7 @@ import isEmpty from 'is-empty';
   const initialState = {
     isAuthenticated: false,
     user: {},
+    admin: {},
     loading: false
   };
 

@@ -1,6 +1,6 @@
 import request from 'request';
 import serverConf from '../config'
-import { GET_ERRORS, UPDATE_USER, SET_CURRENT_USER } from './types';
+import { GET_ERRORS, SET_ADMIN } from './types';
 import { loginUser } from './authActions'
 
 
@@ -20,7 +20,7 @@ export const updateAdmin = (id, form) => dispatch => {
               })
         }
         else {
-            console.log("Hello there: " + res.id)
+            //console.log("Hello there: " + res.id)
             dispatch(getAdmin(res.id))
             
             
@@ -28,7 +28,7 @@ export const updateAdmin = (id, form) => dispatch => {
     });
  };
 
- // get volunteers from database
+ // get admin from database
 export const getAdmin = (id) => dispatch => {
 
     const endpoint = `${serverConf.uri}${serverConf.endpoints.admin.fetch}/${id}`;
@@ -42,19 +42,17 @@ export const getAdmin = (id) => dispatch => {
                 type: GET_ERRORS,
                 payload: res
               })
-              console.log("HEREHEREHERE1 " + res);
         }
         else {
             // set current volunteers
-            dispatch(setCurrentUser(res))
-            console.log("HEREHEREHERE2 " + res);
+            dispatch(setCurrentAdmin(res))
         }    
     });
 };
 
-export const setCurrentUser = user => {
+export const setCurrentAdmin = admin => {
     return {
-        type: UPDATE_USER,
-        payload: user
+        type: SET_ADMIN,
+        payload: admin
     };
 };
