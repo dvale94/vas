@@ -23,10 +23,7 @@ class AddVolunteerDialog extends Component {
             password: '',
             phoneNumber: '',
             major: '',
-<<<<<<< HEAD
-=======
             isActive: true,
->>>>>>> Aurelien
             carAvailable: false,
             volunteerStatus: true,
             MDCPS_ID: '',

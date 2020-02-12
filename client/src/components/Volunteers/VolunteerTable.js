@@ -1,9 +1,5 @@
 import React, { Component, Fragment } from 'react';
 import MaterialTable from 'material-table';
-import { createMuiTheme } from '@material-ui/core/styles';
-import { withStyles } from '@material-ui/core/styles';
-import { blue, blueGrey } from '@material-ui/core/colors';
-import isEmpty from 'is-empty';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
