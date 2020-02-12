@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import MaterialTable from 'material-table';
 import PropTypes from 'prop-types';
+import Grid from '@material-ui/core/Grid';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getVolunteers } from '../../actions/volunteerActions';
@@ -68,7 +69,13 @@ class VolunteerTable extends Component {
                     }}
                     detailPanel={rowData => {
                         return (
-                          <div>More Info Here</div>  
+                            <div>
+                                <p><strong>PID:</strong> {rowData.pantherID}</p>
+                                <p><strong>Major:</strong> {rowData.major}</p>
+                                <p><strong>MDCPS ID:</strong> {rowData.MDCPS_ID}</p>
+                                <p><strong>Volunteer Status:</strong> {rowData.volunteerStatus ? 'active' : 'inactive'}</p>
+                                <p><strong>Car Available:</strong> {rowData.carAvailable ? 'yes' : 'no'}</p>
+                            </div>
                         )
                     }}
                 />
