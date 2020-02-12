@@ -47,7 +47,7 @@ class VolunteerInfo extends Component {
                             Major: {major}
                         </p>
                         <p>    
-                            Car Available: {carAvailable ? "yes" : "no"}
+                            Car Available: {carAvailable ? "Yes" : "No"}
                         </p>
                         <p>
                             MDCPS ID: {MDPSPS_ID}

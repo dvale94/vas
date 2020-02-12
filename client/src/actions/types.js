@@ -3,3 +3,6 @@ export const USER_LOADING = 'USER_LOADING';
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
 export const SET_VOLUNTEERS = 'SET_VOLUNTEERS';
 export const VOLUNTEERS_LOADING = 'VOLUNTEERS_LOADING';
+export const UPDATE_USER = 'UPDATE_USER';
+export const SET_ADMIN = 'SET_ADMIN';
+export const ADMIN_LOADING = 'ADMIN_LOADING';
