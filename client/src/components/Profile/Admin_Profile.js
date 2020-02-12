@@ -111,7 +111,7 @@ class Admin_Profile extends Component {
     componentDidMount() {
         this.getAdmin();
         console.log(this.props.admin)
-        console.log(this.props.auth)
+        //console.log(this.props.auth)
         
         this.setState({
             firstName: this.props.admin.firstName,

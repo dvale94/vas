@@ -29,7 +29,7 @@ export const updateAdmin = (id, form) => dispatch => {
  };
 
  // get admin from database
-export const getAdmin = (id) => dispatch => {
+export const  getAdmin = (id) => dispatch => {
 
     const endpoint = `${serverConf.uri}${serverConf.endpoints.admin.fetch}/${id}`;
 
