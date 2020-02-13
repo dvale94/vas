@@ -68,7 +68,15 @@ class VolunteerTable extends Component {
                         }
                     ]}
                     options={{
-                        actionsColumnIndex: -1
+                        actionsColumnIndex: -1,
+                        headerStyle: {
+                            backgroundColor: '#b0bec5',
+                            color: '#212121'
+                          },
+                        cellStyle: {
+                            width: 250,
+                            maxWidth: 700
+                          },
                     }}
                     detailPanel={rowData => {
                         return (

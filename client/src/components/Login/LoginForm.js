@@ -17,6 +17,8 @@ import { connect } from "react-redux";
 import { loginUser } from "../../actions/authActions";
 import Alert from '@material-ui/lab/Alert';
 
+import { useTheme } from '@material-ui/core/styles';
+
 // Login Styling
 const theme = createMuiTheme({
     palette: {
@@ -121,7 +123,6 @@ class LoginForm extends Component {
     };
 
   render(){   
-    
     return (
       <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -170,7 +171,6 @@ class LoginForm extends Component {
               fullWidth
               variant="contained"
               className={this.props.classes.submit}
-              
             >
               Login
             </Button>

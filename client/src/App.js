@@ -12,6 +12,7 @@ import Dashboard from './pages/Dashboard';
 import PrivateRoute from "./components/PrivateRoute";
 import VolunteerManagement from './pages/VolunteerManagement'
 import Profile from './pages/Profile'
+import { ThemeProvider } from '@material-ui/core/styles';
 
 // check for token to keep user logged in
 if (localStorage.jwt) {
@@ -39,26 +40,34 @@ if (localStorage.jwt) {
     }
 }
 
+const VAS_theme = {
+  //background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+};
+
 class App extends Component {
 
 	render() {
 		return (
+      
       <Provider store={store}>
         <BrowserRouter>
           <div className='.App'>
+          
             <Fragment>
               <NavBar/>
               <Switch>
+              
                 <Route exact path='/' component={Login}/>
                 <Route path='/login' component={Login}/>
                 <PrivateRoute path="/dashboard" component={Dashboard}/>
                 <PrivateRoute path="/volunteermanagement" component={VolunteerManagement} />
                 <PrivateRoute path="/profile" component={Profile}/>
+                
               </Switch>
             </Fragment>
             </div>  
         </BrowserRouter>
-      </Provider>  
+      </Provider> 
 		);
 	}
 }

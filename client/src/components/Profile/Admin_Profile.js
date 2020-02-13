@@ -119,6 +119,7 @@ class Admin_Profile extends Component {
             email: this.props.admin.email,
             phoneNumber: this.props.admin.phoneNumber,
         });
+        console.log(this.props.admin)
 
     }
 
@@ -130,7 +131,9 @@ class Admin_Profile extends Component {
                 errors: nextProps.errors
             });
         }
+        
     }
+    
     getAdmin() {
         //e.preventDefault();
         this.props.getAdmin(this.props.auth.user.id);
@@ -211,6 +214,7 @@ class Admin_Profile extends Component {
                         autoComplete="name"
                         autoFocus
                         onChange={this.handleInput}
+                        //value={this.props.admin.firstName}
                         value={this.state.firstName}
                     />
                     {/* Last Name */}
