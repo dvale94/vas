@@ -163,9 +163,10 @@ class Admin_Profile extends Component {
     }
 
   render(){   
-    const { user } = this.props.auth;
+    const { user, adminData } = this.props.auth;
     //const { admin } = this.props.adminData.admin;
     var initials = (user.firstName.substring(0, 1) + user.lastName.substring(0, 1)).toUpperCase()
+    //var initials = (adminData.admin.firstName.substring(0, 1) + adminData.admin.lastName.substring(0, 1)).toUpperCase()
     
     
     return (

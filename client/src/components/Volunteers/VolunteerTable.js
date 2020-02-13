@@ -70,6 +70,9 @@ class VolunteerTable extends Component {
                             backgroundColor: '#b0bec5',
                             color: '#212121'
                           },
+                        searchFieldStyle: {
+                            backgroundColor: '#eeeeee',
+                        },
                         cellStyle: {
                             width: 250,
                             maxWidth: 700
@@ -81,8 +84,8 @@ class VolunteerTable extends Component {
                                 <p><strong>PID:</strong> {rowData.pantherID}</p>
                                 <p><strong>Major:</strong> {rowData.major}</p>
                                 <p><strong>MDCPS ID:</strong> {rowData.MDCPS_ID}</p>
-                                <p><strong>Volunteer Status:</strong> {rowData.volunteerStatus ? 'active' : 'inactive'}</p>
-                                <p><strong>Car Available:</strong> {rowData.carAvailable ? 'yes' : 'no'}</p>
+                                <p><strong>Volunteer Status:</strong> {rowData.volunteerStatus ? 'Approved' : 'Not yet Approved'}</p>
+                                <p><strong>Car Available:</strong> {rowData.carAvailable ? 'Yes' : 'No'}</p>
                             </div>
                         )
                     }}
