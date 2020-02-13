@@ -12,7 +12,6 @@ import Dashboard from './pages/Dashboard';
 import PrivateRoute from "./components/PrivateRoute";
 import VolunteerManagement from './pages/VolunteerManagement'
 import Profile from './pages/Profile'
-import { ThemeProvider } from '@material-ui/core/styles';
 
 // check for token to keep user logged in
 if (localStorage.jwt) {
@@ -39,10 +38,6 @@ if (localStorage.jwt) {
         window.location.href = "./";
     }
 }
-
-const VAS_theme = {
-  //background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-};
 
 class App extends Component {
 

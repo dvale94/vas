@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import { createMuiTheme } from '@material-ui/core/styles';
+import { blueGrey, blue } from '@material-ui/core/colors';
+import { ThemeProvider } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -12,6 +16,24 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
 import { addVolunteer } from "../../actions/volunteerActions";
+
+
+const theme = createMuiTheme({
+    palette: {
+      primary: blue,
+    }
+  });
+
+const useStyles = {
+    bottomButtons: {
+        backgroundColor: blueGrey[700],
+        color: "white",
+        fontWeight: "bold",
+        '&:hover': {
+            backgroundColor: blue[500],
+        }
+    },
+};
 
 class AddVolunteerDialog extends Component {
     constructor(props) {
@@ -65,7 +87,7 @@ class AddVolunteerDialog extends Component {
         const {open, close} = this.props
 
         return (
-            
+            <ThemeProvider theme={theme}>
             <Dialog
             open={open}
             >
@@ -128,18 +150,7 @@ class AddVolunteerDialog extends Component {
                         onChange={this.handleInput}
                         type="text"
                         fullWidth
-                    />
-                    Volunteer Status: 
-                    <Select
-                    style={{marginBottom : "15px"}}
-                    name='volunteerStatus'
-                    margin="dense"
-                    onChange={this.handleInput}
-                    fullWidth
-                    >
-                        <MenuItem value={true}>Yes</MenuItem>
-                        <MenuItem value={false}>No</MenuItem>
-                    </Select>    
+                    />  
                     Car Available:
                     <Select
                     style={{marginBottom : "15px"}}
@@ -160,6 +171,18 @@ class AddVolunteerDialog extends Component {
                         type="text"
                         fullWidth 
                     />
+                    
+                    Volunteer Status: 
+                    <Select
+                    style={{marginBottom : "15px"}}
+                    name='volunteerStatus'
+                    margin="dense"
+                    onChange={this.handleInput}
+                    fullWidth
+                    >
+                        <MenuItem value={true}>Approved</MenuItem>
+                        <MenuItem value={false}>Not yet Approved</MenuItem>
+                    </Select>
                     MDCPS ID:
                     <TextField 
                         style={{marginBottom : "15px"}}
@@ -172,11 +195,11 @@ class AddVolunteerDialog extends Component {
                     <br></br>   
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={this.addVolunteer}  variant="contained" color="primary">Submit</Button>
-                    <Button onClick={close} variant="contained" color="primary">Cancel</Button>
+                    <Button className={this.props.classes.bottomButtons} onClick={this.addVolunteer}  variant="contained" color="primary">Submit</Button>
+                    <Button className={this.props.classes.bottomButtons} onClick={close} variant="contained" color="primary">Cancel</Button>
                 </DialogActions>
             </Dialog>
-
+            </ThemeProvider>
         );
     }
 }
@@ -193,4 +216,4 @@ const mapStateToProps = state => ({
 export default connect (
     mapStateToProps,
     { addVolunteer }  
-)(withRouter(AddVolunteerDialog));
+)(withRouter(withStyles(useStyles)(AddVolunteerDialog)));
