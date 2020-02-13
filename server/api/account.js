@@ -15,7 +15,7 @@ const router = new express.Router();
 
 router.post('/admin/signup', adminSignUp);
 router.post('/volunteer/signup', volunteerSignUp);
-router.post('/schoolPersonnel/signup', schoolPersonnelSignUp);
+router.post('/school-personnel/signup', schoolPersonnelSignUp);
 router.post('/login', login);
 
 function adminSignUp (req, res) {
