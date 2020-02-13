@@ -10,10 +10,8 @@ import SchoolPersonnel_Profile from '../components/Profile/SchoolPersonnel_Profi
 
 
 class Profile extends Component{
- 
     render(){
         const { user } = this.props.auth;
-
         return (
             <div>
                 { user.role == "Admin" && <Admin_Profile/>}

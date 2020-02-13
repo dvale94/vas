@@ -13,6 +13,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
 import { editVolunteer } from "../../actions/volunteerActions";
+import { useTheme } from '@material-ui/core/styles';
 
 class EditVolunteerDialog extends Component {
     constructor(props) {
@@ -62,6 +63,7 @@ class EditVolunteerDialog extends Component {
 
     render() {
 
+        const theme = useTheme();
         const {volunteer, open, close} = this.props
 
         return (
