@@ -63,7 +63,6 @@ class EditVolunteerDialog extends Component {
 
     render() {
 
-        const theme = useTheme();
         const {volunteer, open, close} = this.props
 
         return (
