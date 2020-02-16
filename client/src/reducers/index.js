@@ -3,10 +3,12 @@ import authReducer from './authReducers';
 import errorReducer from './errorReducers';
 import volunteerReducer from './volunteerReducers';
 import adminReducer from './adminReducer';
+import schoolReducer from './schoolReducer'
 
 export default combineReducers({
   auth: authReducer,
   errors: errorReducer,
-  data: volunteerReducer,
-  adminData: adminReducer
+  volunteerData: volunteerReducer,
+  adminData: adminReducer,
+  schoolData: schoolReducer,
 });

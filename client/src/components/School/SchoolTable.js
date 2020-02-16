@@ -3,9 +3,9 @@ import MaterialTable from 'material-table';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getVolunteers } from '../../actions/volunteerActions';
-import AddVolunteerDialog from './AddVolunteerDialog';
-import EditVolunteerDialog from './EditVolunteerDialog'
+import { getSchools } from '../../actions/schoolActions';
+import AddSchoolDialog from './AddSchoolDialog';
+import EditSchoolDialog from './EditSchoolDialog'
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -21,32 +21,32 @@ const useStyles = ({
   });
 
 
-class VolunteerTable extends Component {
+class SchoolTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedVolunteer: {},
-            addVolunteerDialog: false,
-            editVolunteerDialog: false
+            selectedSchool: {},
+            addSchoolDialog: false,
+            editSchoolDialog: false
         }
 
-        this.toggleAddVolunteerDialog= this.toggleAddVolunteerDialog.bind(this);
-        this.toggleEditVolunteerDialog= this.toggleEditVolunteerDialog.bind(this);
+        this.toggleAddSchoolDialog= this.toggleAddSchoolDialog.bind(this);
+        this.toggleEditSchoolDialog= this.toggleEditSchoolDialog.bind(this);
     }
 
     componentDidMount() {
-        this.props.getVolunteers();
+        this.props.getSchools();
     }
 
-    toggleAddVolunteerDialog() {
+    toggleAddSchoolDialog() {
         this.setState(prevState => ({
-            addVolunteerDialog: !prevState.addVolunteerDialog
+            addSchoolDialog: !prevState.addSchoolDialog
         }));
     }
 
-    toggleEditVolunteerDialog() {
+    toggleEditSchoolDialog() {
         this.setState(prevState => ({
-            editVolunteerDialog: !prevState.editVolunteerDialog
+            editSchoolDialog: !prevState.editSchoolDialog
         }));
     }
 
@@ -54,27 +54,27 @@ class VolunteerTable extends Component {
         return (
             <Fragment>
                 <MaterialTable
-                    title="Volunteers"
+                    title="Schools"
                     columns={
                         [
-                            { title: 'First Name', field: 'firstName' },
-                            { title: 'Last Name', field: 'lastName' },
-                            { title: 'Email', field: 'email'},
-                            { title: 'Phone #', field: 'phoneNumber'}
+                            { title: 'School Name', field: 'schoolName' },
+                            { title: 'Level', field: 'level' },
+                            { title: 'Phone #', field: 'phoneNumber'},
+                            { title: 'City', field: 'city'},
                         ]
                     }
-                    data={this.props.volunteers}
+                    data={this.props.schools}
                     actions={[
                         {
                         icon: 'person_add',
-                        tooltip: 'Add Volunteer',
+                        tooltip: 'Add School',
                         isFreeAction: true,
-                        onClick: this.toggleAddVolunteerDialog
+                        onClick: this.toggleAddSchoolDialog
                         },
                         {
                             icon: 'edit',
-                            tooltip: 'Edit Volunteer',
-                            onClick: (event, rowData) => {this.setState({selectedVolunteer: rowData}); this.toggleEditVolunteerDialog()}
+                            tooltip: 'Edit School',
+                            onClick: (event, rowData) => {this.setState({selectedSchool: rowData}); this.toggleEditSchoolDialog()}
                         }
                     ]}
                     options={{
@@ -100,20 +100,20 @@ class VolunteerTable extends Component {
                                 <Table className={this.props.classes.table} size="small" aria-label="a dense table">
                                 <TableHead backgroundColor='red'>
                                 <TableRow color="red">
-                                <TableCell color="red" align="right"><strong>Panther ID</strong></TableCell>
-                                <TableCell align="right"><strong>Major</strong></TableCell>
-                                <TableCell align="right"><strong>Car Available</strong></TableCell>
-                                <TableCell align="right"><strong>Volunteer Status</strong></TableCell>
-                                <TableCell align="right"><strong>MDCPS ID</strong></TableCell>
+                                <TableCell color="red" align="right"><strong>School Code</strong></TableCell>
+                                <TableCell align="right"><strong>Address</strong></TableCell>
+                                <TableCell align="right"><strong>State</strong></TableCell>
+                                <TableCell align="right"><strong>Zip Code</strong></TableCell>
+                                <TableCell align="right"><strong>Activation status</strong></TableCell>
                                 </TableRow>
                                 </TableHead>
 
                                 <TableBody >
-                                <TableCell component="th" scope="row"> {rowData.pantherID}</TableCell>
-                                <TableCell component="th" scope="row"> {rowData.major}</TableCell>
-                                <TableCell  scope="row"> {rowData.carAvailable ? 'Yes' : 'No'}</TableCell>
-                                <TableCell component="th" scope="row"> {rowData.volunteerStatus ? 'Approved' : 'Not yet Approved'}</TableCell>
-                                <TableCell component="th" scope="row"> {rowData.MDCPS_ID}</TableCell>
+                                <TableCell component="th" scope="row"> {rowData.schoolCode}</TableCell>
+                                <TableCell component="th" scope="row"> {rowData.address}</TableCell>
+                                <TableCell component="th" scope="row"> {rowData.state}</TableCell>
+                                <TableCell component="th" scope="row"> {rowData.zipCode}</TableCell>
+                                <TableCell  scope="row"> {rowData.isActive ? 'Active' : 'Not Active'}</TableCell>
                                 </TableBody>
                                 </Table>
                                 
@@ -128,25 +128,25 @@ class VolunteerTable extends Component {
 
                     }}
                 />
-                {this.state.editVolunteerDialog && <EditVolunteerDialog open={this.state.editVolunteerDialog} close={this.toggleEditVolunteerDialog} volunteer={this.state.selectedVolunteer}/>}
-                {this.state.addVolunteerDialog && <AddVolunteerDialog open={this.state.addVolunteerDialog} close={this.toggleAddVolunteerDialog}/>}
+                {this.state.editSchoolDialog && <EditSchoolDialog open={this.state.editSchoolDialog} close={this.toggleEditSchoolDialog} school={this.state.selectedSchool}/>}
+                {this.state.addSchoolDialog && <AddSchoolDialog open={this.state.addSchoolDialog} close={this.toggleAddSchoolDialog}/>}
             </Fragment>
         );
     }
 }
 
-VolunteerTable.propTypes = {
-    getVolunteers: PropTypes.func.isRequired,
-    volunteers: PropTypes.array.isRequired,
+SchoolTable.propTypes = {
+    getSchools: PropTypes.func.isRequired,
+    schools: PropTypes.array.isRequired,
     errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-    volunteers: state.volunteerData.volunteers,
+    schools: state.schoolData.schools,
     errors: state.errors
 });
 
 export default connect (
     mapStateToProps,
-    { getVolunteers }  
-)(withRouter(withStyles(useStyles)(VolunteerTable)));
+    { getSchools }  
+)(withRouter(withStyles(useStyles)(SchoolTable)));

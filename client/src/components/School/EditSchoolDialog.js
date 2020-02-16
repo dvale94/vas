@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import isEmpty from 'is-empty';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import isEmpty from 'is-empty';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { blueGrey, blue } from '@material-ui/core/colors';
 import { ThemeProvider } from '@material-ui/core/styles';
@@ -16,8 +16,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
-import { editVolunteer } from "../../actions/volunteerActions";
-
+import { editSchool } from "../../actions/schoolActions";
 
 
 const theme = createMuiTheme({
@@ -37,18 +36,18 @@ const useStyles = {
     },
 };
 
-class EditVolunteerDialog extends Component {
+class EditSchoolDialog extends Component {
     constructor(props) {
         super(props);
         this.state = {
             server: {}
         }
 
-        this.editVolunteer = this.editVolunteer.bind(this);
+        this.editSchool = this.editSchool.bind(this);
         this.handleInput = this.handleInput.bind(this);
     }    
 
-    editVolunteer() {
+    editSchool() {
 
         let form = this.state
         delete form.server
@@ -60,7 +59,7 @@ class EditVolunteerDialog extends Component {
             }
         } 
 
-        this.props.editVolunteer(this.props.volunteer._id, form);
+        this.props.editSchool(this.props.school._id, form);
 
         this.props.close()
     }
@@ -86,139 +85,119 @@ class EditVolunteerDialog extends Component {
 
     render() {
 
-        const {volunteer, open, close} = this.props
+        const {school, open, close} = this.props
 
         return (
             <ThemeProvider theme={theme}>
             <Dialog
             open={open}
             >
-                <DialogTitle >Edit Volunteer</DialogTitle>
+                <DialogTitle >Edit School</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                    To edit a volunteer, make the changes and click submit.
+                    To edit a school, make the changes and click submit.
                     </DialogContentText>
                     <br></br>
-                    First Name: 
+                    School Name: 
                     <TextField 
                         style={{marginBottom : "15px"}}
                         margin="dense"
-                        name="firstName"
-                        placeholder={volunteer.firstName}
+                        name="schoolName"
+                        placeholder={school.schoolName}
                         onChange={this.handleInput}
                         type="text"
                         fullWidth
                     />
-                    Last Name:
+                    School Code:
                     <TextField 
                         style={{marginBottom : "15px"}}
                         margin="dense"
-                        name="lastName"
-                        placeholder={volunteer.lastName}
+                        name="schoolCode"
+                        placeholder={school.schoolCode}
                         onChange={this.handleInput}
                         type="text"
                         fullWidth
                     />
-                    Email:
-                    <TextField 
-                        style={{marginBottom : "15px"}}
-                        margin="dense"
-                        name="email"
-                        placeholder={volunteer.email}
-                        onChange={this.handleInput}
-                        type="text"
-                        fullWidth
-                    />
-                    Password:
-                    <TextField 
-                        style={{marginBottom : "15px"}}
-                        margin="dense"
-                        name="password"
-                        placeholder='••••••••••'
-                        onChange={this.handleInput}
-                        type="password"
-                        fullWidth 
-                    />
+                    Educational Level:
+                    <Select
+                    style={{marginBottom : "15px"}}
+                    name='level'
+                    placeholder={school.level}
+                    margin="dense"
+                    onChange={this.handleInput}
+                    fullWidth
+                    >
+                        <MenuItem value={"Elementary School"}>Elementary School</MenuItem>
+                        <MenuItem value={"Middle School"}>Middle School</MenuItem>
+                        <MenuItem value={"High School"}>High School</MenuItem>
+                        <MenuItem value={"K-8"}>K-8</MenuItem>
+                    </Select>
                     Phone Number:
                     <TextField 
                         style={{marginBottom : "15px"}}
                         margin="dense"
                         name="phoneNumber"
-                        placeholder={volunteer.phoneNumber}
+                        placeholder={school.phoneNumber}
                         onChange={this.handleInput}
                         type="text"
                         fullWidth
                     />
-                    Major:
+                    Address:
                     <TextField 
                         style={{marginBottom : "15px"}}
                         margin="dense"
-                        name="major"
-                        placeholder={volunteer.major}
+                        name="address"
+                        placeholder={school.address}
                         onChange={this.handleInput}
                         type="text"
                         fullWidth
-                    /> 
+                    />
+                    City:
+                    <TextField 
+                        style={{marginBottom : "15px"}}
+                        margin="dense"
+                        name="city"
+                        placeholder={school.city}
+                        onChange={this.handleInput}
+                        type="text"
+                        fullWidth
+                    />  
+                    State:
+                    <TextField 
+                        style={{marginBottom : "15px"}}
+                        margin="dense"
+                        name="state"
+                        placeholder={school.state}
+                        onChange={this.handleInput}
+                        type="text"
+                        fullWidth
+                    />  
+                    Zip Code:
+                    <TextField 
+                        style={{marginBottom : "15px"}}
+                        margin="dense"
+                        name="zipCode"
+                        placeholder={school.zipCode}
+                        onChange={this.handleInput}
+                        type="text"
+                        fullWidth 
+                    />                    
                     Is Active: 
                     <Select
                     style={{marginBottom : "15px"}}
-                    name='isActive'
-                    defaultValue={volunteer.isActive}
+                    name='schoolStatus'
                     margin="dense"
-                    onChange={this.handleInput}
-                    fullWidth
-                    >
-                        <MenuItem value={true}>Yes</MenuItem>
-                        <MenuItem value={false}>No</MenuItem>
-                    </Select>                  
-                    Car Available:
-                    <Select
-                    style={{marginBottom : "15px"}}
-                    name='carAvailable'
-                    defaultValue={volunteer.carAvailable}
-                    margin="dense"
+                    defaultValue={school.isActive}
                     onChange={this.handleInput}
                     fullWidth
                     >
                         <MenuItem value={true}>Yes</MenuItem>
                         <MenuItem value={false}>No</MenuItem>
                     </Select>
-                    Panther ID:
-                    <TextField 
-                        style={{marginBottom : "15px"}}
-                        margin="dense"
-                        name="pantherID"
-                        placeholder={volunteer.pantherID.toString()}
-                        onChange={this.handleInput}
-                        type="text"
-                        fullWidth 
-                    />
-                    Volunteer Status: 
-                    <Select
-                    style={{marginBottom : "15px"}}
-                    name='volunteerStatus'
-                    defaultValue={volunteer.volunteerStatus}
-                    margin="dense"
-                    onChange={this.handleInput}
-                    fullWidth
-                    >
-                        <MenuItem value={true}>Approved</MenuItem>
-                        <MenuItem value={false}>Not yet Approved</MenuItem>
-                    </Select>
-                    MDCPS ID:
-                    <TextField 
-                        style={{marginBottom : "15px"}}
-                        margin="dense"
-                        name="MDCPS_ID"
-                        placeholder={volunteer.MDCPS_ID}
-                        onChange={this.handleInput}
-                        type="text"
-                        fullWidth 
-                    />
                     <br></br>   
                 </DialogContent>
                 <DialogActions>
-                    <Button className={this.props.classes.bottomButtons} onClick={this.editVolunteer}  variant="contained" color="primary">Submit</Button>
+                    <Button className={this.props.classes.bottomButtons} onClick={this.editSchool}  variant="contained" color="primary">Submit</Button>
                     <Button className={this.props.classes.bottomButtons} onClick={close} variant="contained" color="primary">Cancel</Button>
                 </DialogActions>
             </Dialog>
@@ -227,8 +206,8 @@ class EditVolunteerDialog extends Component {
     }
 }
 
-EditVolunteerDialog.propTypes = {
-    editVolunteer: PropTypes.func.isRequired,
+EditSchoolDialog.propTypes = {
+    editSchool: PropTypes.func.isRequired,
     errors: PropTypes.object.isRequired
   };
 
@@ -238,5 +217,5 @@ const mapStateToProps = state => ({
 
 export default connect (
     mapStateToProps,
-    { editVolunteer }  
-)(withRouter(withStyles(useStyles)(EditVolunteerDialog)));
+    { editSchool }  
+)(withRouter(withStyles(useStyles)(EditSchoolDialog)));

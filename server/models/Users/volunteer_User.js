@@ -35,7 +35,7 @@ const VolunteerSchema = new mongoose.Schema({
     },
     isActive: {
         type: Boolean,
-        default: false
+        default: true
     },
     MDCPS_ID: {
         type: String,

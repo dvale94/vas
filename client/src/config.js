@@ -16,6 +16,11 @@ const config = {
 			fetch: '/volunteers',
 			register: '/volunteers/register',
 			update: '/volunteers/update',
+		},
+		schools: {
+			create: '/school/create',
+			fetch: '/school',
+			update: '/school/update',
 		}
 		
 	},

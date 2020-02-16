@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import isEmpty from 'is-empty';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { createMuiTheme } from '@material-ui/core/styles';
@@ -16,8 +15,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
-import { editVolunteer } from "../../actions/volunteerActions";
-
+import { addSchool } from "../../actions/schoolActions";
 
 
 const theme = createMuiTheme({
@@ -37,31 +35,28 @@ const useStyles = {
     },
 };
 
-class EditVolunteerDialog extends Component {
+class AddSchoolDialog extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            schoolName: '',
+            schoolCode: '',
+            level: '',
+            phoneNumber: '',
+            address: '',
+            city: false,
+            state: true,
+            zipCode: '',
+            isActive: true,
             server: {}
         }
 
-        this.editVolunteer = this.editVolunteer.bind(this);
+        this.addSchool = this.addSchool.bind(this);
         this.handleInput = this.handleInput.bind(this);
     }    
 
-    editVolunteer() {
-
-        let form = this.state
-        delete form.server
-
-        // check if any of the fields are empty, and remove them so it dosen't get sent to the server update
-        for (let property in form) {
-            if (isEmpty(form[property])) {
-                delete form[property];
-            }
-        } 
-
-        this.props.editVolunteer(this.props.volunteer._id, form);
-
+    addSchool() {
+        this.props.addSchool(this.state);
         this.props.close()
     }
 
@@ -73,6 +68,7 @@ class EditVolunteerDialog extends Component {
           [name]: value 
         })
 
+        console.log(this.state)
     }
 
     inputError = (error) => {
@@ -83,99 +79,101 @@ class EditVolunteerDialog extends Component {
         )
     };
 
-
     render() {
 
-        const {volunteer, open, close} = this.props
+        const {open, close} = this.props
 
         return (
             <ThemeProvider theme={theme}>
             <Dialog
             open={open}
             >
-                <DialogTitle >Edit Volunteer</DialogTitle>
+                <DialogTitle >Add School</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                    To edit a volunteer, make the changes and click submit.
+                    To add a school, fill out the following form and click submit.
                     </DialogContentText>
                     <br></br>
-                    First Name: 
+                    School Name: 
                     <TextField 
                         style={{marginBottom : "15px"}}
                         margin="dense"
-                        name="firstName"
-                        placeholder={volunteer.firstName}
+                        name="schoolName"
                         onChange={this.handleInput}
                         type="text"
                         fullWidth
                     />
-                    Last Name:
+                    School Code:
                     <TextField 
                         style={{marginBottom : "15px"}}
                         margin="dense"
-                        name="lastName"
-                        placeholder={volunteer.lastName}
+                        name="schoolCode"
                         onChange={this.handleInput}
                         type="text"
                         fullWidth
                     />
-                    Email:
-                    <TextField 
-                        style={{marginBottom : "15px"}}
-                        margin="dense"
-                        name="email"
-                        placeholder={volunteer.email}
-                        onChange={this.handleInput}
-                        type="text"
-                        fullWidth
-                    />
-                    Password:
-                    <TextField 
-                        style={{marginBottom : "15px"}}
-                        margin="dense"
-                        name="password"
-                        placeholder='••••••••••'
-                        onChange={this.handleInput}
-                        type="password"
-                        fullWidth 
-                    />
+                    Educational Level:
+                    <Select
+                    style={{marginBottom : "15px"}}
+                    name='level'
+                    margin="dense"
+                    onChange={this.handleInput}
+                    fullWidth
+                    >
+                        <MenuItem value={"Elementary School"}>Elementary School</MenuItem>
+                        <MenuItem value={"Middle School"}>Middle School</MenuItem>
+                        <MenuItem value={"High School"}>High School</MenuItem>
+                        <MenuItem value={"K-8"}>K-8</MenuItem>
+                    </Select>
                     Phone Number:
                     <TextField 
                         style={{marginBottom : "15px"}}
                         margin="dense"
                         name="phoneNumber"
-                        placeholder={volunteer.phoneNumber}
                         onChange={this.handleInput}
                         type="text"
                         fullWidth
                     />
-                    Major:
+                    Address:
                     <TextField 
                         style={{marginBottom : "15px"}}
                         margin="dense"
-                        name="major"
-                        placeholder={volunteer.major}
+                        name="address"
                         onChange={this.handleInput}
                         type="text"
                         fullWidth
-                    /> 
+                    />
+                    City:
+                    <TextField 
+                        style={{marginBottom : "15px"}}
+                        margin="dense"
+                        name="city"
+                        onChange={this.handleInput}
+                        type="text"
+                        fullWidth
+                    />  
+                    State:
+                    <TextField 
+                        style={{marginBottom : "15px"}}
+                        margin="dense"
+                        name="state"
+                        onChange={this.handleInput}
+                        type="text"
+                        fullWidth
+                    />  
+                    Zip Code:
+                    <TextField 
+                        style={{marginBottom : "15px"}}
+                        margin="dense"
+                        name="zipCode"
+                        onChange={this.handleInput}
+                        type="text"
+                        fullWidth 
+                    />                    
                     Is Active: 
                     <Select
                     style={{marginBottom : "15px"}}
-                    name='isActive'
-                    defaultValue={volunteer.isActive}
-                    margin="dense"
-                    onChange={this.handleInput}
-                    fullWidth
-                    >
-                        <MenuItem value={true}>Yes</MenuItem>
-                        <MenuItem value={false}>No</MenuItem>
-                    </Select>                  
-                    Car Available:
-                    <Select
-                    style={{marginBottom : "15px"}}
-                    name='carAvailable'
-                    defaultValue={volunteer.carAvailable}
+                    name='schoolStatus'
                     margin="dense"
                     onChange={this.handleInput}
                     fullWidth
@@ -183,42 +181,10 @@ class EditVolunteerDialog extends Component {
                         <MenuItem value={true}>Yes</MenuItem>
                         <MenuItem value={false}>No</MenuItem>
                     </Select>
-                    Panther ID:
-                    <TextField 
-                        style={{marginBottom : "15px"}}
-                        margin="dense"
-                        name="pantherID"
-                        placeholder={volunteer.pantherID.toString()}
-                        onChange={this.handleInput}
-                        type="text"
-                        fullWidth 
-                    />
-                    Volunteer Status: 
-                    <Select
-                    style={{marginBottom : "15px"}}
-                    name='volunteerStatus'
-                    defaultValue={volunteer.volunteerStatus}
-                    margin="dense"
-                    onChange={this.handleInput}
-                    fullWidth
-                    >
-                        <MenuItem value={true}>Approved</MenuItem>
-                        <MenuItem value={false}>Not yet Approved</MenuItem>
-                    </Select>
-                    MDCPS ID:
-                    <TextField 
-                        style={{marginBottom : "15px"}}
-                        margin="dense"
-                        name="MDCPS_ID"
-                        placeholder={volunteer.MDCPS_ID}
-                        onChange={this.handleInput}
-                        type="text"
-                        fullWidth 
-                    />
                     <br></br>   
                 </DialogContent>
                 <DialogActions>
-                    <Button className={this.props.classes.bottomButtons} onClick={this.editVolunteer}  variant="contained" color="primary">Submit</Button>
+                    <Button className={this.props.classes.bottomButtons} onClick={this.addSchool}  variant="contained" color="primary">Submit</Button>
                     <Button className={this.props.classes.bottomButtons} onClick={close} variant="contained" color="primary">Cancel</Button>
                 </DialogActions>
             </Dialog>
@@ -227,8 +193,8 @@ class EditVolunteerDialog extends Component {
     }
 }
 
-EditVolunteerDialog.propTypes = {
-    editVolunteer: PropTypes.func.isRequired,
+AddSchoolDialog.propTypes = {
+    addSchool: PropTypes.func.isRequired,
     errors: PropTypes.object.isRequired
   };
 
@@ -238,5 +204,5 @@ const mapStateToProps = state => ({
 
 export default connect (
     mapStateToProps,
-    { editVolunteer }  
-)(withRouter(withStyles(useStyles)(EditVolunteerDialog)));
+    { addSchool }  
+)(withRouter(withStyles(useStyles)(AddSchoolDialog)));

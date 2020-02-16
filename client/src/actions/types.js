@@ -6,3 +6,5 @@ export const VOLUNTEERS_LOADING = 'VOLUNTEERS_LOADING';
 export const UPDATE_USER = 'UPDATE_USER';
 export const SET_ADMIN = 'SET_ADMIN';
 export const ADMIN_LOADING = 'ADMIN_LOADING';
+export const SET_SCHOOLS = 'SET_SCHOOLS';
+export const SCHOOLS_LOADING = 'SCHOOLS_LOADING';
