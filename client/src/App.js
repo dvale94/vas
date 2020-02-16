@@ -10,8 +10,9 @@ import Login from './pages/Login'
 import NavBar from './components/NavBar/NavBar';
 import Dashboard from './pages/Dashboard';
 import PrivateRoute from "./components/PrivateRoute";
-import VolunteerManagement from './pages/VolunteerManagement'
-import Profile from './pages/Profile'
+import VolunteerManagement from './pages/VolunteerManagement';
+import Profile from './pages/Profile';
+import SchoolPersonnelManagement from './pages/SchoolPersonnelManagement';
 import { ThemeProvider } from '@material-ui/core/styles';
 
 // check for token to keep user logged in
@@ -60,7 +61,8 @@ class App extends Component {
                 <Route exact path='/' component={Login}/>
                 <Route path='/login' component={Login}/>
                 <PrivateRoute path="/dashboard" component={Dashboard}/>
-                <PrivateRoute path="/volunteermanagement" component={VolunteerManagement} />
+                <PrivateRoute path="/volunteer-management" component={VolunteerManagement}/>
+                <PrivateRoute path="/school-personnel-management" component={SchoolPersonnelManagement}/>
                 <PrivateRoute path="/profile" component={Profile}/>
                 
               </Switch>

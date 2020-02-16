@@ -59,9 +59,9 @@ class VolunteerTable extends Component {
                         onClick: this.toggleAddVolunteerDialog
                         },
                         {
-                            icon: 'edit',
-                            tooltip: 'Edit Volunteer',
-                            onClick: (event, rowData) => {this.setState({selectedVolunteer: rowData}); this.toggleEditVolunteerDialog()}
+                        icon: 'edit',
+                        tooltip: 'Edit Volunteer',
+                        onClick: (event, rowData) => {this.setState({selectedVolunteer: rowData}); this.toggleEditVolunteerDialog()}
                         }
                     ]}
                     options={{
@@ -101,7 +101,7 @@ VolunteerTable.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    volunteers: state.data.volunteers,
+    volunteers: state.volunteers.volunteers,
     errors: state.errors
 });
 
