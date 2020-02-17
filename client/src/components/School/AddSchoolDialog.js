@@ -44,8 +44,8 @@ class AddSchoolDialog extends Component {
             level: '',
             phoneNumber: '',
             address: '',
-            city: false,
-            state: true,
+            city: '',
+            state: '',
             zipCode: '',
             isActive: true,
             server: {}
