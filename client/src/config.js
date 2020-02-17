@@ -14,15 +14,17 @@ const config = {
 		volunteers: {
 			signup: '/account/volunteer/signup',
 			fetch: '/volunteers',
-			register: '/volunteers/register',
 			update: '/volunteers/update',
 		},
 		schools: {
 			create: '/school/create',
 			fetch: '/school',
 			update: '/school/update',
+		schoolPersonnels: {
+			signup: '/account/school-personnel/signup',
+			fetch: '/school-personnels',
+			update: '/school-personnels/update',
 		}
-		
 	},
 };
 

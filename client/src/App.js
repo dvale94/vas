@@ -9,10 +9,15 @@ import { setCurrentUser, logoutUser } from "./actions/authActions";
 import Login from './pages/Login'
 import NavBar from './components/NavBar/NavBar';
 import Dashboard from './pages/Dashboard';
-import PrivateRoute from "./components/PrivateRoute";
 import VolunteerManagement from './pages/VolunteerManagement'
 import Profile from './pages/Profile'
 import SchoolManagement from './pages/SchoolManagement';
+import PrivateRoute from "./components/Routes/PrivateRoute";
+import AdminRoute from './components/Routes/AdminRoute'
+import VolunteerManagement from './pages/VolunteerManagement';
+import Profile from './pages/Profile';
+import SchoolPersonnelManagement from './pages/SchoolPersonnelManagement';
+import { ThemeProvider } from '@material-ui/core/styles';
 
 // check for token to keep user logged in
 if (localStorage.jwt) {
@@ -56,8 +61,9 @@ class App extends Component {
                 <Route exact path='/' component={Login}/>
                 <Route path='/login' component={Login}/>
                 <PrivateRoute path="/dashboard" component={Dashboard}/>
+                <AdminRoute path="/volunteer-management" component={VolunteerManagement}/>
+                <AdminRoute path="/school-personnel-management" component={SchoolPersonnelManagement}/>
                 <PrivateRoute path="/profile" component={Profile}/>
-                <PrivateRoute path="/volunteermanagement" component={VolunteerManagement} />
                 <PrivateRoute path="/schoolmanagement" component={SchoolManagement} />
                 
               </Switch>
