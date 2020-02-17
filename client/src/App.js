@@ -9,7 +9,8 @@ import { setCurrentUser, logoutUser } from "./actions/authActions";
 import Login from './pages/Login'
 import NavBar from './components/NavBar/NavBar';
 import Dashboard from './pages/Dashboard';
-import PrivateRoute from "./components/PrivateRoute";
+import PrivateRoute from "./components/Routes/PrivateRoute";
+import AdminRoute from './components/Routes/AdminRoute'
 import VolunteerManagement from './pages/VolunteerManagement';
 import Profile from './pages/Profile';
 import SchoolPersonnelManagement from './pages/SchoolPersonnelManagement';
@@ -61,8 +62,8 @@ class App extends Component {
                 <Route exact path='/' component={Login}/>
                 <Route path='/login' component={Login}/>
                 <PrivateRoute path="/dashboard" component={Dashboard}/>
-                <PrivateRoute path="/volunteer-management" component={VolunteerManagement}/>
-                <PrivateRoute path="/school-personnel-management" component={SchoolPersonnelManagement}/>
+                <AdminRoute path="/volunteer-management" component={VolunteerManagement}/>
+                <AdminRoute path="/school-personnel-management" component={SchoolPersonnelManagement}/>
                 <PrivateRoute path="/profile" component={Profile}/>
                 
               </Switch>
