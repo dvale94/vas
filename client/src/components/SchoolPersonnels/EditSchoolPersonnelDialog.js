@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import isEmpty from 'is-empty';
 import Button from '@material-ui/core/Button';
+import { createMuiTheme } from '@material-ui/core/styles';
+import { blueGrey, blue } from '@material-ui/core/colors';
+import { ThemeProvider } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -11,7 +15,25 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
 import { editSchoolPersonnel } from "../../actions/schoolPersonnelActions";
-import { useTheme } from '@material-ui/core/styles';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+
+const theme = createMuiTheme({
+    palette: {
+      primary: blue,
+    }
+  });
+
+const useStyles = {
+    bottomButtons: {
+        backgroundColor: blueGrey[700],
+        color: "white",
+        fontWeight: "bold",
+        '&:hover': {
+            backgroundColor: blue[500],
+        }
+    },
+};
 
 class EditSchoolPersonnelDialog extends Component {
     constructor(props) {
@@ -64,7 +86,7 @@ class EditSchoolPersonnelDialog extends Component {
         const {schoolPersonnel, open, close} = this.props
 
         return (
-            
+            <ThemeProvider theme={theme}>
             <Dialog
             open={open}
             >
@@ -144,14 +166,26 @@ class EditSchoolPersonnelDialog extends Component {
                         type="text"
                         fullWidth
                     />
+                    Is Active: 
+                    <Select
+                    style={{marginBottom : "15px"}}
+                    name='isActive'
+                    margin="dense"
+                    defaultValue={schoolPersonnel.isActive}
+                    onChange={this.handleInput}
+                    fullWidth
+                    >
+                        <MenuItem value={true}>Yes</MenuItem>
+                        <MenuItem value={false}>No</MenuItem>
+                    </Select>
                     <br></br>   
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={this.editSchoolPersonnel}  variant="contained" color="primary">Submit</Button>
-                    <Button onClick={close} variant="contained" color="primary">Cancel</Button>
+                    <Button className={this.props.classes.bottomButtons} onClick={this.editSchoolPersonnel}  variant="contained" color="primary">Update</Button>
+                    <Button className={this.props.classes.bottomButtons} onClick={close} variant="contained" color="primary">Cancel</Button>
                 </DialogActions>
             </Dialog>
-
+            </ThemeProvider>
         );
     }
 }
@@ -168,4 +202,4 @@ const mapStateToProps = state => ({
 export default connect (
     mapStateToProps,
     { editSchoolPersonnel }  
-)(withRouter(EditSchoolPersonnelDialog));
+)(withRouter(withStyles(useStyles)(EditSchoolPersonnelDialog)));

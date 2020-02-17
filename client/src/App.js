@@ -15,7 +15,6 @@ import SchoolManagement from './pages/SchoolManagement';
 import PrivateRoute from "./components/Routes/PrivateRoute";
 import AdminRoute from './components/Routes/AdminRoute'
 import SchoolPersonnelManagement from './pages/SchoolPersonnelManagement';
-import { ThemeProvider } from '@material-ui/core/styles';
 
 // check for token to keep user logged in
 if (localStorage.jwt) {
@@ -62,7 +61,7 @@ class App extends Component {
                 <AdminRoute path="/volunteer-management" component={VolunteerManagement}/>
                 <AdminRoute path="/school-personnel-management" component={SchoolPersonnelManagement}/>
                 <PrivateRoute path="/profile" component={Profile}/>
-                <PrivateRoute path="/schoolmanagement" component={SchoolManagement} />
+                <AdminRoute path="/schoolmanagement" component={SchoolManagement} />
                 
               </Switch>
             </Fragment>

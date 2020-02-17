@@ -197,7 +197,7 @@ class EditSchoolDialog extends Component {
                     <br></br>   
                 </DialogContent>
                 <DialogActions>
-                    <Button className={this.props.classes.bottomButtons} onClick={this.editSchool}  variant="contained" color="primary">Submit</Button>
+                    <Button className={this.props.classes.bottomButtons} onClick={this.editSchool}  variant="contained" color="primary">Update</Button>
                     <Button className={this.props.classes.bottomButtons} onClick={close} variant="contained" color="primary">Cancel</Button>
                 </DialogActions>
             </Dialog>

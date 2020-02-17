@@ -339,6 +339,7 @@ function schoolPersonnelSignUp (req, res) {
         newSchPersonnel.phoneNumber = phoneNumber;
         newSchPersonnel.schoolID = schoolID;
         newSchPersonnel.title = title;
+        newSchPersonnel.isActive = 'true'
         
         newSchPersonnel.save((err, schPersonnel) => {
             if (err) {

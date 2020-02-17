@@ -170,21 +170,10 @@ class AddSchoolDialog extends Component {
                         type="text"
                         fullWidth 
                     />                    
-                    Is Active: 
-                    <Select
-                    style={{marginBottom : "15px"}}
-                    name='schoolStatus'
-                    margin="dense"
-                    onChange={this.handleInput}
-                    fullWidth
-                    >
-                        <MenuItem value={true}>Yes</MenuItem>
-                        <MenuItem value={false}>No</MenuItem>
-                    </Select>
                     <br></br>   
                 </DialogContent>
                 <DialogActions>
-                    <Button className={this.props.classes.bottomButtons} onClick={this.addSchool}  variant="contained" color="primary">Submit</Button>
+                    <Button className={this.props.classes.bottomButtons} onClick={this.addSchool}  variant="contained" color="primary">Add</Button>
                     <Button className={this.props.classes.bottomButtons} onClick={close} variant="contained" color="primary">Cancel</Button>
                 </DialogActions>
             </Dialog>

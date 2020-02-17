@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import { createMuiTheme } from '@material-ui/core/styles';
+import { blueGrey, blue } from '@material-ui/core/colors';
+import { ThemeProvider } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -10,6 +14,23 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
 import { addSchoolPersonnel } from "../../actions/schoolPersonnelActions";
+
+const theme = createMuiTheme({
+    palette: {
+      primary: blue,
+    }
+  });
+
+const useStyles = {
+    bottomButtons: {
+        backgroundColor: blueGrey[700],
+        color: "white",
+        fontWeight: "bold",
+        '&:hover': {
+            backgroundColor: blue[500],
+        }
+    },
+};
 
 class AddSchoolPersonnelDialog extends Component {
     constructor(props) {
@@ -59,7 +80,7 @@ class AddSchoolPersonnelDialog extends Component {
         const {open, close} = this.props
 
         return (
-            
+            <ThemeProvider theme={theme}>
             <Dialog
             open={open}
             >
@@ -114,7 +135,7 @@ class AddSchoolPersonnelDialog extends Component {
                         type="text"
                         fullWidth
                     />
-                    title:
+                    Title:
                     <TextField 
                         style={{marginBottom : "15px"}}
                         margin="dense"
@@ -135,11 +156,11 @@ class AddSchoolPersonnelDialog extends Component {
                     <br></br>   
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={this.addSchoolPersonnel}  variant="contained" color="primary">Submit</Button>
-                    <Button onClick={close} variant="contained" color="primary">Cancel</Button>
+                    <Button className={this.props.classes.bottomButtons} onClick={this.addSchoolPersonnel}  variant="contained" color="primary">Add</Button>
+                    <Button className={this.props.classes.bottomButtons} onClick={close} variant="contained" color="primary">Cancel</Button>
                 </DialogActions>
             </Dialog>
-
+            </ThemeProvider>
         );
     }
 }
@@ -156,4 +177,4 @@ const mapStateToProps = state => ({
 export default connect (
     mapStateToProps,
     { addSchoolPersonnel }  
-)(withRouter(AddSchoolPersonnelDialog));
+)(withRouter(withStyles(useStyles)(AddSchoolPersonnelDialog)));
