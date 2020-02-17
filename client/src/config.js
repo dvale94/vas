@@ -20,12 +20,13 @@ const config = {
 			create: '/school/create',
 			fetch: '/school',
 			update: '/school/update',
+		},	
 		schoolPersonnels: {
 			signup: '/account/school-personnel/signup',
 			fetch: '/school-personnels',
 			update: '/school-personnels/update',
 		}
-	},
+	}
 };
 
 export default config;

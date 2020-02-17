@@ -6,10 +6,13 @@ class Dashboard extends Component{
     
     //TEMPORARY REMOVE LATER
     redirect_to_VolunteerManagement = () =>{
-        this.props.history.push("/volunteermanagement"); 
+        this.props.history.push("/volunteer-management"); 
     }
     redirect_to_SchoolManagement = () =>{
         this.props.history.push("/schoolmanagement"); 
+    }
+    redirect_to_SchoolPersonnelManagement = () =>{
+        this.props.history.push("/school-personnel-management"); 
     }
 
 
@@ -42,6 +45,17 @@ class Dashboard extends Component{
                     //
                 >
                     School Management
+                </Button>
+                <p>       </p>
+                <Button
+                    type="submit"
+                    color=""
+                    size="small"
+                    variant="contained"
+                    onClick={this.redirect_to_SchoolPersonnelManagement}
+                    //
+                >
+                    School Personnel Management
                 </Button>
 
 
