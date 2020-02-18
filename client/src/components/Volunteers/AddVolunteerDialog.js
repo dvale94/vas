@@ -15,8 +15,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
+import { clearErrors } from '../../actions/errorActions'
 import { addVolunteer } from "../../actions/volunteerActions";
-
 
 const theme = createMuiTheme({
     palette: {
@@ -49,18 +49,25 @@ class AddVolunteerDialog extends Component {
             carAvailable: false,
             volunteerStatus: true,
             MDCPS_ID: '',
-            pantherID: '',
-            server: {}
+            pantherID: ''
         }
 
         this.addVolunteer = this.addVolunteer.bind(this);
         this.handleInput = this.handleInput.bind(this);
     }    
 
-    addVolunteer() {
-        this.props.addVolunteer(this.state);
+    // check if a new volunteer was added successfully to close this pop up
+    componentDidUpdate(prevProps) {
+        if(prevProps.volunteers.length != this.props.volunteers.length) {
+            this.props.close();
+        }
+    }
 
-        this.props.close()
+    addVolunteer() {
+        this.props.clearErrors();
+
+        this.props.addVolunteer(this.state)
+
     }
 
     handleInput = (e) =>{
@@ -70,8 +77,6 @@ class AddVolunteerDialog extends Component {
         this.setState({
           [name]: value 
         })
-
-        console.log(this.state)
     }
 
     inputError = (error) => {
@@ -106,6 +111,7 @@ class AddVolunteerDialog extends Component {
                         type="text"
                         fullWidth
                     />
+                    {this.props.errors.hasOwnProperty("firstName") && this.inputError(this.props.errors.firstName)}
                     Last Name:
                     <TextField 
                         style={{marginBottom : "15px"}}
@@ -115,6 +121,7 @@ class AddVolunteerDialog extends Component {
                         type="text"
                         fullWidth
                     />
+                    {this.props.errors.hasOwnProperty("lastName") && this.inputError(this.props.errors.lastName)}
                     Email:
                     <TextField 
                         style={{marginBottom : "15px"}}
@@ -124,6 +131,7 @@ class AddVolunteerDialog extends Component {
                         type="text"
                         fullWidth
                     />
+                    {this.props.errors.hasOwnProperty("email") && this.inputError(this.props.errors.email)}
                     Password:
                     <TextField 
                         style={{marginBottom : "15px"}}
@@ -133,6 +141,7 @@ class AddVolunteerDialog extends Component {
                         type="password"
                         fullWidth
                     />
+                    {this.props.errors.hasOwnProperty("password") && this.inputError(this.props.errors.password)}
                     Phone Number:
                     <TextField 
                         style={{marginBottom : "15px"}}
@@ -142,6 +151,7 @@ class AddVolunteerDialog extends Component {
                         type="text"
                         fullWidth
                     />
+                    {this.props.errors.hasOwnProperty("phoneNumber") && this.inputError(this.props.errors.phoneNumber)}
                     Major:
                     <TextField 
                         style={{marginBottom : "15px"}}
@@ -151,6 +161,7 @@ class AddVolunteerDialog extends Component {
                         type="text"
                         fullWidth
                     />  
+                    {this.props.errors.hasOwnProperty("major") && this.inputError(this.props.errors.major)}
                     Car Available:
                     <Select
                     style={{marginBottom : "15px"}}
@@ -162,6 +173,7 @@ class AddVolunteerDialog extends Component {
                         <MenuItem value={true}>Yes</MenuItem>
                         <MenuItem value={false}>No</MenuItem>
                     </Select>
+                    {this.props.errors.hasOwnProperty("carAvailable") && this.inputError(this.props.errors.carAvailable)}
                     Panther ID:
                     <TextField 
                         style={{marginBottom : "15px"}}
@@ -171,7 +183,7 @@ class AddVolunteerDialog extends Component {
                         type="text"
                         fullWidth 
                     />
-                    
+                    {this.props.errors.hasOwnProperty("pantherID") && this.inputError(this.props.errors.pantherID)}
                     Volunteer Status: 
                     <Select
                     style={{marginBottom : "15px"}}
@@ -206,14 +218,17 @@ class AddVolunteerDialog extends Component {
 
 AddVolunteerDialog.propTypes = {
     addVolunteer: PropTypes.func.isRequired,
-    errors: PropTypes.object.isRequired
+    clearErrors: PropTypes.func.isRequired,
+    errors: PropTypes.object.isRequired,
+    volunteers: PropTypes.array.isRequired
   };
 
 const mapStateToProps = state => ({
-    errors: state.errors
+    errors: state.errors,
+    volunteers: state.volunteers.volunteers
   });
 
 export default connect (
     mapStateToProps,
-    { addVolunteer }  
+    { addVolunteer, clearErrors }  
 )(withRouter(withStyles(useStyles)(AddVolunteerDialog)));

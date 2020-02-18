@@ -10,6 +10,7 @@ const schPersonnel = require('../models/Users/school_User')
 
 // input validation
 import validateLoginInput from '../validation/login';
+import validateCreateVolunteerInput from '../validation/volunteers/createVolunteer'
 
 const router = new express.Router();
 
@@ -139,60 +140,13 @@ function volunteerSignUp (req, res) {
             email
         } = body;
 
-        if (!firstName) {
-            return res.send({
-                success: false,
-                message: 'Error: First name cannot be blank.'
-            });
-        }
-        if (!lastName) {
-        return res.send({
-            success: false,
-            message: 'Error: Last name cannot be blank.'
-        });
-        }
-        if (!email) {
-            return res.send({
-                success: false,
-                message: 'Error: Email cannot be blank.'
-            });
-        }
-        if (!password) {
-            return res.send({
-                success: false,
-                message: 'Error: Password cannot be blank'
-            });
-        }
-        if (!phoneNumber) {
-            return res.send({
-                success: false,
-                message: 'Error: Phone number cannot be blank'
-            });
-        }
-        if (!pantherID) {
-            return res.send({
-                success: false,
-                message: 'Error: Panther ID cannot be blank.'
-            });
-        }
-        if (!major) {
-        return res.send({
-            success: false,
-            message: 'Error: Student major cannot be blank.'
-        });
-        }
-        if (!carAvailable) {
-            return res.send({
-                success: false,
-                message: 'Error: Car available cannot be blank.'
-            });
-        }
-        if (!volunteerStatus) {
-            return res.send({
-                success: false,
-                message: 'Error: Password cannot be blank'
-            });
-        }
+    // Form validation
+	const { errors, isValid } = validateCreateVolunteerInput(req.body);
+
+	// Check validation
+	if (!isValid) {
+		return res.status(400).json({success: false, errors});
+	}
 
     email = email.toLowerCase();
 
@@ -205,12 +159,12 @@ function volunteerSignUp (req, res) {
         if (err) {
             return res.send({
                 success: false,
-                message: 'Error: Server error'
+                errors: {server: 'Server errors'}
             });
         } else if (previousUsers.length > 0) {
             return res.send({
                 success: false,
-                message: 'Error: Account already exists.'
+                errors: {email: 'Account already exists'}
             });
         }
 
@@ -232,7 +186,7 @@ function volunteerSignUp (req, res) {
             if (err) {
                 return res.send({
                     success: false,
-                    message: err
+                    errors: err
                 });
             }
             return res.send({
