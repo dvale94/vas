@@ -2,7 +2,7 @@ import request from 'request';
 import setAuthToken from '../utils/setAuthToken';
 import jwt_decode from 'jwt-decode';
 import serverConf from '../config'
-import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING } from './types';
+import { GET_ERRORS, SET_USER, USER_LOADING, SET_AUTH } from './types';
 
 // login - get user token
 export const loginUser = form => dispatch => {
@@ -34,6 +34,8 @@ export const loginUser = form => dispatch => {
             const decoded = jwt_decode(token);
 
             // set current user
+            dispatch(setAuth(decoded.role));
+
             dispatch(setCurrentUser(decoded))
         }    
     });
@@ -42,7 +44,15 @@ export const loginUser = form => dispatch => {
 // set logged in user
 export const setCurrentUser = decoded => {
     return {
-        type: SET_CURRENT_USER,
+        type: SET_USER,
+        payload: decoded
+    };
+};
+
+// set auth
+export const setAuth = decoded => {
+    return {
+        type: SET_AUTH,
         payload: decoded
     };
 };
@@ -64,7 +74,7 @@ export const logoutUser = () => dispatch => {
     setAuthToken(false);
 
     // set current user to empty object which will set isAuthenticated to false
-    dispatch(setCurrentUser({}));
+    dispatch(setAuth({}));
 
     //this.props.history.push("/login"); 
 };

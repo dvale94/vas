@@ -1,7 +1,6 @@
 import request from 'request';
 import serverConf from '../config'
-import { GET_ERRORS, SET_ADMIN } from './types';
-import { loginUser } from './authActions'
+import { GET_ERRORS, SET_USER } from './types';
 
 
 export const updateAdmin = (id, form) => dispatch => {
@@ -45,14 +44,14 @@ export const  getAdmin = (id) => dispatch => {
         }
         else {
             // set current volunteers
-            dispatch(setCurrentAdmin(res))
+            dispatch(setCurrentUser(res))
         }    
     });
 };
 
-export const setCurrentAdmin = admin => {
+export const setCurrentUser = user => {
     return {
-        type: SET_ADMIN,
-        payload: admin
+        type: SET_USER,
+        payload: user
     };
 };

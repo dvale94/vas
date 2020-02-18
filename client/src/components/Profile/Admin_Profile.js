@@ -15,7 +15,7 @@ import Grid from '@material-ui/core/Grid';
 import { createMuiTheme } from '@material-ui/core/styles';
 import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
-import { getAdmin, updateAdmin } from "../../actions/adminActions";
+import { updateAdmin } from "../../actions/userActions";
 import Alert from '@material-ui/lab/Alert';
 
 
@@ -109,21 +109,20 @@ class Admin_Profile extends Component {
     }
 
     componentDidMount() {
-        this.getAdmin();
         console.log(this.props.admin)
         //console.log(this.props.auth)
         
         this.setState({
-            firstName: this.props.admin.firstName,
-            lastName: this.props.admin.lastName,
-            email: this.props.admin.email,
-            phoneNumber: this.props.admin.phoneNumber,
+            firstName: this.props.user.firstName,
+            lastName: this.props.user.lastName,
+            email: this.props.user.email,
+            phoneNumber: this.props.user.phoneNumber,
         });
-        console.log(this.props.admin)
+        console.log(this.props.user)
 
     }
 
-    //Supress depricated warning use UNSAFE_
+    /* //Supress depricated warning use UNSAFE_
     UNSAFE_componentWillReceiveProps(nextProps) {
         this.getAdmin();
         if (nextProps.res) {
@@ -132,7 +131,7 @@ class Admin_Profile extends Component {
             });
         }
         
-    }
+    } */
     
     getAdmin() {
         //e.preventDefault();
@@ -141,7 +140,7 @@ class Admin_Profile extends Component {
 
     updateAdmin() {
         const form = this.state
-        this.props.updateAdmin(this.props.auth.user.id, form);
+        this.props.updateAdmin(this.props.user.id, form);
         this.editable();
     }
 
@@ -163,9 +162,9 @@ class Admin_Profile extends Component {
     }
 
   render(){   
-    const { user, adminData } = this.props.auth;
+    const user  = this.props.user;
     //const { admin } = this.props.adminData.admin;
-    var initials = (user.firstName.substring(0, 1) + user.lastName.substring(0, 1)).toUpperCase()
+    //var initials = (user.firstName.substring(0, 1) + user.lastName.substring(0, 1)).toUpperCase()
     //var initials = (adminData.admin.firstName.substring(0, 1) + adminData.admin.lastName.substring(0, 1)).toUpperCase()
     
     
@@ -190,7 +189,7 @@ class Admin_Profile extends Component {
                     alignItems="center"
                     justify="center"
                     >
-                        <Avatar className={this.props.classes.blue} >{initials}</Avatar>
+                        {/* <Avatar className={this.props.classes.blue} >{initials}</Avatar> */}
                     </Grid>
                     <div className={this.props.classes.paper}>
                         <Typography className={this.props.classes.title} color="textPrimary" variant="h4" gutterBottom>
@@ -298,18 +297,18 @@ class Admin_Profile extends Component {
 Admin_Profile.propTypes = {
     updateAdmin: PropTypes.func.isRequired,
     getAdmin: PropTypes.func.isRequired,
-    admin: PropTypes.object.isRequired,
+    user: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired
 };
 
 // allows us to get our state from Redux and map it to props
 const mapStateToProps = state => ({
   auth: state.auth,
-  admin: state.adminData.admin,
+  user: state.userData.user,
   errors: state.errors
 });
 
 export default connect (
   mapStateToProps,
-  { getAdmin, updateAdmin }
+  { updateAdmin }
 )(withRouter(withStyles(useStyles)(Admin_Profile)));

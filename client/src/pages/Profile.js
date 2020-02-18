@@ -11,12 +11,12 @@ import SchoolPersonnel_Profile from '../components/Profile/SchoolPersonnel_Profi
 
 class Profile extends Component{
     render(){
-        const { user } = this.props.auth;
+        const { auth } = this.props;
         return (
             <div>
-                { user.role == "Admin" && <Admin_Profile/>}
-                { user.role == "Volunteer" && <Volunteer_Profile/>}
-                { user.role == "School Personnel" && <SchoolPersonnel_Profile/>}
+                { auth.role == "Admin" && <Admin_Profile/>}
+                { auth.role == "Volunteer" && <Volunteer_Profile/>}
+                { auth.role == "School Personnel" && <SchoolPersonnel_Profile/>}
             </div>
 
         )
