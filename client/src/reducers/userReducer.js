@@ -1,19 +1,19 @@
-import { SET_ADMIN, ADMIN_LOADING } from '../actions/types';
+import { SET_USER, USER_LOADING } from '../actions/types';
 import isEmpty from 'is-empty';
 
   const initialState = {
-    admin: {},
+    user: {},
     loading: false
   };
 
   export default function(state = initialState, action) {
     switch (action.type) {
-        case SET_ADMIN:
+        case SET_USER:
         return {
           ...state,
-          admin: action.payload
+          user: action.payload
         };
-      case ADMIN_LOADING:
+      case USER_LOADING:
         return {
           ...state,
           loading: true

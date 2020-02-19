@@ -10,13 +10,10 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
-import { clearErrors } from '../../actions/errorActions'
-import { addVolunteer } from "../../actions/volunteerActions";
+import { addSchoolPersonnel } from "../../actions/schoolPersonnelActions";
 
 const theme = createMuiTheme({
     palette: {
@@ -35,7 +32,7 @@ const useStyles = {
     },
 };
 
-class AddVolunteerDialog extends Component {
+class AddSchoolPersonnelDialog extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -44,30 +41,19 @@ class AddVolunteerDialog extends Component {
             email: '',
             password: '',
             phoneNumber: '',
-            major: '',
-            isActive: true,
-            carAvailable: false,
-            volunteerStatus: true,
-            MDCPS_ID: '',
-            pantherID: ''
+            title: '',
+            schoolID: '',
+            server: {}
         }
 
-        this.addVolunteer = this.addVolunteer.bind(this);
+        this.addSchoolPersonnel = this.addSchoolPersonnel.bind(this);
         this.handleInput = this.handleInput.bind(this);
     }    
 
-    // check if a new volunteer was added successfully to close this pop up
-    componentDidUpdate(prevProps) {
-        if(prevProps.volunteers.length != this.props.volunteers.length) {
-            this.props.close();
-        }
-    }
+    addSchoolPersonnel() {
+        this.props.addSchoolPersonnel(this.state);
 
-    addVolunteer() {
-        this.props.clearErrors();
-
-        this.props.addVolunteer(this.state)
-
+        this.props.close()
     }
 
     handleInput = (e) =>{
@@ -77,6 +63,8 @@ class AddVolunteerDialog extends Component {
         this.setState({
           [name]: value 
         })
+
+        console.log(this.state)
     }
 
     inputError = (error) => {
@@ -96,10 +84,10 @@ class AddVolunteerDialog extends Component {
             <Dialog
             open={open}
             >
-                <DialogTitle >Add Volunteer</DialogTitle>
+                <DialogTitle >Add School Personnel</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                    To add a volunteer, fill out the following form and click submit.
+                    To add a School Personnel, fill out the following form and click submit.
                     </DialogContentText>
                     <br></br>
                     First Name: 
@@ -111,7 +99,6 @@ class AddVolunteerDialog extends Component {
                         type="text"
                         fullWidth
                     />
-                    {this.props.errors.hasOwnProperty("firstName") && this.inputError(this.props.errors.firstName)}
                     Last Name:
                     <TextField 
                         style={{marginBottom : "15px"}}
@@ -121,7 +108,6 @@ class AddVolunteerDialog extends Component {
                         type="text"
                         fullWidth
                     />
-                    {this.props.errors.hasOwnProperty("lastName") && this.inputError(this.props.errors.lastName)}
                     Email:
                     <TextField 
                         style={{marginBottom : "15px"}}
@@ -131,7 +117,6 @@ class AddVolunteerDialog extends Component {
                         type="text"
                         fullWidth
                     />
-                    {this.props.errors.hasOwnProperty("email") && this.inputError(this.props.errors.email)}
                     Password:
                     <TextField 
                         style={{marginBottom : "15px"}}
@@ -141,7 +126,6 @@ class AddVolunteerDialog extends Component {
                         type="password"
                         fullWidth
                     />
-                    {this.props.errors.hasOwnProperty("password") && this.inputError(this.props.errors.password)}
                     Phone Number:
                     <TextField 
                         style={{marginBottom : "15px"}}
@@ -151,63 +135,28 @@ class AddVolunteerDialog extends Component {
                         type="text"
                         fullWidth
                     />
-                    {this.props.errors.hasOwnProperty("phoneNumber") && this.inputError(this.props.errors.phoneNumber)}
-                    Major:
+                    Title:
                     <TextField 
                         style={{marginBottom : "15px"}}
                         margin="dense"
-                        name="major"
+                        name="title"
                         onChange={this.handleInput}
                         type="text"
                         fullWidth
-                    />  
-                    {this.props.errors.hasOwnProperty("major") && this.inputError(this.props.errors.major)}
-                    Car Available:
-                    <Select
-                    style={{marginBottom : "15px"}}
-                    name='carAvailable'
-                    margin="dense"
-                    onChange={this.handleInput}
-                    fullWidth
-                    >
-                        <MenuItem value={true}>Yes</MenuItem>
-                        <MenuItem value={false}>No</MenuItem>
-                    </Select>
-                    {this.props.errors.hasOwnProperty("carAvailable") && this.inputError(this.props.errors.carAvailable)}
-                    Panther ID:
-                    <TextField 
-                        style={{marginBottom : "15px"}}
-                        margin="dense"
-                        name="pantherID"
-                        onChange={this.handleInput}
-                        type="text"
-                        fullWidth 
                     />
-                    {this.props.errors.hasOwnProperty("pantherID") && this.inputError(this.props.errors.pantherID)}
-                    Volunteer Status: 
-                    <Select
-                    style={{marginBottom : "15px"}}
-                    name='volunteerStatus'
-                    margin="dense"
-                    onChange={this.handleInput}
-                    fullWidth
-                    >
-                        <MenuItem value={true}>Approved</MenuItem>
-                        <MenuItem value={false}>Not yet Approved</MenuItem>
-                    </Select>
-                    MDCPS ID:
+                    School ID: 
                     <TextField 
                         style={{marginBottom : "15px"}}
                         margin="dense"
-                        name="MDCPS_ID"
+                        name="schoolID"
                         onChange={this.handleInput}
                         type="text"
-                        fullWidth 
+                        fullWidth
                     />
                     <br></br>   
                 </DialogContent>
                 <DialogActions>
-                    <Button className={this.props.classes.bottomButtons} onClick={this.addVolunteer}  variant="contained" color="primary">Add</Button>
+                    <Button className={this.props.classes.bottomButtons} onClick={this.addSchoolPersonnel}  variant="contained" color="primary">Add</Button>
                     <Button className={this.props.classes.bottomButtons} onClick={close} variant="contained" color="primary">Cancel</Button>
                 </DialogActions>
             </Dialog>
@@ -216,19 +165,16 @@ class AddVolunteerDialog extends Component {
     }
 }
 
-AddVolunteerDialog.propTypes = {
-    addVolunteer: PropTypes.func.isRequired,
-    clearErrors: PropTypes.func.isRequired,
-    errors: PropTypes.object.isRequired,
-    volunteers: PropTypes.array.isRequired
+AddSchoolPersonnelDialog.propTypes = {
+    addSchoolPersonnel: PropTypes.func.isRequired,
+    errors: PropTypes.object.isRequired
   };
 
 const mapStateToProps = state => ({
-    errors: state.errors,
-    volunteers: state.volunteers.volunteers
+    errors: state.errors
   });
 
 export default connect (
     mapStateToProps,
-    { addVolunteer, clearErrors }  
-)(withRouter(withStyles(useStyles)(AddVolunteerDialog)));
+    { addSchoolPersonnel }  
+)(withRouter(withStyles(useStyles)(AddSchoolPersonnelDialog)));

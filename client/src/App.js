@@ -5,14 +5,17 @@ import store from "./store";
 import './App.css';
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
-import { setCurrentUser, logoutUser } from "./actions/authActions";
+import { logoutUser, setAuth } from "./actions/authActions"
+import { setCurrentUser, getAdmin, getVolunteer, getSchoolPersonnel } from "./actions/userActions"
 import Login from './pages/Login'
 import NavBar from './components/NavBar/NavBar';
 import Dashboard from './pages/Dashboard';
-import PrivateRoute from "./components/PrivateRoute";
 import VolunteerManagement from './pages/VolunteerManagement'
 import Profile from './pages/Profile'
 import SchoolManagement from './pages/SchoolManagement';
+import PrivateRoute from "./components/Routes/PrivateRoute";
+import AdminRoute from './components/Routes/AdminRoute'
+import SchoolPersonnelManagement from './pages/SchoolPersonnelManagement';
 
 // check for token to keep user logged in
 if (localStorage.jwt) {
@@ -24,8 +27,18 @@ if (localStorage.jwt) {
     // decode token and get user info and expiration
     const decoded = jwt_decode(token);
 
-    // set user and isAuthenticated
-    store.dispatch(setCurrentUser(decoded));
+    // set user
+    store.dispatch(setAuth(decoded));
+    if (decoded.role == "Admin") {
+      store.dispatch(getAdmin(decoded.id))
+    }
+    if (decoded.role == "Volunteer") {
+      store.dispatch(getVolunteer(decoded.id))
+    }
+    if (decoded.role == "School Personnel") {
+      store.dispatch(getSchoolPersonnel(decoded.id))
+    }
+    //store.dispatch(setCurrentUser(decoded));
 
     // check for expired token
     // to get in milliseconds divide by 1000
@@ -56,9 +69,10 @@ class App extends Component {
                 <Route exact path='/' component={Login}/>
                 <Route path='/login' component={Login}/>
                 <PrivateRoute path="/dashboard" component={Dashboard}/>
+                <AdminRoute path="/volunteer-management" component={VolunteerManagement}/>
+                <AdminRoute path="/school-personnel-management" component={SchoolPersonnelManagement}/>
                 <PrivateRoute path="/profile" component={Profile}/>
-                <PrivateRoute path="/volunteermanagement" component={VolunteerManagement} />
-                <PrivateRoute path="/schoolmanagement" component={SchoolManagement} />
+                <AdminRoute path="/schoolmanagement" component={SchoolManagement} />
                 
               </Switch>
             </Fragment>

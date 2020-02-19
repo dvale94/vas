@@ -33,13 +33,10 @@ export const addVolunteer = form => dispatch => {
         
         const res = JSON.parse(body);
 
-        //REMOVE- only for debugging
-        console.log(res)
-
-        if (error) {
+        if (!res.success) {
             dispatch({
                 type: GET_ERRORS,
-                payload: res
+                payload: res.errors
               })
         }
         else {
@@ -54,7 +51,7 @@ export const editVolunteer = (id, form) => dispatch => {
 
     const endpoint = `${serverConf.uri}${serverConf.endpoints.volunteers.update}/${id}`;
 
-    request.post(endpoint, { form }, (error, response, body) => {
+    request.put(endpoint, { form }, (error, response, body) => {
         
         const res = JSON.parse(body);
 

@@ -1,25 +1,22 @@
-import { SET_AUTH, AUTH_LOADING} from '../actions/types';
-import isEmpty from 'is-empty';
+import { SET_SCHOOL_PERSONNELS, SCHOOL_PERSONNELS_LOADING} from '../actions/types';
 
   const initialState = {
-    isAuthenticated: false,
-    role: '',
+    schoolPersonnels: [],
     loading: false
   };
 
   export default function(state = initialState, action) {
     switch (action.type) {
-      case SET_AUTH:
+      case SET_SCHOOL_PERSONNELS:
         return {
           ...state,
-          isAuthenticated: !isEmpty(action.payload),
-          role: action.payload
+          schoolPersonnels: action.payload
         };
-      case AUTH_LOADING:
+      case SCHOOL_PERSONNELS_LOADING:
         return {
           ...state,
           loading: true
-        };
+        };  
       default:
         return state;
     }

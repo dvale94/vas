@@ -11,7 +11,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import { createMuiTheme } from '@material-ui/core/styles';
-
+import { ThemeProvider } from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
     palette: {
@@ -97,7 +97,7 @@ class SchoolPersonnel_Profile extends Component {
 
 
   render(){   
-    const { user } = this.props.auth;
+    const user = this.props.user;
     var initials = (user.firstName.substring(0, 1) + user.lastName.substring(0, 1)).toUpperCase()
     
     
@@ -222,13 +222,14 @@ class SchoolPersonnel_Profile extends Component {
 // define types
 SchoolPersonnel_Profile.propTypes = {
   classes: PropTypes.object.isRequired,
-  auth: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
 };
 
 // allows us to get our state from Redux and map it to props
 const mapStateToProps = state => ({
   auth: state.auth,
+  user: state.userData.user,
   errors: state.errors
 });
 

@@ -1,22 +1,22 @@
 import React, { Component } from 'react';
+import isEmpty from 'is-empty';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { blueGrey, blue } from '@material-ui/core/colors';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { withStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
-import { clearErrors } from '../../actions/errorActions'
-import { addVolunteer } from "../../actions/volunteerActions";
+import { editSchoolPersonnel } from "../../actions/schoolPersonnelActions";
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 
 const theme = createMuiTheme({
     palette: {
@@ -35,39 +35,32 @@ const useStyles = {
     },
 };
 
-class AddVolunteerDialog extends Component {
+class EditSchoolPersonnelDialog extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            firstName: '',
-            lastName: '',
-            email: '',
-            password: '',
-            phoneNumber: '',
-            major: '',
-            isActive: true,
-            carAvailable: false,
-            volunteerStatus: true,
-            MDCPS_ID: '',
-            pantherID: ''
+            server: {}
         }
 
-        this.addVolunteer = this.addVolunteer.bind(this);
+        this.editSchoolPersonnel = this.editSchoolPersonnel.bind(this);
         this.handleInput = this.handleInput.bind(this);
     }    
 
-    // check if a new volunteer was added successfully to close this pop up
-    componentDidUpdate(prevProps) {
-        if(prevProps.volunteers.length != this.props.volunteers.length) {
-            this.props.close();
-        }
-    }
+    editSchoolPersonnel() {
 
-    addVolunteer() {
-        this.props.clearErrors();
+        let form = this.state
+        delete form.server
 
-        this.props.addVolunteer(this.state)
+        // check if any of the fields are empty, and remove them so it dosen't get sent to the server update
+        for (let property in form) {
+            if (isEmpty(form[property])) {
+                delete form[property];
+            }
+        } 
 
+        this.props.editSchoolPersonnel(this.props.schoolPersonnel._id,form);
+
+        this.props.close()
     }
 
     handleInput = (e) =>{
@@ -77,6 +70,7 @@ class AddVolunteerDialog extends Component {
         this.setState({
           [name]: value 
         })
+
     }
 
     inputError = (error) => {
@@ -89,17 +83,17 @@ class AddVolunteerDialog extends Component {
 
     render() {
 
-        const {open, close} = this.props
+        const {schoolPersonnel, open, close} = this.props
 
         return (
             <ThemeProvider theme={theme}>
             <Dialog
             open={open}
             >
-                <DialogTitle >Add Volunteer</DialogTitle>
+                <DialogTitle >Edit School Personnel</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                    To add a volunteer, fill out the following form and click submit.
+                    To edit a School Personnel, make the changes and click submit.
                     </DialogContentText>
                     <br></br>
                     First Name: 
@@ -107,107 +101,87 @@ class AddVolunteerDialog extends Component {
                         style={{marginBottom : "15px"}}
                         margin="dense"
                         name="firstName"
+                        placeholder={schoolPersonnel.firstName}
                         onChange={this.handleInput}
                         type="text"
                         fullWidth
                     />
-                    {this.props.errors.hasOwnProperty("firstName") && this.inputError(this.props.errors.firstName)}
                     Last Name:
                     <TextField 
                         style={{marginBottom : "15px"}}
                         margin="dense"
                         name="lastName"
+                        placeholder={schoolPersonnel.lastName}
                         onChange={this.handleInput}
                         type="text"
                         fullWidth
                     />
-                    {this.props.errors.hasOwnProperty("lastName") && this.inputError(this.props.errors.lastName)}
                     Email:
                     <TextField 
                         style={{marginBottom : "15px"}}
                         margin="dense"
                         name="email"
+                        placeholder={schoolPersonnel.email}
                         onChange={this.handleInput}
                         type="text"
                         fullWidth
                     />
-                    {this.props.errors.hasOwnProperty("email") && this.inputError(this.props.errors.email)}
                     Password:
                     <TextField 
                         style={{marginBottom : "15px"}}
                         margin="dense"
                         name="password"
+                        placeholder='**********'
                         onChange={this.handleInput}
                         type="password"
-                        fullWidth
+                        fullWidth 
                     />
-                    {this.props.errors.hasOwnProperty("password") && this.inputError(this.props.errors.password)}
                     Phone Number:
                     <TextField 
                         style={{marginBottom : "15px"}}
                         margin="dense"
                         name="phoneNumber"
+                        placeholder={schoolPersonnel.phoneNumber}
                         onChange={this.handleInput}
                         type="text"
                         fullWidth
                     />
-                    {this.props.errors.hasOwnProperty("phoneNumber") && this.inputError(this.props.errors.phoneNumber)}
-                    Major:
+                    Title:
                     <TextField 
                         style={{marginBottom : "15px"}}
                         margin="dense"
-                        name="major"
+                        name="title"
+                        placeholder={schoolPersonnel.title}
                         onChange={this.handleInput}
                         type="text"
                         fullWidth
-                    />  
-                    {this.props.errors.hasOwnProperty("major") && this.inputError(this.props.errors.major)}
-                    Car Available:
+                    />
+                    School ID: 
+                    <TextField 
+                        style={{marginBottom : "15px"}}
+                        margin="dense"
+                        name="schoolID"
+                        placeholder={schoolPersonnel.schoolID}
+                        onChange={this.handleInput}
+                        type="text"
+                        fullWidth
+                    />
+                    Is Active: 
                     <Select
                     style={{marginBottom : "15px"}}
-                    name='carAvailable'
+                    name='isActive'
                     margin="dense"
+                    defaultValue={schoolPersonnel.isActive}
                     onChange={this.handleInput}
                     fullWidth
                     >
                         <MenuItem value={true}>Yes</MenuItem>
                         <MenuItem value={false}>No</MenuItem>
                     </Select>
-                    {this.props.errors.hasOwnProperty("carAvailable") && this.inputError(this.props.errors.carAvailable)}
-                    Panther ID:
-                    <TextField 
-                        style={{marginBottom : "15px"}}
-                        margin="dense"
-                        name="pantherID"
-                        onChange={this.handleInput}
-                        type="text"
-                        fullWidth 
-                    />
-                    {this.props.errors.hasOwnProperty("pantherID") && this.inputError(this.props.errors.pantherID)}
-                    Volunteer Status: 
-                    <Select
-                    style={{marginBottom : "15px"}}
-                    name='volunteerStatus'
-                    margin="dense"
-                    onChange={this.handleInput}
-                    fullWidth
-                    >
-                        <MenuItem value={true}>Approved</MenuItem>
-                        <MenuItem value={false}>Not yet Approved</MenuItem>
-                    </Select>
-                    MDCPS ID:
-                    <TextField 
-                        style={{marginBottom : "15px"}}
-                        margin="dense"
-                        name="MDCPS_ID"
-                        onChange={this.handleInput}
-                        type="text"
-                        fullWidth 
-                    />
                     <br></br>   
                 </DialogContent>
                 <DialogActions>
-                    <Button className={this.props.classes.bottomButtons} onClick={this.addVolunteer}  variant="contained" color="primary">Add</Button>
+                    <Button className={this.props.classes.bottomButtons} onClick={this.editSchoolPersonnel}  variant="contained" color="primary">Update</Button>
                     <Button className={this.props.classes.bottomButtons} onClick={close} variant="contained" color="primary">Cancel</Button>
                 </DialogActions>
             </Dialog>
@@ -216,19 +190,16 @@ class AddVolunteerDialog extends Component {
     }
 }
 
-AddVolunteerDialog.propTypes = {
-    addVolunteer: PropTypes.func.isRequired,
-    clearErrors: PropTypes.func.isRequired,
-    errors: PropTypes.object.isRequired,
-    volunteers: PropTypes.array.isRequired
+EditSchoolPersonnelDialog.propTypes = {
+    editSchoolPersonnel: PropTypes.func.isRequired,
+    errors: PropTypes.object.isRequired
   };
 
 const mapStateToProps = state => ({
-    errors: state.errors,
-    volunteers: state.volunteers.volunteers
+    errors: state.errors
   });
 
 export default connect (
     mapStateToProps,
-    { addVolunteer, clearErrors }  
-)(withRouter(withStyles(useStyles)(AddVolunteerDialog)));
+    { editSchoolPersonnel }  
+)(withRouter(withStyles(useStyles)(EditSchoolPersonnelDialog)));

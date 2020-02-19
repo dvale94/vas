@@ -9,21 +9,26 @@ const config = {
 		},
 		admin: {
 			update: '/admin/update',
-			fetch: '/admin',
+			fetchByid: '/admin',
 		},
 		volunteers: {
 			signup: '/account/volunteer/signup',
 			fetch: '/volunteers',
-			register: '/volunteers/register',
+			fetchByid: '/volunteers',
 			update: '/volunteers/update',
 		},
 		schools: {
 			create: '/school/create',
 			fetch: '/school',
 			update: '/school/update',
+		},	
+		schoolPersonnels: {
+			signup: '/account/school-personnel/signup',
+			fetch: '/school-personnels',
+			fetchByid: '/school-personnels',
+			update: '/school-personnels/update',
 		}
-		
-	},
+	}
 };
 
 export default config;
