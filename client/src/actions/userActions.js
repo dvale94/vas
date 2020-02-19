@@ -28,9 +28,9 @@ export const updateAdmin = (id, form) => dispatch => {
  };
 
  // get admin from database
-export const  getAdmin = (id) => dispatch => {
+export const getAdmin = (id) => dispatch => {
 
-    const endpoint = `${serverConf.uri}${serverConf.endpoints.admin.fetch}/${id}`;
+    const endpoint = `${serverConf.uri}${serverConf.endpoints.admin.fetchByid}/${id}`;
 
     request.get(endpoint, (error, response, body) => {
         
@@ -48,6 +48,69 @@ export const  getAdmin = (id) => dispatch => {
         }    
     });
 };
+
+export const getVolunteer = (id) => dispatch => {
+
+    const endpoint = `${serverConf.uri}${serverConf.endpoints.volunteers.fetchByid}/${id}`;
+
+    request.get(endpoint, (error, response, body) => {
+        
+        const res = JSON.parse(body);
+
+        if (error) {
+            dispatch({
+                type: GET_ERRORS,
+                payload: res
+              })
+        }
+        else {
+            // set current volunteers
+            dispatch(setCurrentUser(res))
+        }    
+    });
+};
+
+export const getSchoolPersonnel = (id) => dispatch => {
+
+    const endpoint = `${serverConf.uri}${serverConf.endpoints.schoolPersonnels.fetchByid}/${id}`;
+
+    request.get(endpoint, (error, response, body) => {
+        
+        const res = JSON.parse(body);
+
+        if (error) {
+            dispatch({
+                type: GET_ERRORS,
+                payload: res
+              })
+        }
+        else {
+            // set current volunteers
+            dispatch(setCurrentUser(res))
+        }    
+    });
+};
+
+export const updateVolunteer = (id, form) => dispatch => {
+
+    const endpoint = `${serverConf.uri}${serverConf.endpoints.volunteers.update}/${id}`;
+
+    request.put(endpoint, { form }, (error, response, body) => {
+        
+        const res = JSON.parse(body);
+
+        if (error) {
+            dispatch({
+                type: GET_ERRORS,
+                payload: res
+              })
+        }
+        else {
+            //console.log("Hello there: " + body)
+            dispatch(getVolunteer(res.id))
+        }   
+    });
+ };
 
 export const setCurrentUser = user => {
     return {

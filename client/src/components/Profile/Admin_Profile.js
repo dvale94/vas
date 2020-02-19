@@ -16,6 +16,8 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
 import { updateAdmin } from "../../actions/userActions";
+import { ThemeProvider } from '@material-ui/core/styles';
+
 import Alert from '@material-ui/lab/Alert';
 
 
@@ -104,14 +106,10 @@ class Admin_Profile extends Component {
         }
 
         this.updateAdmin = this.updateAdmin.bind(this);
-        this.getAdmin = this.getAdmin.bind(this);
         this.handleInput = this.handleInput.bind(this);
     }
 
-    componentDidMount() {
-        console.log(this.props.admin)
-        //console.log(this.props.auth)
-        
+    componentDidMount() {  
         this.setState({
             firstName: this.props.user.firstName,
             lastName: this.props.user.lastName,
@@ -120,22 +118,6 @@ class Admin_Profile extends Component {
         });
         console.log(this.props.user)
 
-    }
-
-    /* //Supress depricated warning use UNSAFE_
-    UNSAFE_componentWillReceiveProps(nextProps) {
-        this.getAdmin();
-        if (nextProps.res) {
-            this.setState({
-                errors: nextProps.errors
-            });
-        }
-        
-    } */
-    
-    getAdmin() {
-        //e.preventDefault();
-        this.props.getAdmin(this.props.auth.user.id);
     }
 
     updateAdmin() {
@@ -162,13 +144,11 @@ class Admin_Profile extends Component {
     }
 
   render(){   
-    const user  = this.props.user;
-    //const { admin } = this.props.adminData.admin;
-    //var initials = (user.firstName.substring(0, 1) + user.lastName.substring(0, 1)).toUpperCase()
-    //var initials = (adminData.admin.firstName.substring(0, 1) + adminData.admin.lastName.substring(0, 1)).toUpperCase()
-    
-    
+
+    var initials = (this.state.firstName.substring(0, 1) + this.state.lastName.substring(0, 1)).toUpperCase()
+  
     return (
+        <ThemeProvider theme={theme}>
         <div className={this.props.classes.all} >
         <Grid
         container
@@ -189,11 +169,11 @@ class Admin_Profile extends Component {
                     alignItems="center"
                     justify="center"
                     >
-                        {/* <Avatar className={this.props.classes.blue} >{initials}</Avatar> */}
+                        <Avatar className={this.props.classes.blue} >{initials}</Avatar>
                     </Grid>
                     <div className={this.props.classes.paper}>
                         <Typography className={this.props.classes.title} color="textPrimary" variant="h4" gutterBottom>
-                            {user.role}
+                            {this.props.user.role}
                         </Typography>
                     </div>
                     <Typography className={this.props.classes.title} color="textSecondary" variant="h4" gutterBottom>
@@ -288,7 +268,7 @@ class Admin_Profile extends Component {
 
         </Grid>
         </div>
-      
+        </ThemeProvider>
     );
   }
 }

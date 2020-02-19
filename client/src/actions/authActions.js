@@ -34,9 +34,8 @@ export const loginUser = form => dispatch => {
             const decoded = jwt_decode(token);
 
             // set current user
-            dispatch(setAuth(decoded.role));
-
-            dispatch(setCurrentUser(decoded))
+            dispatch(setAuth(decoded)); // role
+            dispatch(setCurrentUser(decoded)) // add user data
         }    
     });
  };
@@ -53,7 +52,7 @@ export const setCurrentUser = decoded => {
 export const setAuth = decoded => {
     return {
         type: SET_AUTH,
-        payload: decoded
+        payload: decoded.role
     };
 };
 
