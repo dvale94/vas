@@ -3,9 +3,9 @@ import Volunteer from '../models/Users/volunteer_User';
 
 const router = new express.Router();
 
-router.post('/update/:id', updateVolunteer);
-router.get('/:id', fetchVolunteerById);
+router.put('/update/:id', updateVolunteer);
 router.get('/', fetchVolunteers);
+router.get('/:id', fetchVolunteerById);
 
 function updateVolunteer(request, response) {
 	console.log(request.params);
@@ -15,7 +15,9 @@ function updateVolunteer(request, response) {
 			console.log(err);
 		  } else {
 			if (result.n === 1) {
-				response.json('success');
+				//response.json('success');
+				response.json(request.params)
+			
 			}
 			else {
 				response.json('failed')
@@ -39,7 +41,21 @@ function fetchVolunteerById(request, response) {
 		if (err) {
 			console.log(err);
 		  } else {
-			response.json(result);
+			  const payload = {
+				role: 'Volunteer',
+				firstName: result.firstName,
+				lastName: result.lastName,
+				email: result.email,
+				phoneNumber: result.phoneNumber,
+				pantherID: result.pantherID,
+				major: result.major,
+				carAvailable: result.carAvailable,
+				volunteerStatus: result.volunteerStatus,
+				isActive: result.isActive,
+				MDCPS_ID: result.MDCPS_ID,
+				id: result.id,
+			  }
+			response.json(payload);
 		  }
 	});
 }
