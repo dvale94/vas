@@ -17,6 +17,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
 import { clearErrors } from '../../actions/errorActions'
 import { addVolunteer } from "../../actions/volunteerActions";
+import Alert from '@material-ui/lab/Alert';
 
 const theme = createMuiTheme({
     palette: {
@@ -65,9 +66,7 @@ class AddVolunteerDialog extends Component {
 
     addVolunteer() {
         this.props.clearErrors();
-
         this.props.addVolunteer(this.state)
-
     }
 
     handleInput = (e) =>{
@@ -81,9 +80,10 @@ class AddVolunteerDialog extends Component {
 
     inputError = (error) => {
         return (
-          <div style={{color: "red"}}>
-              {error}
-            </div>
+            <Alert severity="error">{error}</Alert>
+          //<div style={{color: "red"}}>
+            //  {error}
+            //</div>
         )
     };
 

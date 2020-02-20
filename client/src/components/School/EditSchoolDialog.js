@@ -40,12 +40,28 @@ class EditSchoolDialog extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            schoolName: '',
+            schoolCode: '',
+            level: '',
+            phoneNumber: '',
+            address: '',
+            city: '',
+            state: '',
+            zipCode: '',
+            isActive: true,
             server: {}
         }
 
         this.editSchool = this.editSchool.bind(this);
         this.handleInput = this.handleInput.bind(this);
-    }    
+        
+    }
+    /* componentDidMount(){
+        this.setState({
+            schoolName: this.props.schoolName
+        });
+        console.log(this.state)
+    } */
 
     editSchool() {
 
@@ -82,10 +98,15 @@ class EditSchoolDialog extends Component {
         )
     };
 
+    updateInfo(school){
+        this.schoolName= school.schoolName
+    }
 
     render() {
+        
 
-        const {school, open, close} = this.props
+        const { school, open, close} = this.props
+        this.updateInfo(school);
 
         return (
             <ThemeProvider theme={theme}>
@@ -104,6 +125,7 @@ class EditSchoolDialog extends Component {
                         margin="dense"
                         name="schoolName"
                         placeholder={school.schoolName}
+                        value={this.schoolName}
                         onChange={this.handleInput}
                         type="text"
                         fullWidth
@@ -113,7 +135,7 @@ class EditSchoolDialog extends Component {
                         style={{marginBottom : "15px"}}
                         margin="dense"
                         name="schoolCode"
-                        placeholder={school.schoolCode}
+                        //placeholder={school.schoolCode}
                         onChange={this.handleInput}
                         type="text"
                         fullWidth
@@ -122,7 +144,7 @@ class EditSchoolDialog extends Component {
                     <Select
                     style={{marginBottom : "15px"}}
                     name='level'
-                    placeholder={school.level}
+                    //placeholder={school.level}
                     margin="dense"
                     onChange={this.handleInput}
                     fullWidth
@@ -137,7 +159,7 @@ class EditSchoolDialog extends Component {
                         style={{marginBottom : "15px"}}
                         margin="dense"
                         name="phoneNumber"
-                        placeholder={school.phoneNumber}
+                        //placeholder={school.phoneNumber}
                         onChange={this.handleInput}
                         type="text"
                         fullWidth
@@ -147,7 +169,7 @@ class EditSchoolDialog extends Component {
                         style={{marginBottom : "15px"}}
                         margin="dense"
                         name="address"
-                        placeholder={school.address}
+                        //placeholder={school.address}
                         onChange={this.handleInput}
                         type="text"
                         fullWidth
@@ -157,7 +179,7 @@ class EditSchoolDialog extends Component {
                         style={{marginBottom : "15px"}}
                         margin="dense"
                         name="city"
-                        placeholder={school.city}
+                        //placeholder={school.city}
                         onChange={this.handleInput}
                         type="text"
                         fullWidth
@@ -167,7 +189,7 @@ class EditSchoolDialog extends Component {
                         style={{marginBottom : "15px"}}
                         margin="dense"
                         name="state"
-                        placeholder={school.state}
+                       // placeholder={school.state}
                         onChange={this.handleInput}
                         type="text"
                         fullWidth
@@ -177,7 +199,7 @@ class EditSchoolDialog extends Component {
                         style={{marginBottom : "15px"}}
                         margin="dense"
                         name="zipCode"
-                        placeholder={school.zipCode}
+                        //placeholder={school.zipCode}
                         onChange={this.handleInput}
                         type="text"
                         fullWidth 
@@ -187,7 +209,7 @@ class EditSchoolDialog extends Component {
                     style={{marginBottom : "15px"}}
                     name='schoolStatus'
                     margin="dense"
-                    defaultValue={school.isActive}
+                    //defaultValue={school.isActive}
                     onChange={this.handleInput}
                     fullWidth
                     >
