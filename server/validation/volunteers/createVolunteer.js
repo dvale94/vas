@@ -6,7 +6,7 @@ function validateCreateVolunteerInput(data) {
     let errors = {};
 
     // convert empty fields to an empty string so we can use validator functions
-	data.firstName = !isEmpty(data.firstName) ? data.firstName : '';
+	  data.firstName = !isEmpty(data.firstName) ? data.firstName : '';
     data.lastName = !isEmpty(data.lastName) ? data.lastName : '';
     data.email = !isEmpty(data.email) ? data.email : '';
     data.password = !isEmpty(data.password) ? data.password : '';
@@ -16,7 +16,7 @@ function validateCreateVolunteerInput(data) {
     data.carAvailable= !isEmpty(data.carAvailable) ? data.carAvailable : '';
     
     // first and last name checks
-	if (validator.isEmpty(data.firstName)) {
+	  if (validator.isEmpty(data.firstName)) {
 	    errors.firstName = 'First name is required';
     } 
     if (validator.isEmpty(data.lastName)) {
@@ -29,7 +29,7 @@ function validateCreateVolunteerInput(data) {
     }
     else if (!validator.isEmail(data.email)) {
 		errors.email = 'Invalid Email';
-	}
+	  }
 
     // password check
     if (validator.isEmpty(data.password)) {

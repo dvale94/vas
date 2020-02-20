@@ -36,10 +36,10 @@ export const addSchool = form => dispatch => {
         //REMOVE- only for debugging
         console.log(res)
 
-        if (error) {
+        if (!res.success) {
             dispatch({
                 type: GET_ERRORS,
-                payload: res
+                payload: res.errors
               })
         }
         else {

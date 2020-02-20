@@ -73,6 +73,17 @@ class SchoolPersonnelTable extends Component {
                             width: 250,
                             maxWidth: 700
                           },
+                          searchFieldStyle: {
+                            backgroundColor: '#eeeeee',
+                        },
+                        cellStyle: {
+                            width: 250,
+                            maxWidth: 700
+                          },
+                          pageSizeOptions: [10, 20, 50, 100],
+                          pageSize: 10,
+                          paging: true,
+                          exportButton: true,
                     }}
                     detailPanel={rowData => {
                         return (

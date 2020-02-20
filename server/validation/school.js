@@ -6,7 +6,7 @@ function validateCreateSchoolInput(data) {
     let errors = {};
 
     // convert empty fields to an empty string so we can use validator functions
-	data.schoolName = !isEmpty(data.schoolName) ? data.schoolName : '';
+	  data.schoolName = !isEmpty(data.schoolName) ? data.schoolName : '';
     data.schoolCode = !isEmpty(data.schoolCode) ? data.schoolCode : '';
     data.level = !isEmpty(data.level) ? data.level : '';
     data.phoneNumber = !isEmpty(data.phoneNumber) ? data.phoneNumber : '';
@@ -16,7 +16,7 @@ function validateCreateSchoolInput(data) {
     data.zipCode = !isEmpty(data.zipCode) ? data.zipCode : '';
     
     // isEmpty validator
-	if (validator.isEmpty(data.schoolName)) {
+	  if (validator.isEmpty(data.schoolName)) {
 		errors.schoolName = 'A School name is required';
     } 
     if (validator.isEmpty(data.schoolCode)) {
@@ -40,7 +40,6 @@ function validateCreateSchoolInput(data) {
     if (validator.isEmpty(data.zipCode)) {
 		errors.zipCode = 'The school\'s zip code is required';
     } 
-
 
     return {
 		errors,

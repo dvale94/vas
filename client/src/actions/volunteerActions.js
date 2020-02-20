@@ -32,7 +32,7 @@ export const addVolunteer = form => dispatch => {
     request.post(endpoint, { form }, (error, response, body) => {
         
         const res = JSON.parse(body);
-
+        console.log(res)
         if (!res.success) {
             dispatch({
                 type: GET_ERRORS,
