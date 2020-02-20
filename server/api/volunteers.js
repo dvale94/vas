@@ -16,6 +16,7 @@ function updateVolunteer(request, response) {
 	let volunteer = {};
 	
 	volunteer = request.body;
+	
 
 	// Form validation
 	const { errors, isValid } = validateUpdateVolunteerInput(volunteer);
