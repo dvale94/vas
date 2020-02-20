@@ -84,15 +84,6 @@ class AddSchoolDialog extends Component {
         console.log(this.state)
     }
 
-    inputError = (error) => {
-        return ( <Alert severity="error">{error}</Alert> )
-        /* return (
-          <div style={{color: "red"}}>
-              {error}
-            </div>
-        ) */
-    };
-
     render() {
 
         const {open, close} = this.props
