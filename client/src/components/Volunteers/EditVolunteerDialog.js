@@ -45,6 +45,7 @@ class EditVolunteerDialog extends Component {
 
         this.editVolunteer = this.editVolunteer.bind(this);
         this.handleInput = this.handleInput.bind(this);
+        this.exitDialog = this.exitDialog.bind(this);
     }    
 
     componentDidMount() {
@@ -60,7 +61,7 @@ class EditVolunteerDialog extends Component {
             volunteerStatus: this.props.volunteer.volunteerStatus,
             MDCPS_ID: this.props.volunteer.MDCPS_ID,
             pantherID: this.props.volunteer.pantherID,
-            prevEmail: this.props.volunteer.email
+            prevEmail: this.props.volunteer.email,
         })
     }
 
@@ -68,7 +69,6 @@ class EditVolunteerDialog extends Component {
         this.props.clearErrors();
 
         let form = this.state
-        delete form.server
 
         // check if any of the fields are empty, and remove them so it dosen't get sent to the server update
         for (let property in form) {
@@ -78,7 +78,6 @@ class EditVolunteerDialog extends Component {
         } 
 
         this.props.editVolunteer(this.props.volunteer._id, form);
-
     }
 
     handleInput = (e) =>{
@@ -91,29 +90,15 @@ class EditVolunteerDialog extends Component {
 
     }
 
-    inputError = (error) => {
-        return (
-          <div style={{color: "red"}}>
-              {error}
-            </div>
-        )
-    };
-
-    updateSuccessful = () => {
-        if (this.props.errors === {}) {
-            return (
-                <div style={{color: "green"}}>
-                    Update updateSuccessful
-                </div>
-            
-            )
-            }    
-    };
-
+    
+    exitDialog() {
+        this.props.clearErrors();
+        this.props.close();
+    }
 
     render() {
 
-        const {volunteer, open, close} = this.props
+        const {open} = this.props
 
         return (
             <ThemeProvider theme={theme}>
@@ -126,8 +111,8 @@ class EditVolunteerDialog extends Component {
                     To edit a volunteer, make the changes and click submit.
                     </DialogContentText>
                     <br></br>
-                    First Name: 
                     <TextField 
+                        label="First Name"
                         style={{marginBottom : "15px"}}
                         margin="dense"
                         name="firstName"
@@ -135,10 +120,12 @@ class EditVolunteerDialog extends Component {
                         onChange={this.handleInput}
                         type="text"
                         fullWidth
+                        error={this.props.errors.firstName}
+                        helperText={this.props.errors.firstName}
                     />
-                    {this.props.errors.hasOwnProperty("firstName") && this.inputError(this.props.errors.firstName)}
-                    Last Name:
+
                     <TextField 
+                        label="Last Name"
                         style={{marginBottom : "15px"}}
                         margin="dense"
                         name="lastName"
@@ -146,10 +133,12 @@ class EditVolunteerDialog extends Component {
                         onChange={this.handleInput}
                         type="text"
                         fullWidth
+                        error={this.props.errors.lastName}
+                        helperText={this.props.errors.lastName}
                     />
-                    {this.props.errors.hasOwnProperty("lastName") && this.inputError(this.props.errors.lastName)}
-                    Email:
+
                     <TextField 
+                        label="Email"
                         style={{marginBottom : "15px"}}
                         margin="dense"
                         name="email"
@@ -157,10 +146,12 @@ class EditVolunteerDialog extends Component {
                         onChange={this.handleInput}
                         type="text"
                         fullWidth
+                        error={this.props.errors.email}
+                        helperText={this.props.errors.email}
                     />
-                    {this.props.errors.hasOwnProperty("email") && this.inputError(this.props.errors.email)}
-                    Password:
+                    
                     <TextField 
+                        label="Password"
                         style={{marginBottom : "15px"}}
                         margin="dense"
                         name="password"
@@ -168,10 +159,12 @@ class EditVolunteerDialog extends Component {
                         onChange={this.handleInput}
                         type="password"
                         fullWidth 
+                        error={this.props.errors.password}
+                        helperText={this.props.errors.password}
                     />
-                    {this.props.errors.hasOwnProperty("password") && this.inputError(this.props.errors.password)}
-                    Phone Number:
+                    
                     <TextField 
+                        label="Phone Number"
                         style={{marginBottom : "15px"}}
                         margin="dense"
                         name="phoneNumber"
@@ -179,10 +172,12 @@ class EditVolunteerDialog extends Component {
                         onChange={this.handleInput}
                         type="text"
                         fullWidth
+                        error={this.props.errors.phoneNumber}
+                        helperText={this.props.errors.phoneNumber}
                     />
-                    {this.props.errors.hasOwnProperty("phoneNumber") && this.inputError(this.props.errors.phoneNumber)}
-                    Major:
+                    
                     <TextField 
+                        label="Major:"
                         style={{marginBottom : "15px"}}
                         margin="dense"
                         name="major"
@@ -190,8 +185,22 @@ class EditVolunteerDialog extends Component {
                         onChange={this.handleInput}
                         type="text"
                         fullWidth
+                        error={this.props.errors.major}
+                        helperText={this.props.errors.major}
                     /> 
-                    {this.props.errors.hasOwnProperty("major") && this.inputError(this.props.errors.major)}
+                    
+                    <TextField 
+                        label="Panther ID"
+                        style={{marginBottom : "15px"}}
+                        margin="dense"
+                        name="pantherID"
+                        defaultValue={this.state.pantherID}
+                        onChange={this.handleInput}
+                        type="text"
+                        fullWidth 
+                        error={this.props.errors.pantherID}
+                        helperText={this.props.errors.pantherID}
+                    />
                     Is Active: 
                     <Select
                     style={{marginBottom : "15px"}}
@@ -216,17 +225,7 @@ class EditVolunteerDialog extends Component {
                         <MenuItem value={true}>Yes</MenuItem>
                         <MenuItem value={false}>No</MenuItem>
                     </Select>
-                    Panther ID:
-                    <TextField 
-                        style={{marginBottom : "15px"}}
-                        margin="dense"
-                        name="pantherID"
-                        defaultValue={this.state.pantherID}
-                        onChange={this.handleInput}
-                        type="text"
-                        fullWidth 
-                    />
-                    {this.props.errors.hasOwnProperty("pantherID") && this.inputError(this.props.errors.pantherID)}
+                    
                     Volunteer Status: 
                     <Select
                     style={{marginBottom : "15px"}}
@@ -253,9 +252,8 @@ class EditVolunteerDialog extends Component {
                     <br></br>   
                 </DialogContent>
                 <DialogActions>
-                    {this.updateSuccessful()}
                     <Button className={this.props.classes.bottomButtons} onClick={this.editVolunteer}  variant="contained" color="primary">Update</Button>
-                    <Button className={this.props.classes.bottomButtons} onClick={close} variant="contained" color="primary">Exit</Button>
+                    <Button className={this.props.classes.bottomButtons} onClick={this.exitDialog} variant="contained" color="primary">Exit</Button>
                 </DialogActions>
             </Dialog>
             </ThemeProvider>

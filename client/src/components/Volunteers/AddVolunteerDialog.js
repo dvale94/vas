@@ -55,6 +55,7 @@ class AddVolunteerDialog extends Component {
 
         this.addVolunteer = this.addVolunteer.bind(this);
         this.handleInput = this.handleInput.bind(this);
+        this.exitDialog = this.exitDialog.bind(this);
     }    
 
     // check if a new volunteer was added successfully to close this pop up
@@ -78,18 +79,14 @@ class AddVolunteerDialog extends Component {
         })
     }
 
-    inputError = (error) => {
-        return (
-            <Alert severity="error">{error}</Alert>
-          //<div style={{color: "red"}}>
-            //  {error}
-            //</div>
-        )
-    };
+    exitDialog() {
+        this.props.clearErrors();
+        this.props.close();
+    }
 
     render() {
 
-        const {open, close} = this.props
+        const {open} = this.props
 
         return (
             <ThemeProvider theme={theme}>
@@ -102,66 +99,89 @@ class AddVolunteerDialog extends Component {
                     To add a volunteer, fill out the following form and click submit.
                     </DialogContentText>
                     <br></br>
-                    First Name: 
                     <TextField 
+                        label="First Name"
                         style={{marginBottom : "15px"}}
                         margin="dense"
                         name="firstName"
                         onChange={this.handleInput}
                         type="text"
                         fullWidth
+                        error={this.props.errors.firstName}
+                        helperText={this.props.errors.firstName}
                     />
-                    {this.props.errors.hasOwnProperty("firstName") && this.inputError(this.props.errors.firstName)}
-                    Last Name:
-                    <TextField 
+                    
+                    <TextField
+                        label="Last Name"
                         style={{marginBottom : "15px"}}
                         margin="dense"
                         name="lastName"
                         onChange={this.handleInput}
                         type="text"
                         fullWidth
+                        error={this.props.errors.lastName}
+                        helperText={this.props.errors.lastName}
                     />
-                    {this.props.errors.hasOwnProperty("lastName") && this.inputError(this.props.errors.lastName)}
-                    Email:
+                    
                     <TextField 
+                        label="Email"
                         style={{marginBottom : "15px"}}
                         margin="dense"
                         name="email"
                         onChange={this.handleInput}
                         type="text"
                         fullWidth
+                        error={this.props.errors.email}
+                        helperText={this.props.errors.email}
                     />
-                    {this.props.errors.hasOwnProperty("email") && this.inputError(this.props.errors.email)}
-                    Password:
+                    
                     <TextField 
+                        label="Password"
                         style={{marginBottom : "15px"}}
                         margin="dense"
                         name="password"
                         onChange={this.handleInput}
                         type="password"
                         fullWidth
+                        error={this.props.errors.password}
+                        helperText={this.props.errors.password}
                     />
-                    {this.props.errors.hasOwnProperty("password") && this.inputError(this.props.errors.password)}
-                    Phone Number:
+                   
                     <TextField 
+                        label="Phone Number"
                         style={{marginBottom : "15px"}}
                         margin="dense"
                         name="phoneNumber"
                         onChange={this.handleInput}
                         type="text"
                         fullWidth
+                        error={this.props.errors.phoneNumber}
+                        helperText={this.props.errors.phoneNumber}
                     />
-                    {this.props.errors.hasOwnProperty("phoneNumber") && this.inputError(this.props.errors.phoneNumber)}
-                    Major:
+                    
                     <TextField 
+                        label="Major"
                         style={{marginBottom : "15px"}}
                         margin="dense"
                         name="major"
                         onChange={this.handleInput}
                         type="text"
                         fullWidth
+                        error={this.props.errors.major}
+                        helperText={this.props.errors.major}
                     />  
-                    {this.props.errors.hasOwnProperty("major") && this.inputError(this.props.errors.major)}
+
+                    <TextField 
+                        label="Panther ID"
+                        style={{marginBottom : "15px"}}
+                        margin="dense"
+                        name="pantherID"
+                        onChange={this.handleInput}
+                        type="text"
+                        fullWidth 
+                        error={this.props.errors.pantherID}
+                        helperText={this.props.errors.pantherID}
+                    />
                     Car Available:
                     <Select
                     style={{marginBottom : "15px"}}
@@ -173,17 +193,7 @@ class AddVolunteerDialog extends Component {
                         <MenuItem value={true}>Yes</MenuItem>
                         <MenuItem value={false}>No</MenuItem>
                     </Select>
-                    {this.props.errors.hasOwnProperty("carAvailable") && this.inputError(this.props.errors.carAvailable)}
-                    Panther ID:
-                    <TextField 
-                        style={{marginBottom : "15px"}}
-                        margin="dense"
-                        name="pantherID"
-                        onChange={this.handleInput}
-                        type="text"
-                        fullWidth 
-                    />
-                    {this.props.errors.hasOwnProperty("pantherID") && this.inputError(this.props.errors.pantherID)}
+    
                     Volunteer Status: 
                     <Select
                     style={{marginBottom : "15px"}}
@@ -195,8 +205,9 @@ class AddVolunteerDialog extends Component {
                         <MenuItem value={true}>Approved</MenuItem>
                         <MenuItem value={false}>Not yet Approved</MenuItem>
                     </Select>
-                    MDCPS ID:
+                    
                     <TextField 
+                        label="MDCPS ID"
                         style={{marginBottom : "15px"}}
                         margin="dense"
                         name="MDCPS_ID"
@@ -208,7 +219,7 @@ class AddVolunteerDialog extends Component {
                 </DialogContent>
                 <DialogActions>
                     <Button className={this.props.classes.bottomButtons} onClick={this.addVolunteer}  variant="contained" color="primary">Add</Button>
-                    <Button className={this.props.classes.bottomButtons} onClick={close} variant="contained" color="primary">Exit</Button>
+                    <Button className={this.props.classes.bottomButtons} onClick={this.exitDialog} variant="contained" color="primary">Exit</Button>
                 </DialogActions>
             </Dialog>
             </ThemeProvider>
