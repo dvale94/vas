@@ -153,63 +153,62 @@ function volunteerSignUp (req, res) {
     // Steps:
     // 1. Verify email doesn't exist
     // 2. Save to both collections
-    User.find({
-        email: email
-    }, (err, previousUsers) => {
-        if (err) {
-            return res.send({
-                success: false,
-                errors: {server: 'Server errors'}
-            });
-        } else if (previousUsers.length > 0) {
-            return res.send({
-                success: false,
-                errors: {email: 'Account already exists'}
-            });
-        }
-
-        // Save new user to volunteer collection
-        const newVolunteer = new Volunteer();
-
-        newVolunteer.firstName = firstName;
-        newVolunteer.lastName = lastName;
-        newVolunteer.email = email;
-        newVolunteer.phoneNumber = phoneNumber;
-        newVolunteer.pantherID = pantherID;
-        newVolunteer.major = major;
-        newVolunteer.carAvailable = carAvailable;
-        newVolunteer.volunteerStatus = volunteerStatus;
-        newVolunteer.isActive = isActive;
-        newVolunteer.MDCPS_ID = MDCPS_ID;
-
-        newVolunteer.save((err, volunteer) => {
+    User.find({email: email}, 
+        (err, previousUsers) => {
             if (err) {
                 return res.send({
                     success: false,
-                    errors: err
+                    errors: {server: 'Server errors'}
+                });
+            } else if (previousUsers.length > 0) {
+                return res.send({
+                    success: false,
+                    errors: {email: 'Account already exists'}
                 });
             }
-            return res.send({
-                success: true,
-                message: 'Signed up'
+
+            // Save new user to volunteer collection
+            const newVolunteer = new Volunteer();
+
+            newVolunteer.firstName = firstName;
+            newVolunteer.lastName = lastName;
+            newVolunteer.email = email;
+            newVolunteer.phoneNumber = phoneNumber;
+            newVolunteer.pantherID = pantherID;
+            newVolunteer.major = major;
+            newVolunteer.carAvailable = carAvailable;
+            newVolunteer.volunteerStatus = volunteerStatus;
+            newVolunteer.isActive = isActive;
+            newVolunteer.MDCPS_ID = MDCPS_ID;
+
+            newVolunteer.save((err, volunteer) => {
+                if (err) {
+                    return res.send({
+                        success: false,
+                        errors: err
+                    });
+                }
+                return res.send({
+                    success: true,
+                    message: 'Signed up'
+                });
             });
-        });
 
-        //Save new user to user auth collection
-        const newUser = new User();
+            //Save new user to user auth collection
+            const newUser = new User();
 
-        newUser.email = email;
-        newUser.password = newUser.generateHash(password);
-        newUser.role = 'Volunteer'
+            newUser.email = email;
+            newUser.password = newUser.generateHash(password);
+            newUser.role = 'Volunteer'
         
-        newUser.save((err, user) => {
-            if (err) {
-                return res.send({
-                    success: false,
-                    message: 'Error: Server error'
-                });
-            }
-        });
+            newUser.save((err, user) => {
+                if (err) {
+                    return res.send({
+                        success: false,
+                        message: 'Error: Server error'
+                    });
+                }
+            });
     });
 }
 

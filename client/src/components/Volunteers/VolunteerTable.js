@@ -94,9 +94,10 @@ class VolunteerTable extends Component {
                           paging: true,
                           exportButton: true,
                     }}
-                    detailPanel={rowData => {
+                    detailPanel={rowData => { 
                         return (
                             <div>
+                                {console.log(rowData)}
                                 <Table className={this.props.classes.table} size="small" aria-label="a dense table">
                                 <TableHead backgroundColor='red'>
                                 <TableRow color="red">
