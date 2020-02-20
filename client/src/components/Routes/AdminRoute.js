@@ -9,7 +9,7 @@ const AdminRoute = ({ component: Component, auth, ...rest }) => (
         {...rest}
         render={props =>
         auth.isAuthenticated === true ? (
-            auth.role === 'Admin' ? <Component {...props} /> : <AccessDenied/>
+            auth.user.role === 'Admin' ? <Component {...props} /> : <AccessDenied/>
         ) : (
             <Redirect to="/" />
         )

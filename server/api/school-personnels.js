@@ -5,8 +5,8 @@ import schPersonnel from '../models/Users/school_User';
 const router = new express.Router();
 
 router.post('/update/:id', updateSchoolPersonnel);
-router.get('/', fetchSchoolPersonnels);
 router.get('/:id', fetchSchoolPersonnelById);
+router.get('/', fetchSchoolPersonnels);
 
 function updateSchoolPersonnel(request, response) {
 	console.log(request.params);

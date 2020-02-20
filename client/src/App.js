@@ -5,8 +5,7 @@ import store from "./store";
 import './App.css';
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
-import { logoutUser, setAuth } from "./actions/authActions"
-import { setCurrentUser, getAdmin, getVolunteer, getSchoolPersonnel } from "./actions/userActions"
+import { setCurrentUser, logoutUser } from "./actions/authActions";
 import Login from './pages/Login'
 import NavBar from './components/NavBar/NavBar';
 import Dashboard from './pages/Dashboard';
@@ -27,18 +26,8 @@ if (localStorage.jwt) {
     // decode token and get user info and expiration
     const decoded = jwt_decode(token);
 
-    // set user
-    store.dispatch(setAuth(decoded));
-    if (decoded.role == "Admin") {
-      store.dispatch(getAdmin(decoded.id))
-    }
-    if (decoded.role == "Volunteer") {
-      store.dispatch(getVolunteer(decoded.id))
-    }
-    if (decoded.role == "School Personnel") {
-      store.dispatch(getSchoolPersonnel(decoded.id))
-    }
-    //store.dispatch(setCurrentUser(decoded));
+    // set user and isAuthenticated
+    store.dispatch(setCurrentUser(decoded));
 
     // check for expired token
     // to get in milliseconds divide by 1000

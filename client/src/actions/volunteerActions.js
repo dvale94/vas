@@ -51,7 +51,7 @@ export const editVolunteer = (id, form) => dispatch => {
 
     const endpoint = `${serverConf.uri}${serverConf.endpoints.volunteers.update}/${id}`;
 
-    request.put(endpoint, { form }, (error, response, body) => {
+    request.post(endpoint, { form }, (error, response, body) => {
         
         const res = JSON.parse(body);
 

@@ -11,15 +11,6 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import { createMuiTheme } from '@material-ui/core/styles';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import Button from '@material-ui/core/Button';
-import EditIcon from '@material-ui/icons/Edit';
-import SaveIcon from '@material-ui/icons/Save';
-import CardActions from '@material-ui/core/CardActions';
-import { ThemeProvider } from '@material-ui/core/styles';
-import { updateVolunteer } from "../../actions/userActions";
-import FormHelperText from '@material-ui/core/FormHelperText';
 
 
 
@@ -39,7 +30,7 @@ const useStyles = {
         marginTop: 10,
         minWidth: 300,
         maxWidth: 450,
-        height: 850
+        height: 800
     },
     paper: {
         marginTop: theme.spacing(1),
@@ -68,27 +59,7 @@ const useStyles = {
     },
     form: {
         width: '100%',
-    },
-    Button: {
-        marginTop: theme.spacing(1),
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        marginBottom: 10,
-    },
-    editButton: {
-        backgroundColor: blueGrey[700],
-        color: "white",
-        fontWeight: "bold",
-        '&:hover': {
-            backgroundColor: blue[500],
-        },
-        width: "70px",
-        "&:disabled": {
-            backgroundColor: blueGrey[100],
-            color: "white",
-          }
-    },
+    }
   };
 // Login Styling END
 
@@ -98,16 +69,11 @@ class Volunteer_Profile extends Component {
         super(props);
         this.state = {
             editDisabled: true,
-            carAvailable: false,
         }
-        this.updateVolunteer = this.updateVolunteer.bind(this);
-        this.handleInput = this.handleInput.bind(this);
     }
 
     componentDidMount() {
-        this.setState({
-            carAvailable: this.props.user.carAvailable
-        })
+
     }
 
     //Supress depricated warning use UNSAFE_
@@ -115,17 +81,10 @@ class Volunteer_Profile extends Component {
         
     }
 
-    updateVolunteer() {
-        const form = this.state
-        //console.log(form)
-        this.props.updateVolunteer(this.props.user.id, form);
-        this.editable();
-    }
-
     handleInput = (e) =>{
         const value = e.target.value
         const name = e.target.name
-        
+
         this.setState({
         [name]: value 
         })
@@ -138,14 +97,12 @@ class Volunteer_Profile extends Component {
     }
 
 
-
   render(){   
-    const user = this.props.user;
+    const { user } = this.props.auth;
     var initials = (user.firstName.substring(0, 1) + user.lastName.substring(0, 1)).toUpperCase();
     
     
     return (
-        <ThemeProvider theme={theme}>
         <div className={this.props.classes.all} >
         <Grid
         container
@@ -268,23 +225,21 @@ class Volunteer_Profile extends Component {
                         onChange={this.handleInput}
                         value={user.major}
                     />
-                    <br></br>
-                    <br></br>
-                    <FormHelperText>Car Available</FormHelperText>
-                    <Select
-                    style={{marginBottom : "15px"}}
-                    labelId="carLabel"
-                    name='carAvailable'
-                    disabled={this.state.editDisabled}
-                    defaultValue={this.props.user.carAvailable}
-                    margin="dense"
-                    onChange={this.handleInput}
-                    fullWidth
-                    >
-                        <MenuItem value={true}>Yes</MenuItem>
-                        <MenuItem value={false}>No</MenuItem>
-                    </Select>
-                    
+                    {/* Major */}
+                    <TextField
+                        variant="standard"
+                        color= "primary"
+                        margin="normal"
+                        disabled
+                        fullWidth
+                        id="Car Available"
+                        label="Car Available"
+                        name="Car Available"
+                        autoComplete="name"
+                        autoFocus
+                        onChange={this.handleInput}
+                        value={user.carAvailable ? "Yes" : "No"}
+                    />
                     {/* Volunteer Status */}
                     <TextField
                         variant="standard"
@@ -316,50 +271,27 @@ class Volunteer_Profile extends Component {
                     />
                     </form>
                 </CardContent>
-                <div className={this.props.classes.Button}>
-                <CardActions>
-                    <Button 
-                    className={this.props.classes.editButton}
-                    onClick={this.editable} 
-                    size="small"
-                    disabled={!this.state.editDisabled}
-                    endIcon={<EditIcon />}>
-                        Edit
-                    </Button>
-                    <Button 
-                    className={this.props.classes.editButton}
-                    onClick={this.editable && this.updateVolunteer}
-                    size="small"
-                    disabled={this.state.editDisabled}
-                    endIcon={<SaveIcon />}>
-                        Save
-                    </Button>
-                </CardActions>
-                </div>
             </Card>
         </Grid>
         </div>
-        </ThemeProvider>
+      
     );
   }
 }
 
 // define types
 Volunteer_Profile.propTypes = {
-  updateVolunteer: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
 };
 
 // allows us to get our state from Redux and map it to props
 const mapStateToProps = state => ({
   auth: state.auth,
-  user: state.userData.user,
   errors: state.errors
 });
 
 export default connect (
   mapStateToProps,
-  { updateVolunteer }
 )(withRouter(withStyles(useStyles)(Volunteer_Profile)));

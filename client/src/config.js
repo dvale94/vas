@@ -9,12 +9,11 @@ const config = {
 		},
 		admin: {
 			update: '/admin/update',
-			fetchByid: '/admin',
+			fetch: '/admin',
 		},
 		volunteers: {
 			signup: '/account/volunteer/signup',
 			fetch: '/volunteers',
-			fetchByid: '/volunteers',
 			update: '/volunteers/update',
 		},
 		schools: {
@@ -25,7 +24,6 @@ const config = {
 		schoolPersonnels: {
 			signup: '/account/school-personnel/signup',
 			fetch: '/school-personnels',
-			fetchByid: '/school-personnels',
 			update: '/school-personnels/update',
 		}
 	}
