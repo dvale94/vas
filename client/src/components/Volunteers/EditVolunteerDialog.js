@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import isEmpty from 'is-empty';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { blueGrey, blue } from '@material-ui/core/colors';
 import { ThemeProvider } from '@material-ui/core/styles';
@@ -120,7 +122,7 @@ class EditVolunteerDialog extends Component {
                         onChange={this.handleInput}
                         type="text"
                         fullWidth
-                        error={this.props.errors.firstName}
+                        error={!isEmpty(this.props.errors.firstName)}
                         helperText={this.props.errors.firstName}
                     />
 
@@ -133,7 +135,7 @@ class EditVolunteerDialog extends Component {
                         onChange={this.handleInput}
                         type="text"
                         fullWidth
-                        error={this.props.errors.lastName}
+                        error={!isEmpty(this.props.errors.lastName)}
                         helperText={this.props.errors.lastName}
                     />
 
@@ -146,7 +148,7 @@ class EditVolunteerDialog extends Component {
                         onChange={this.handleInput}
                         type="text"
                         fullWidth
-                        error={this.props.errors.email}
+                        error={!isEmpty(this.props.errors.email)}
                         helperText={this.props.errors.email}
                     />
                     
@@ -159,7 +161,7 @@ class EditVolunteerDialog extends Component {
                         onChange={this.handleInput}
                         type="password"
                         fullWidth 
-                        error={this.props.errors.password}
+                        error={!isEmpty(this.props.errors.password)}
                         helperText={this.props.errors.password}
                     />
                     
@@ -172,12 +174,12 @@ class EditVolunteerDialog extends Component {
                         onChange={this.handleInput}
                         type="text"
                         fullWidth
-                        error={this.props.errors.phoneNumber}
+                        error={!isEmpty(this.props.errors.phoneNumber)}
                         helperText={this.props.errors.phoneNumber}
                     />
                     
                     <TextField 
-                        label="Major:"
+                        label="Major"
                         style={{marginBottom : "15px"}}
                         margin="dense"
                         name="major"
@@ -185,7 +187,7 @@ class EditVolunteerDialog extends Component {
                         onChange={this.handleInput}
                         type="text"
                         fullWidth
-                        error={this.props.errors.major}
+                        error={!isEmpty(this.props.errors.major)}
                         helperText={this.props.errors.major}
                     /> 
                     
@@ -198,57 +200,61 @@ class EditVolunteerDialog extends Component {
                         onChange={this.handleInput}
                         type="text"
                         fullWidth 
-                        error={this.props.errors.pantherID}
+                        error={!isEmpty(this.props.errors.pantherID)}
                         helperText={this.props.errors.pantherID}
                     />
-                    Is Active: 
-                    <Select
-                    style={{marginBottom : "15px"}}
-                    name='isActive'
-                    defaultValue={this.state.isActive}
-                    margin="dense"
-                    onChange={this.handleInput}
-                    fullWidth
-                    >
-                        <MenuItem value={true}>Yes</MenuItem>
-                        <MenuItem value={false}>No</MenuItem>
-                    </Select>                  
-                    Car Available:
-                    <Select
-                    style={{marginBottom : "15px"}}
-                    name='carAvailable'
-                    defaultValue={this.state.carAvailable}
-                    margin="dense"
-                    onChange={this.handleInput}
-                    fullWidth
-                    >
-                        <MenuItem value={true}>Yes</MenuItem>
-                        <MenuItem value={false}>No</MenuItem>
-                    </Select>
+
+                    <FormControl fullWidth style={{marginBottom : "15px"}} margin='dense'>
+                        <InputLabel id="is-active">Is Active</InputLabel>
+                        <Select
+                            labelId='is-active'
+                            name='isActive'
+                            onChange={this.handleInput}
+                            value={this.state.isActive}
+                        >
+                            <MenuItem  value={true}>Yes</MenuItem >
+                            <MenuItem  value={false}>No</MenuItem >
+                        </Select>
+                    </FormControl>
+
+                    <FormControl fullWidth style={{marginBottom : "15px"}} margin='dense'>
+                        <InputLabel id="car-available">Car Available</InputLabel>
+                        <Select
+                            labelId='car-available'
+                            name='carAvailable'
+                            onChange={this.handleInput}
+                            value={this.state.carAvailable}
+                        >
+                            <MenuItem  value={true}>Yes</MenuItem >
+                            <MenuItem  value={false}>No</MenuItem >
+                        </Select>
+                    </FormControl>
                     
-                    Volunteer Status: 
-                    <Select
-                    style={{marginBottom : "15px"}}
-                    name='volunteerStatus'
-                    defaultValue={this.state.volunteerStatus}
-                    margin="dense"
-                    onChange={this.handleInput}
-                    fullWidth
-                    >
-                        <MenuItem value={true}>Approved</MenuItem>
-                        <MenuItem value={false}>Not yet Approved</MenuItem>
-                    </Select>
-                    MDCPS ID:
+                    <FormControl fullWidth style={{marginBottom : "15px"}} margin='dense'>
+                        <InputLabel id="volunteer-status">Is Active</InputLabel>
+                        <Select
+                            labelId='volunteer-status'
+                            name='volunteerStatus'
+                            onChange={this.handleInput}
+                            value={this.state.volunteerStatus}
+                        >
+                            <MenuItem value={true}>Approved</MenuItem>
+                            <MenuItem value={false}>Not yet Approved</MenuItem>
+                        </Select>
+                    </FormControl>
+
                     <TextField 
+                        label="MDCPS ID"
                         style={{marginBottom : "15px"}}
                         margin="dense"
                         name="MDCPS_ID"
                         defaultValue={this.state.MDCPS_ID}
                         onChange={this.handleInput}
                         type="text"
-                        fullWidth 
-                    />
-
+                        fullWidth
+                        error={!isEmpty(this.props.errors.MDCPS_ID)}
+                        helperText={this.props.errors.MDCPS_ID}
+                    /> 
                     <br></br>   
                 </DialogContent>
                 <DialogActions>
