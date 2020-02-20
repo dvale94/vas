@@ -32,7 +32,7 @@ function createSchool (req, res) {
         const { errors, isValid } = validateCreateSchoolInput(req.body);
         // check validation
         if (!isValid) {
-            return res.status(400).json(errors);
+            return res.status(400).json({success: false, errors});
         }
 
         School.find({
