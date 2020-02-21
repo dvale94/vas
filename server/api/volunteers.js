@@ -9,11 +9,11 @@ import validateUpdateVolunteerInput from '../validation/volunteers/updateVolunte
 const router = new express.Router();
 
 router.put('/update/:id', updateVolunteer);
+router.put('/updateProfile/:id', updateVolunteer_Profile);
 router.get('/', fetchVolunteers);
 router.get('/:id', fetchVolunteerById);
 
-
-/* function updateVolunteer(request, response) {
+function updateVolunteer_Profile(request, response) {
 	console.log(request.params);
 	console.log(request.body);
 	Volunteer.updateOne({_id: request.params.id}, request.body, (err, result) => {
@@ -30,7 +30,8 @@ router.get('/:id', fetchVolunteerById);
 			}
 		  }
 	});
-} */
+}
+
 function updateVolunteer(request, response) {
 	let volunteer = {};
 	

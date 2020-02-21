@@ -96,7 +96,7 @@ export const updateVolunteer = (id, form) => dispatch => {
     const endpoint = `${serverConf.uri}${serverConf.endpoints.volunteers.update}/${id}`;
 
     request.put(endpoint, { form }, (error, response, body) => {
-        
+        console.log("Hello there: " + body)
         const res = JSON.parse(body);
 
         if (error) {
@@ -111,6 +111,28 @@ export const updateVolunteer = (id, form) => dispatch => {
         }   
     });
  };
+
+ export const updateVolunteer_Profile = (id, form) => dispatch => {
+
+    const endpoint = `${serverConf.uri}${serverConf.endpoints.volunteers.updateProfile}/${id}`;
+
+    request.put(endpoint, { form }, (error, response, body) => {
+
+        const res = JSON.parse(body);
+
+        if (error) {
+            dispatch({
+                type: GET_ERRORS,
+                payload: res
+              })
+        }
+        else {
+            //console.log("Hello there2: " + body)
+            dispatch(getVolunteer(res.id))
+        }   
+    });
+ };
+
 
 export const setCurrentUser = user => {
     return {

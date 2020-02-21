@@ -16,6 +16,7 @@ const config = {
 			fetch: '/volunteers',
 			fetchByid: '/volunteers',
 			update: '/volunteers/update',
+			updateProfile: '/volunteers/updateProfile',
 		},
 		schools: {
 			create: '/school/create',
