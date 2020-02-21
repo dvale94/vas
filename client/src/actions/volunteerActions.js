@@ -46,22 +46,22 @@ export const addVolunteer = form => dispatch => {
     });
  };
 
- // make chanhes to volunteer in the database and refresh the store
+// make chanhes to volunteer in the database and refresh the store
 export const editVolunteer = (id, form) => dispatch => {
 
     const endpoint = `${serverConf.uri}${serverConf.endpoints.volunteers.update}/${id}`;
 
-    request.post(endpoint, { form }, (error, response, body) => {
+    request.put(endpoint, { form }, (error, response, body) => {
         
         const res = JSON.parse(body);
 
         //REMOVE- only for debugging
         console.log(res)
 
-        if (!res.success) {
+        if (error) {
             dispatch({
                 type: GET_ERRORS,
-                payload: res.errors
+                payload: res
               })
         }
         else {
@@ -70,7 +70,6 @@ export const editVolunteer = (id, form) => dispatch => {
         }   
     });
  };
-
 // volunteers loading
 export const setVolunteersLoading = () => {
     return {
