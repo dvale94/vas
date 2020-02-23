@@ -1,5 +1,4 @@
 import { SET_USER, USER_LOADING } from '../actions/types';
-import isEmpty from 'is-empty';
 
   const initialState = {
     user: {},

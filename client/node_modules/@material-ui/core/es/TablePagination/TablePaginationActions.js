@@ -47,7 +47,7 @@ const TablePaginationActions = React.forwardRef(function TablePaginationActions(
     color: "inherit"
   }, backIconButtonProps), theme.direction === 'rtl' ? _ref : _ref2), React.createElement(IconButton, _extends({
     onClick: handleNextButtonClick,
-    disabled: page >= Math.ceil(count / rowsPerPage) - 1,
+    disabled: count !== -1 ? page >= Math.ceil(count / rowsPerPage) - 1 : false,
     color: "inherit"
   }, nextIconButtonProps), theme.direction === 'rtl' ? _ref3 : _ref4));
 });

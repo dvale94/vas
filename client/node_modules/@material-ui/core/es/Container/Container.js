@@ -17,10 +17,6 @@ export const styles = theme => ({
     [theme.breakpoints.up('sm')]: {
       paddingLeft: theme.spacing(3),
       paddingRight: theme.spacing(3)
-    },
-    [theme.breakpoints.up('md')]: {
-      paddingLeft: theme.spacing(4),
-      paddingRight: theme.spacing(4)
     }
   },
 

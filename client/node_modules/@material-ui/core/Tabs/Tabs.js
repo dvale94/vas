@@ -27,7 +27,7 @@ var _debounce = _interopRequireDefault(require("../utils/debounce"));
 
 var _ownerWindow = _interopRequireDefault(require("../utils/ownerWindow"));
 
-var _normalizeScrollLeft = require("normalize-scroll-left");
+var _scrollLeft = require("../utils/scrollLeft");
 
 var _animate = _interopRequireDefault(require("../internal/animate"));
 
@@ -196,7 +196,7 @@ var Tabs = _react.default.forwardRef(function Tabs(props, ref) {
         clientWidth: tabsNode.clientWidth,
         scrollLeft: tabsNode.scrollLeft,
         scrollTop: tabsNode.scrollTop,
-        scrollLeftNormalized: (0, _normalizeScrollLeft.getNormalizedScrollLeft)(tabsNode, theme.direction),
+        scrollLeftNormalized: (0, _scrollLeft.getNormalizedScrollLeft)(tabsNode, theme.direction),
         scrollWidth: tabsNode.scrollWidth,
         top: rect.top,
         bottom: rect.bottom,
@@ -273,7 +273,7 @@ var Tabs = _react.default.forwardRef(function Tabs(props, ref) {
     } else {
       scrollValue += delta * (isRtl ? -1 : 1); // Fix for Edge
 
-      scrollValue *= isRtl && (0, _normalizeScrollLeft.detectScrollType)() === 'reverse' ? -1 : 1;
+      scrollValue *= isRtl && (0, _scrollLeft.detectScrollType)() === 'reverse' ? -1 : 1;
     }
 
     scroll(scrollValue);
@@ -354,7 +354,7 @@ var Tabs = _react.default.forwardRef(function Tabs(props, ref) {
         showStartScroll = scrollTop > 1;
         showEndScroll = scrollTop < scrollHeight - clientHeight - 1;
       } else {
-        var scrollLeft = (0, _normalizeScrollLeft.getNormalizedScrollLeft)(tabsRef.current, theme.direction); // use 1 for the potential rounding error with browser zooms.
+        var scrollLeft = (0, _scrollLeft.getNormalizedScrollLeft)(tabsRef.current, theme.direction); // use 1 for the potential rounding error with browser zooms.
 
         showStartScroll = isRtl ? scrollLeft < scrollWidth - clientWidth - 1 : scrollLeft > 1;
         showEndScroll = !isRtl ? scrollLeft < scrollWidth - clientWidth - 1 : scrollLeft > 1;

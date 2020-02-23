@@ -15,11 +15,13 @@ import MenuItem from '@material-ui/core/MenuItem';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
-import { clearErrors } from '../../actions/errorActions'
+import { clearErrors } from '../../actions/server/errorActions'
+import { clearSuccess } from '../../actions/server/successActions'
 import { addSchool } from "../../actions/schoolActions";
 import Alert from '@material-ui/lab/Alert';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
+import isEmpty from 'is-empty';
 import FormControl from '@material-ui/core/FormControl';
 
 
@@ -54,23 +56,24 @@ class AddSchoolDialog extends Component {
             zipCode: '',
             isActive: true,
             server: {},
-            error: true
+            error123: {}
         }
 
         this.addSchool = this.addSchool.bind(this);
         this.handleInput = this.handleInput.bind(this);
+        this.exitDialog = this.exitDialog.bind(this);
     }
 
-    componentDidUpdate(prevProps) {
-        if(prevProps.schools.length != this.props.schools.length) {
-            this.props.close();
-        }
-    }
 
     addSchool() {
         this.props.clearErrors();
         this.props.addSchool(this.state);
         //this.props.close()
+    }
+    exitDialog() {
+        this.props.clearErrors();
+        this.props.clearSuccess();
+        this.props.close();
     }
 
     handleInput = (e) =>{
@@ -83,10 +86,15 @@ class AddSchoolDialog extends Component {
 
         console.log(this.state)
     }
+    successMessage() {
+        if (!isEmpty(this.props.success.message)) {
+            return <Alert severity="success">{this.props.success.message}</Alert> 
+        }
+    }
 
     render() {
 
-        const {open, close} = this.props
+        const { open } = this.props
 
         return (
             <ThemeProvider theme={theme}>
@@ -95,6 +103,7 @@ class AddSchoolDialog extends Component {
             maxWidth="sm"
             >
                 <DialogTitle >Add School</DialogTitle>
+                { this.successMessage() }
                 <DialogContent>
                     <DialogContentText>
                     To add a school, fill out the following form and click submit.
@@ -110,7 +119,7 @@ class AddSchoolDialog extends Component {
                         type="text"
                         fullWidth
                         label="School Name"
-                        error={this.props.errors.schoolName}
+                        error={!isEmpty(this.props.errors.schoolName)}
                         helperText={this.props.errors.schoolName}
                     />
 
@@ -142,7 +151,7 @@ class AddSchoolDialog extends Component {
                             <MenuItem value={"High School"}>High School</MenuItem>
                             <MenuItem value={"K-8"}>K-8</MenuItem>
                         </Select>
-                        <FormHelperText>{this.props.errors.level}</FormHelperText>
+                        {<FormHelperText>{this.props.errors.level}</FormHelperText>}
                     </FormControl>
 
                     {/* Phone Number: */}
@@ -156,7 +165,6 @@ class AddSchoolDialog extends Component {
                         label="Phone Number"
                         error={this.props.errors.phoneNumber}
                         helperText={this.props.errors.phoneNumber}
-                        
                     />
                     
                     {/* Address: */}
@@ -215,7 +223,7 @@ class AddSchoolDialog extends Component {
                 </DialogContent>
                 <DialogActions>
                     <Button className={this.props.classes.bottomButtons} onClick={this.addSchool}  variant="contained" color="primary">Add</Button>
-                    <Button className={this.props.classes.bottomButtons} onClick={this.props.clearErrors, close} variant="contained" color="primary">Cancel</Button>
+                    <Button className={this.props.classes.bottomButtons} onClick={this.exitDialog} variant="contained" color="primary">Exit</Button>
                 </DialogActions>
             </Dialog>
             </ThemeProvider>
@@ -226,15 +234,18 @@ class AddSchoolDialog extends Component {
 AddSchoolDialog.propTypes = {
     addSchool: PropTypes.func.isRequired,
     clearErrors: PropTypes.func.isRequired,
-    errors: PropTypes.object.isRequired
+    clearSuccess: PropTypes.func.isRequired,
+    errors: PropTypes.object.isRequired,
+    success: PropTypes.object.isRequired
   };
 
 const mapStateToProps = state => ({
     errors: state.errors,
+    success: state.success,
     schools: state.schoolData.schools
   });
 
 export default connect (
     mapStateToProps,
-    { addSchool, clearErrors }  
+    { addSchool, clearErrors, clearSuccess}
 )(withRouter(withStyles(useStyles)(AddSchoolDialog)));

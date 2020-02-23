@@ -19,6 +19,8 @@ export const styles = {
     padding: 0,
     margin: 0,
     border: 0,
+    zIndex: 0,
+    // Fix blur label text issue
     verticalAlign: 'top' // Fix alignment issue on Safari.
 
   },
@@ -160,6 +162,7 @@ const FormControl = React.forwardRef(function FormControl(props, ref) {
     error,
     filled,
     focused,
+    fullWidth,
     hiddenLabel,
     margin: (size === 'small' ? 'dense' : undefined) || margin,
     onBlur: () => {

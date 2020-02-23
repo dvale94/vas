@@ -9,6 +9,7 @@ import { refType } from '@material-ui/utils';
 import Menu from '../Menu/Menu';
 import { isFilled } from '../InputBase/utils';
 import useForkRef from '../utils/useForkRef';
+import useControlled from '../utils/useControlled';
 
 function areEqualValues(a, b) {
   if (typeof b === 'object' && b !== null) {
@@ -57,21 +58,11 @@ const SelectInput = React.forwardRef(function SelectInput(props, ref) {
   } = props,
         other = _objectWithoutPropertiesLoose(props, ["autoFocus", "autoWidth", "children", "classes", "className", "defaultValue", "disabled", "displayEmpty", "IconComponent", "inputRef", "labelId", "MenuProps", "multiple", "name", "onBlur", "onChange", "onClose", "onFocus", "onOpen", "open", "readOnly", "renderValue", "required", "SelectDisplayProps", "tabIndex", "type", "value", "variant"]);
 
-  const {
-    current: isControlled
-  } = React.useRef(valueProp != null);
-  const [valueState, setValueState] = React.useState(defaultValue);
-  const value = isControlled ? valueProp : valueState;
-
-  if (process.env.NODE_ENV !== 'production') {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    React.useEffect(() => {
-      if (isControlled !== (valueProp != null)) {
-        console.error([`Material-UI: A component is changing ${isControlled ? 'a ' : 'an un'}controlled Select to be ${isControlled ? 'un' : ''}controlled.`, 'Elements should not switch from uncontrolled to controlled (or vice versa).', 'Decide between using a controlled or uncontrolled Select ' + 'element for the lifetime of the component.', 'More info: https://fb.me/react-controlled-components'].join('\n'));
-      }
-    }, [valueProp, isControlled]);
-  }
-
+  const [value, setValue] = useControlled({
+    controlled: valueProp,
+    default: defaultValue,
+    name: 'SelectInput'
+  });
   const inputRef = React.useRef(null);
   const [displayNode, setDisplayNode] = React.useState(null);
   const {
@@ -109,7 +100,12 @@ const SelectInput = React.forwardRef(function SelectInput(props, ref) {
   };
 
   const handleMouseDown = event => {
-    // Hijack the default focus behavior.
+    // Ignore everything but left-click
+    if (event.button !== 0) {
+      return;
+    } // Hijack the default focus behavior.
+
+
     event.preventDefault();
     displayNode.focus();
     update(true, event);
@@ -139,9 +135,7 @@ const SelectInput = React.forwardRef(function SelectInput(props, ref) {
       newValue = child.props.value;
     }
 
-    if (!isControlled) {
-      setValueState(newValue);
-    }
+    setValue(newValue);
 
     if (onChange) {
       event.persist(); // Preact support, target is read only property on a native event.
@@ -401,7 +395,7 @@ process.env.NODE_ENV !== "production" ? SelectInput.propTypes = {
   inputRef: refType,
 
   /**
-   * The idea of an element that acts as an additional label. The Select will
+   * The ID of an element that acts as an additional label. The Select will
    * be labelled by the additional label and the selected value.
    */
   labelId: PropTypes.string,

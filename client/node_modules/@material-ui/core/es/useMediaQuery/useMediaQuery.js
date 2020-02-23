@@ -1,8 +1,7 @@
 import _extends from "@babel/runtime/helpers/esm/extends";
 import React from 'react';
 import { getThemeProps, useTheme } from '@material-ui/styles';
-
-function useMediaQuery(queryInput, options = {}) {
+export default function useMediaQuery(queryInput, options = {}) {
   const theme = useTheme();
   const props = getThemeProps({
     theme,
@@ -71,5 +70,3 @@ function useMediaQuery(queryInput, options = {}) {
   }, [query, matchMedia, supportMatchMedia]);
   return match;
 }
-
-export default useMediaQuery;

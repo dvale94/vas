@@ -416,6 +416,7 @@ process.env.NODE_ENV !== "production" ? Dialog.propTypes = {
 
   /**
    * The component used for the transition.
+   * [Follow this guide](/components/transitions/#transitioncomponent-prop) to learn more about the requirements for this component.
    */
   TransitionComponent: _propTypes.default.elementType,
 
@@ -429,7 +430,7 @@ process.env.NODE_ENV !== "production" ? Dialog.propTypes = {
   })]),
 
   /**
-   * Props applied to the `Transition` element.
+   * Props applied to the [`Transition`](http://reactcommunity.org/react-transition-group/transition#Transition-props) element.
    */
   TransitionProps: _propTypes.default.object
 } : void 0;

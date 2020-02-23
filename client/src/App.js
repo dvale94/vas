@@ -6,7 +6,7 @@ import './App.css';
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import { logoutUser, setAuth } from "./actions/authActions"
-import { setCurrentUser, getAdmin, getVolunteer, getSchoolPersonnel } from "./actions/userActions"
+import { getAdmin, getVolunteer, getSchoolPersonnel } from "./actions/userActions"
 import Login from './pages/Login'
 import NavBar from './components/NavBar/NavBar';
 import Dashboard from './pages/Dashboard';

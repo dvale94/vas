@@ -1,4 +1,4 @@
-import { CLEAR_ERRORS } from './types';
+import { CLEAR_ERRORS } from '../types';
 
 // clear errors
 export const clearErrors = () => dispatch => {

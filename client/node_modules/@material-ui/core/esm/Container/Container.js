@@ -7,24 +7,19 @@ import clsx from 'clsx';
 import withStyles from '../styles/withStyles';
 import capitalize from '../utils/capitalize';
 export var styles = function styles(theme) {
-  var _root;
-
   return {
     /* Styles applied to the root element. */
-    root: (_root = {
+    root: _defineProperty({
       width: '100%',
       marginLeft: 'auto',
       boxSizing: 'border-box',
       marginRight: 'auto',
       paddingLeft: theme.spacing(2),
       paddingRight: theme.spacing(2)
-    }, _defineProperty(_root, theme.breakpoints.up('sm'), {
+    }, theme.breakpoints.up('sm'), {
       paddingLeft: theme.spacing(3),
       paddingRight: theme.spacing(3)
-    }), _defineProperty(_root, theme.breakpoints.up('md'), {
-      paddingLeft: theme.spacing(4),
-      paddingRight: theme.spacing(4)
-    }), _root),
+    }),
 
     /* Styles applied to the root element if `disableGutters={true}`. */
     disableGutters: {

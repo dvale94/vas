@@ -79,11 +79,10 @@ var styles = function styles(theme) {
       textAlignLast: 'right' // Align <select> on Chrome.
 
     },
+    // TODO v5: remove
 
     /* Styles applied to the Select component `icon` class. */
-    selectIcon: {
-      top: 1
-    },
+    selectIcon: {},
 
     /* Styles applied to the `InputBase` component. */
     input: {
@@ -109,7 +108,7 @@ var defaultLabelDisplayedRows = function defaultLabelDisplayedRows(_ref) {
   var from = _ref.from,
       to = _ref.to,
       count = _ref.count;
-  return "".concat(from, "-").concat(to === -1 ? count : to, " of ").concat(count);
+  return "".concat(from, "-").concat(to === -1 ? count : to, " of ").concat(count !== -1 ? count : "more than ".concat(to));
 };
 
 var defaultRowsPerPageOptions = [10, 25, 50, 100];
@@ -186,7 +185,7 @@ var TablePagination = _react.default.forwardRef(function TablePagination(props, 
     className: classes.caption
   }, labelDisplayedRows({
     from: count === 0 ? 0 : page * rowsPerPage + 1,
-    to: Math.min(count, (page + 1) * rowsPerPage),
+    to: count !== -1 ? Math.min(count, (page + 1) * rowsPerPage) : (page + 1) * rowsPerPage,
     count: count,
     page: page
   })), _react.default.createElement(ActionsComponent, {
@@ -249,6 +248,8 @@ process.env.NODE_ENV !== "production" ? TablePagination.propTypes = {
 
   /**
    * The total number of rows.
+   *
+   * To enable server side pagination for an unknown number of items, provide -1.
    */
   count: _propTypes.default.number.isRequired,
 

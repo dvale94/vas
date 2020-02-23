@@ -68,13 +68,11 @@ var Radio = React.forwardRef(function Radio(props, ref) {
       classes = props.classes,
       _props$color = props.color,
       color = _props$color === void 0 ? 'secondary' : _props$color,
-      _props$disabled = props.disabled,
-      disabled = _props$disabled === void 0 ? false : _props$disabled,
       nameProp = props.name,
       onChangeProp = props.onChange,
       _props$size = props.size,
       size = _props$size === void 0 ? 'medium' : _props$size,
-      other = _objectWithoutProperties(props, ["checked", "classes", "color", "disabled", "name", "onChange", "size"]);
+      other = _objectWithoutProperties(props, ["checked", "classes", "color", "name", "onChange", "size"]);
 
   var radioGroup = useRadioGroup();
   var checked = checkedProp;
@@ -108,8 +106,7 @@ var Radio = React.forwardRef(function Radio(props, ref) {
     name: name,
     checked: checked,
     onChange: onChange,
-    ref: ref,
-    disabled: disabled
+    ref: ref
   }, other));
 });
 process.env.NODE_ENV !== "production" ? Radio.propTypes = {
@@ -135,7 +132,7 @@ process.env.NODE_ENV !== "production" ? Radio.propTypes = {
   color: PropTypes.oneOf(['primary', 'secondary', 'default']),
 
   /**
-   * If `true`, the switch will be disabled.
+   * If `true`, the radio will be disabled.
    */
   disabled: PropTypes.bool,
 

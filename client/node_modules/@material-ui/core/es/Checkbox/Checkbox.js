@@ -68,14 +68,13 @@ const Checkbox = React.forwardRef(function Checkbox(props, ref) {
     checkedIcon = defaultCheckedIcon,
     classes,
     color = 'secondary',
-    disabled = false,
     icon = defaultIcon,
     indeterminate = false,
     indeterminateIcon = defaultIndeterminateIcon,
     inputProps,
     size = 'medium'
   } = props,
-        other = _objectWithoutPropertiesLoose(props, ["checkedIcon", "classes", "color", "disabled", "icon", "indeterminate", "indeterminateIcon", "inputProps", "size"]);
+        other = _objectWithoutPropertiesLoose(props, ["checkedIcon", "classes", "color", "icon", "indeterminate", "indeterminateIcon", "inputProps", "size"]);
 
   return React.createElement(SwitchBase, _extends({
     type: "checkbox",
@@ -94,8 +93,7 @@ const Checkbox = React.forwardRef(function Checkbox(props, ref) {
     checkedIcon: React.cloneElement(indeterminate ? indeterminateIcon : checkedIcon, {
       fontSize: size === 'small' ? 'small' : 'default'
     }),
-    ref: ref,
-    disabled: disabled
+    ref: ref
   }, other));
 });
 process.env.NODE_ENV !== "production" ? Checkbox.propTypes = {
@@ -121,7 +119,7 @@ process.env.NODE_ENV !== "production" ? Checkbox.propTypes = {
   color: PropTypes.oneOf(['primary', 'secondary', 'default']),
 
   /**
-   * If `true`, the switch will be disabled.
+   * If `true`, the checkbox will be disabled.
    */
   disabled: PropTypes.bool,
 

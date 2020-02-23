@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { withRouter } from 'react-router-dom';
-import store from "../store";
-import jwt_decode from "jwt-decode";
-import { setCurrentUser, logoutUser, setAuth } from "../actions/authActions"
 import Admin_Profile from '../components/Profile/Admin_Profile'
 import Volunteer_Profile from '../components/Profile/Volunteer_Profile'
 import SchoolPersonnel_Profile from '../components/Profile/SchoolPersonnel_Profile'
@@ -13,9 +10,6 @@ import SchoolPersonnel_Profile from '../components/Profile/SchoolPersonnel_Profi
 
 class Profile extends Component{
     render(){
-      /* const decoded = jwt_decode(localStorage.jwt);
-        
-        store.dispatch(setCurrentUser(decoded)); */
 
         const { auth } = this.props;
         return (

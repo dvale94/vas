@@ -18,9 +18,6 @@ import SaveIcon from '@material-ui/icons/Save';
 import { updateAdmin } from "../../actions/userActions";
 import { ThemeProvider } from '@material-ui/core/styles';
 
-import Alert from '@material-ui/lab/Alert';
-
-
 const theme = createMuiTheme({
     palette: {
       primary: blue,

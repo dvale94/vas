@@ -25,9 +25,7 @@ var styles = {
     top: 0,
     left: 0,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    WebkitTapHighlightColor: 'transparent',
-    // Disable scroll capabilities.
-    touchAction: 'none'
+    WebkitTapHighlightColor: 'transparent'
   },
 
   /* Styles applied to the root element if `invisible={true}`. */

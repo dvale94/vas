@@ -18,7 +18,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
-import { clearErrors } from '../../actions/errorActions'
+import { clearErrors } from '../../actions/server/errorActions'
 import { addVolunteer } from "../../actions/volunteerActions";
 
 const theme = createMuiTheme({

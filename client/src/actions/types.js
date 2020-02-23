@@ -1,5 +1,7 @@
 export const GET_ERRORS = 'GET_ERRORS';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';
+export const GET_SUCCESS = 'GET_SUCCESS';
+export const CLEAR_SUCCESS = 'CLEAR_SUCCESS';
 export const AUTH_LOADING = 'AUTH_LOADING';
 export const SET_AUTH = 'SET_AUTH';
 export const SET_VOLUNTEERS = 'SET_VOLUNTEERS';

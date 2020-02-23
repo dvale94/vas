@@ -10,6 +10,8 @@ exports.default = exports.styles = void 0;
 
 var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
 
+var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
+
 var _objectWithoutProperties2 = _interopRequireDefault(require("@babel/runtime/helpers/objectWithoutProperties"));
 
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
@@ -39,6 +41,8 @@ var _useForkRef = _interopRequireDefault(require("../utils/useForkRef"));
 var _setRef = _interopRequireDefault(require("../utils/setRef"));
 
 var _focusVisible = require("../utils/focusVisible");
+
+var _useControlled3 = _interopRequireDefault(require("../utils/useControlled"));
 
 var _useTheme = _interopRequireDefault(require("../styles/useTheme"));
 
@@ -266,36 +270,33 @@ var Tooltip = _react.default.forwardRef(function Tooltip(props, ref) {
 
   var touchTimer = _react.default.useRef();
 
-  var _React$useRef = _react.default.useRef(openProp != null),
-      isControlled = _React$useRef.current;
+  var _useControlled = (0, _useControlled3.default)({
+    controlled: openProp,
+    default: false,
+    name: 'Tooltip'
+  }),
+      _useControlled2 = (0, _slicedToArray2.default)(_useControlled, 2),
+      openState = _useControlled2[0],
+      setOpenState = _useControlled2[1];
 
-  var _React$useState3 = _react.default.useState(false),
-      openState = _React$useState3[0],
-      setOpenState = _React$useState3[1];
-
-  var open = isControlled ? openProp : openState;
-
-  if (process.env.NODE_ENV !== 'production') {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    _react.default.useEffect(function () {
-      if (isControlled !== (openProp != null)) {
-        console.error(["Material-UI: A component is changing ".concat(isControlled ? 'a ' : 'an un', "controlled Tooltip to be ").concat(isControlled ? 'un' : '', "controlled."), 'Elements should not switch from uncontrolled to controlled (or vice versa).', 'Decide between using a controlled or uncontrolled Tooltip ' + 'element for the lifetime of the component.', 'More info: https://fb.me/react-controlled-components'].join('\n'));
-      }
-    }, [openProp, isControlled]);
-  }
+  var open = openState;
 
   if (process.env.NODE_ENV !== 'production') {
     // eslint-disable-next-line react-hooks/rules-of-hooks
+    var _React$useRef = _react.default.useRef(openProp !== undefined),
+        isControlled = _React$useRef.current; // eslint-disable-next-line react-hooks/rules-of-hooks
+
+
     _react.default.useEffect(function () {
       if (childNode && childNode.disabled && !isControlled && title !== '' && childNode.tagName.toLowerCase() === 'button') {
         console.error(['Material-UI: you are providing a disabled `button` child to the Tooltip component.', 'A disabled element does not fire events.', "Tooltip needs to listen to the child element's events to display the title.", '', 'Add a simple wrapper element, such as a `span`.'].join('\n'));
       }
-    }, [isControlled, title, childNode]);
+    }, [title, childNode, isControlled]);
   }
 
-  var _React$useState4 = _react.default.useState(),
-      defaultId = _React$useState4[0],
-      setDefaultId = _React$useState4[1];
+  var _React$useState3 = _react.default.useState(),
+      defaultId = _React$useState3[0],
+      setDefaultId = _React$useState3[1];
 
   var id = idProp || defaultId;
 
@@ -325,9 +326,7 @@ var Tooltip = _react.default.forwardRef(function Tooltip(props, ref) {
     // We can skip rerendering when the tooltip is already open.
     // We are using the mouseover event instead of the mouseenter event to fix a hide/show issue.
 
-    if (!isControlled) {
-      setOpenState(true);
-    }
+    setOpenState(true);
 
     if (onOpen) {
       onOpen(event);
@@ -370,9 +369,9 @@ var Tooltip = _react.default.forwardRef(function Tooltip(props, ref) {
       onBlurVisible = _useIsFocusVisible.onBlurVisible,
       focusVisibleRef = _useIsFocusVisible.ref;
 
-  var _React$useState5 = _react.default.useState(false),
-      childIsFocusVisible = _React$useState5[0],
-      setChildIsFocusVisible = _React$useState5[1];
+  var _React$useState4 = _react.default.useState(false),
+      childIsFocusVisible = _React$useState4[0],
+      setChildIsFocusVisible = _React$useState4[1];
 
   var handleBlur = function handleBlur() {
     if (childIsFocusVisible) {
@@ -407,9 +406,7 @@ var Tooltip = _react.default.forwardRef(function Tooltip(props, ref) {
       hystersisOpen = false;
     }, 500); // Use 500 ms per https://github.com/reach/reach-ui/blob/3b5319027d763a3082880be887d7a29aee7d3afc/packages/tooltip/src/index.js#L214
 
-    if (!isControlled) {
-      setOpenState(false);
-    }
+    setOpenState(false);
 
     if (onClose) {
       onClose(event);
@@ -527,7 +524,19 @@ var Tooltip = _react.default.forwardRef(function Tooltip(props, ref) {
     if (children.props.title) {
       console.error(['Material-UI: you have provided a `title` prop to the child of <Tooltip />.', "Remove this title prop `".concat(children.props.title, "` or the Tooltip component.")].join('\n'));
     }
-  }
+  } // Avoid the creation of a new Popper.js instance at each render.
+
+
+  var popperOptions = _react.default.useMemo(function () {
+    return {
+      modifiers: {
+        arrow: {
+          enabled: Boolean(arrowRef),
+          element: arrowRef
+        }
+      }
+    };
+  }, [arrowRef]);
 
   return _react.default.createElement(_react.default.Fragment, null, _react.default.cloneElement(children, (0, _extends2.default)({
     ref: handleRef
@@ -538,14 +547,7 @@ var Tooltip = _react.default.forwardRef(function Tooltip(props, ref) {
     open: childNode ? open : false,
     id: childrenProps['aria-describedby'],
     transition: true,
-    popperOptions: {
-      modifiers: {
-        arrow: {
-          enabled: Boolean(arrowRef),
-          element: arrowRef
-        }
-      }
-    }
+    popperOptions: popperOptions
   }, interactiveWrapperListeners, PopperProps), function (_ref) {
     var placementInner = _ref.placement,
         TransitionPropsInner = _ref.TransitionProps;
@@ -662,11 +664,12 @@ process.env.NODE_ENV !== "production" ? Tooltip.propTypes = {
 
   /**
    * The component used for the transition.
+   * [Follow this guide](/components/transitions/#transitioncomponent-prop) to learn more about the requirements for this component.
    */
   TransitionComponent: _propTypes.default.elementType,
 
   /**
-   * Props applied to the `Transition` element.
+   * Props applied to the [`Transition`](http://reactcommunity.org/react-transition-group/transition#Transition-props) element.
    */
   TransitionProps: _propTypes.default.object
 } : void 0;

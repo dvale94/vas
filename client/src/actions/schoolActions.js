@@ -1,6 +1,6 @@
 import request from 'request';
 import serverConf from '../config'
-import { GET_ERRORS, SET_SCHOOLS, SCHOOLS_LOADING} from './types';
+import { GET_ERRORS, SET_SCHOOLS, SCHOOLS_LOADING, GET_SUCCESS} from './types';
 
 // get schools from database
 export const getSchools = () => dispatch => {
@@ -45,6 +45,10 @@ export const addSchool = form => dispatch => {
         else {
             // set current schools
             dispatch(getSchools());
+            dispatch({
+                type: GET_SUCCESS,
+                payload: res.message
+            });
         }   
     });
  };
@@ -61,15 +65,19 @@ export const editSchool = (id, form) => dispatch => {
         //REMOVE- only for debugging
         console.log(res)
 
-        if (error) {
+        if (!res.success) {
             dispatch({
                 type: GET_ERRORS,
-                payload: res
+                payload: res.errors
               })
         }
         else {
-            // get updated schools
+            // set current schools
             dispatch(getSchools());
+            dispatch({
+                type: GET_SUCCESS,
+                payload: res.message
+            });
         }   
     });
  };

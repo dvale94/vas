@@ -27,8 +27,6 @@ var _Typography = _interopRequireDefault(require("../Typography"));
 
 var _BreadcrumbCollapsed = _interopRequireDefault(require("./BreadcrumbCollapsed"));
 
-var _BreadcrumbSeparator = _interopRequireDefault(require("./BreadcrumbSeparator"));
-
 var styles = {
   /* Styles applied to the root element. */
   root: {},
@@ -39,25 +37,28 @@ var styles = {
     flexWrap: 'wrap',
     alignItems: 'center',
     padding: 0,
-    // Reset
-    margin: 0 // Reset
-
-  },
-
-  /* Styles applied to the li element. */
-  li: {
+    margin: 0,
     listStyle: 'none'
   },
 
+  /* Styles applied to the li element. */
+  li: {},
+
   /* Styles applied to the separator element. */
-  separator: {}
+  separator: {
+    display: 'flex',
+    userSelect: 'none',
+    marginLeft: 8,
+    marginRight: 8
+  }
 };
 exports.styles = styles;
 
 function insertSeparators(items, className, separator) {
   return items.reduce(function (acc, current, index) {
     if (index < items.length - 1) {
-      acc = acc.concat(current, _react.default.createElement(_BreadcrumbSeparator.default, {
+      acc = acc.concat(current, _react.default.createElement("li", {
+        "aria-hidden": true,
         key: "separator-".concat(index),
         className: className
       }, separator));

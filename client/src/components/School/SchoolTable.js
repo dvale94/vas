@@ -13,7 +13,6 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
-
 const useStyles = ({
     table: {
       minWidth: 200,
@@ -32,6 +31,7 @@ class SchoolTable extends Component {
 
         this.toggleAddSchoolDialog= this.toggleAddSchoolDialog.bind(this);
         this.toggleEditSchoolDialog= this.toggleEditSchoolDialog.bind(this);
+        //this.clearErrors = this.clearErrors.bind(this);
     }
 
     componentDidMount() {
@@ -49,6 +49,14 @@ class SchoolTable extends Component {
             editSchoolDialog: !prevState.editSchoolDialog
         }));
     }
+  /*   clearErrors() {
+        //clearErrors();
+        console.log("yes", clearErrors())
+    }
+    multi() {
+        clearErrors();
+        //toggleAddSchoolDialog()
+    } */
 
     render() {
         return (
@@ -69,7 +77,7 @@ class SchoolTable extends Component {
                         icon: 'person_add',
                         tooltip: 'Add School',
                         isFreeAction: true,
-                        onClick: this.toggleAddSchoolDialog
+                        onClick: (this.toggleAddSchoolDialog)/* (this.clearErrors, this.toggleAddSchoolDialog) */
                         },
                         {
                             icon: 'edit',

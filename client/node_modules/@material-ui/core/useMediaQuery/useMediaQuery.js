@@ -5,7 +5,7 @@ var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefau
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports.default = useMediaQuery;
 
 var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
 
@@ -90,6 +90,3 @@ function useMediaQuery(queryInput) {
 
   return match;
 }
-
-var _default = useMediaQuery;
-exports.default = _default;

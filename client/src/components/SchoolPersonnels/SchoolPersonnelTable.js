@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import MaterialTable from 'material-table';
 import PropTypes from 'prop-types';
-import Grid from '@material-ui/core/Grid';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getSchoolPersonnels } from '../../actions/schoolPersonnelActions';
@@ -76,10 +75,6 @@ class SchoolPersonnelTable extends Component {
                           searchFieldStyle: {
                             backgroundColor: '#eeeeee',
                         },
-                        cellStyle: {
-                            width: 250,
-                            maxWidth: 700
-                          },
                           pageSizeOptions: [10, 20, 50, 100],
                           pageSize: 10,
                           paging: true,

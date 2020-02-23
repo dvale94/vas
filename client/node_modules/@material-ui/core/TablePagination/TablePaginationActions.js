@@ -60,7 +60,7 @@ var TablePaginationActions = _react.default.forwardRef(function TablePaginationA
     color: "inherit"
   }, backIconButtonProps), theme.direction === 'rtl' ? _ref : _ref2), _react.default.createElement(_IconButton.default, (0, _extends2.default)({
     onClick: handleNextButtonClick,
-    disabled: page >= Math.ceil(count / rowsPerPage) - 1,
+    disabled: count !== -1 ? page >= Math.ceil(count / rowsPerPage) - 1 : false,
     color: "inherit"
   }, nextIconButtonProps), theme.direction === 'rtl' ? _ref3 : _ref4));
 });

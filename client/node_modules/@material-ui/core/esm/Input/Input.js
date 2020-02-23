@@ -87,7 +87,7 @@ export var styles = function styles(theme) {
       }
     },
 
-    /* Styles applied to the root element if `error={true}`. */
+    /* Pseudo-class applied to the root element if `error={true}`. */
     error: {},
 
     /* Styles applied to the `input` element if `margin="dense"`. */

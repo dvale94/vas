@@ -8,7 +8,6 @@ import clsx from 'clsx';
 import withStyles from '../styles/withStyles';
 import Typography from '../Typography';
 import BreadcrumbCollapsed from './BreadcrumbCollapsed';
-import BreadcrumbSeparator from './BreadcrumbSeparator';
 export var styles = {
   /* Styles applied to the root element. */
   root: {},
@@ -19,24 +18,27 @@ export var styles = {
     flexWrap: 'wrap',
     alignItems: 'center',
     padding: 0,
-    // Reset
-    margin: 0 // Reset
-
-  },
-
-  /* Styles applied to the li element. */
-  li: {
+    margin: 0,
     listStyle: 'none'
   },
 
+  /* Styles applied to the li element. */
+  li: {},
+
   /* Styles applied to the separator element. */
-  separator: {}
+  separator: {
+    display: 'flex',
+    userSelect: 'none',
+    marginLeft: 8,
+    marginRight: 8
+  }
 };
 
 function insertSeparators(items, className, separator) {
   return items.reduce(function (acc, current, index) {
     if (index < items.length - 1) {
-      acc = acc.concat(current, React.createElement(BreadcrumbSeparator, {
+      acc = acc.concat(current, React.createElement("li", {
+        "aria-hidden": true,
         key: "separator-".concat(index),
         className: className
       }, separator));

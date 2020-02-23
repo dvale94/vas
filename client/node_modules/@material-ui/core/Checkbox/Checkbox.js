@@ -99,8 +99,6 @@ var Checkbox = _react.default.forwardRef(function Checkbox(props, ref) {
       classes = props.classes,
       _props$color = props.color,
       color = _props$color === void 0 ? 'secondary' : _props$color,
-      _props$disabled = props.disabled,
-      disabled = _props$disabled === void 0 ? false : _props$disabled,
       _props$icon = props.icon,
       icon = _props$icon === void 0 ? defaultIcon : _props$icon,
       _props$indeterminate = props.indeterminate,
@@ -110,7 +108,7 @@ var Checkbox = _react.default.forwardRef(function Checkbox(props, ref) {
       inputProps = props.inputProps,
       _props$size = props.size,
       size = _props$size === void 0 ? 'medium' : _props$size,
-      other = (0, _objectWithoutProperties2.default)(props, ["checkedIcon", "classes", "color", "disabled", "icon", "indeterminate", "indeterminateIcon", "inputProps", "size"]);
+      other = (0, _objectWithoutProperties2.default)(props, ["checkedIcon", "classes", "color", "icon", "indeterminate", "indeterminateIcon", "inputProps", "size"]);
   return _react.default.createElement(_SwitchBase.default, (0, _extends2.default)({
     type: "checkbox",
     classes: {
@@ -128,8 +126,7 @@ var Checkbox = _react.default.forwardRef(function Checkbox(props, ref) {
     checkedIcon: _react.default.cloneElement(indeterminate ? indeterminateIcon : checkedIcon, {
       fontSize: size === 'small' ? 'small' : 'default'
     }),
-    ref: ref,
-    disabled: disabled
+    ref: ref
   }, other));
 });
 
@@ -156,7 +153,7 @@ process.env.NODE_ENV !== "production" ? Checkbox.propTypes = {
   color: _propTypes.default.oneOf(['primary', 'secondary', 'default']),
 
   /**
-   * If `true`, the switch will be disabled.
+   * If `true`, the checkbox will be disabled.
    */
   disabled: _propTypes.default.bool,
 

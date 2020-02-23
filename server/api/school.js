@@ -3,7 +3,7 @@ import express from 'express';
 const School = require('../models/Schools/school')
 
 // input validation
-import validateCreateSchoolInput from '../validation/school';
+import validateCreateSchoolInput from '../validation/schools/createSchool';
 
 const router = new express.Router();
 
@@ -72,7 +72,7 @@ function createSchool (req, res) {
             }
             return res.send({
                 success: true,
-                message: 'School created'
+                message: 'Successfully created school!'
             });
         });
     });
@@ -81,13 +81,25 @@ function createSchool (req, res) {
 
 function updateSchool(request, response) {
 	console.log(request.params);
-	console.log(request.body);
+    console.log(request.body);
+
+
+    // form validation
+    const { errors, isValid } = validateCreateSchoolInput(request.body);
+    // check validation
+    if (!isValid) {
+        return response.status(400).json({success: false, errors});
+    }
+
 	School.updateOne({_id: request.params.id}, request.body, (err, result) => {
 		if (err) {
 			console.log(err);
 		  } else {
 			if (result.n === 1) {
-				response.json('success');
+				return response.send({
+                    success: true,
+                    message: 'Successfully updated school!'
+                });
 			}
 			else {
 				response.json('failed')

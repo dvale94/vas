@@ -210,24 +210,29 @@ var TouchRipple = React.forwardRef(function TouchRipple(props, ref) {
 
 
     if (event.touches) {
-      // Prepare the ripple effect.
-      startTimerCommit.current = function () {
-        startCommit({
-          pulsate: pulsate,
-          rippleX: rippleX,
-          rippleY: rippleY,
-          rippleSize: rippleSize,
-          cb: cb
-        });
-      }; // Delay the execution of the ripple effect.
+      // check that this isn't another touchstart due to multitouch
+      // otherwise we will only clear a single timer when unmounting while two
+      // are running
+      if (startTimerCommit.current === null) {
+        // Prepare the ripple effect.
+        startTimerCommit.current = function () {
+          startCommit({
+            pulsate: pulsate,
+            rippleX: rippleX,
+            rippleY: rippleY,
+            rippleSize: rippleSize,
+            cb: cb
+          });
+        }; // Delay the execution of the ripple effect.
 
 
-      startTimer.current = setTimeout(function () {
-        if (startTimerCommit.current) {
-          startTimerCommit.current();
-          startTimerCommit.current = null;
-        }
-      }, DELAY_RIPPLE); // We have to make a tradeoff with this value.
+        startTimer.current = setTimeout(function () {
+          if (startTimerCommit.current) {
+            startTimerCommit.current();
+            startTimerCommit.current = null;
+          }
+        }, DELAY_RIPPLE); // We have to make a tradeoff with this value.
+      }
     } else {
       startCommit({
         pulsate: pulsate,
@@ -281,13 +286,7 @@ var TouchRipple = React.forwardRef(function TouchRipple(props, ref) {
     component: null,
     exit: true
   }, ripples));
-}); // TODO cleanup after https://github.com/reactjs/react-docgen/pull/378 is released
-
-function withMuiName(Component) {
-  Component.muiName = 'MuiTouchRipple';
-  return Component;
-}
-
+});
 process.env.NODE_ENV !== "production" ? TouchRipple.propTypes = {
   /**
    * If `true`, the ripple starts at the center of the component
@@ -309,4 +308,4 @@ process.env.NODE_ENV !== "production" ? TouchRipple.propTypes = {
 export default withStyles(styles, {
   flip: false,
   name: 'MuiTouchRipple'
-})(withMuiName(React.memo(TouchRipple)));
+})(React.memo(TouchRipple));

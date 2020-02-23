@@ -96,7 +96,7 @@ var styles = function styles(theme) {
       padding: '5px 15px',
       border: "1px solid ".concat(theme.palette.type === 'light' ? 'rgba(0, 0, 0, 0.23)' : 'rgba(255, 255, 255, 0.23)'),
       '&$disabled': {
-        border: "1px solid ".concat(theme.palette.action.disabled)
+        border: "1px solid ".concat(theme.palette.action.disabledBackground)
       }
     },
 

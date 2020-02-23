@@ -107,7 +107,7 @@ export const styles = theme => {
       paddingRight: 12
     },
 
-    /* Styles applied to the root element if `error={true}`. */
+    /* Pseudo-class applied to the root element if `error={true}`. */
     error: {},
 
     /* Styles applied to the `input` element if `margin="dense"`. */
