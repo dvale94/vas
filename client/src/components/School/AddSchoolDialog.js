@@ -67,6 +67,7 @@ class AddSchoolDialog extends Component {
 
     addSchool() {
         this.props.clearErrors();
+        this.props.clearSuccess();
         this.props.addSchool(this.state);
         //this.props.close()
     }

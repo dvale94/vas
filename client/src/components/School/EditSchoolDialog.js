@@ -69,6 +69,7 @@ class EditSchoolDialog extends Component {
 
     editSchool() {
         this.props.clearErrors();
+        this.props.clearSuccess();
 
         let form = this.state
         delete form.server

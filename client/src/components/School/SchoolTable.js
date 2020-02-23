@@ -7,16 +7,47 @@ import { getSchools } from '../../actions/schoolActions';
 import AddSchoolDialog from './AddSchoolDialog';
 import EditSchoolDialog from './EditSchoolDialog'
 import { withStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import { green, blue, red } from '@material-ui/core/colors';
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/core/styles';
+
+  const theme = createMuiTheme({
+    palette: {
+      primary: {main: green[600]}, // For isActive is true
+      secondary: {main: red[600]},// For isActive is false
+    }
+  });
 
 const useStyles = ({
     table: {
       minWidth: 200,
     },
+    all: {
+        backgroundColor: '#fafafa',
+        height: '13.5vh'
+    },
+    card: {
+        marginTop: 10,
+        minWidth: 300,
+        maxWidth: 450,
+        height: 150
+    },
+    title: {
+        fontSize: 14,
+        alignItems: 'right'
+    },
+    subHeading: {
+        fontSize: 15,
+        alignItems: 'right'
+    },
+    body: {
+        fontSize: 13,
+        alignItems: 'right'
+    }
   });
 
 
@@ -49,14 +80,18 @@ class SchoolTable extends Component {
             editSchoolDialog: !prevState.editSchoolDialog
         }));
     }
-  /*   clearErrors() {
-        //clearErrors();
-        console.log("yes", clearErrors())
+
+    setColor(text) {
+        if (text == true) {
+            return "primary";
+        }
+        else if (text == false) {
+            return "secondary";
+        }
+        else {
+            return "textPrimary";
+        }
     }
-    multi() {
-        clearErrors();
-        //toggleAddSchoolDialog()
-    } */
 
     render() {
         return (
@@ -97,7 +132,10 @@ class SchoolTable extends Component {
                         cellStyle: {
                             width: 250,
                             maxWidth: 700
-                          },
+                        },
+                        rowStyle:{
+                            height: 1
+                        },
                           pageSizeOptions: [10, 20, 50, 100],
                           pageSize: 20,
                           paging: true,
@@ -105,33 +143,68 @@ class SchoolTable extends Component {
                     }}
                     detailPanel={rowData => {
                         return (
-                            <div>
-                                <Table className={this.props.classes.table} size="small" aria-label="a dense table">
-                                <TableHead backgroundColor='red'>
-                                <TableRow color="red">
-                                <TableCell color="red" align="right"><strong>School Code</strong></TableCell>
-                                <TableCell align="right"><strong>Address</strong></TableCell>
-                                <TableCell align="right"><strong>State</strong></TableCell>
-                                <TableCell align="right"><strong>Zip Code</strong></TableCell>
-                                <TableCell align="right"><strong>Activation status</strong></TableCell>
-                                </TableRow>
-                                </TableHead>
 
-                                <TableBody >
-                                <TableCell component="th" scope="row"> {rowData.schoolCode}</TableCell>
-                                <TableCell component="th" scope="row"> {rowData.address}</TableCell>
-                                <TableCell component="th" scope="row"> {rowData.state}</TableCell>
-                                <TableCell component="th" scope="row"> {rowData.zipCode}</TableCell>
-                                <TableCell  scope="row"> {rowData.isActive ? 'Active' : 'Not Active'}</TableCell>
-                                </TableBody>
-                                </Table>
-                                
-                               {/*  <p><strong>PID:</strong> {rowData.pantherID}</p>
-                                <p><strong>Major:</strong> {rowData.major}</p>
-                                <p><strong>Car Available:</strong> {rowData.carAvailable ? 'Yes' : 'No'}</p>
-                                <p><strong>Volunteer Status:</strong> {rowData.volunteerStatus ? 'Approved' : 'Not yet Approved'}</p>
-                                <p><strong>MDCPS ID:</strong> {rowData.MDCPS_ID}</p> */}
+                            <ThemeProvider theme={theme}>
+                            <div className={this.props.classes.all} >
+                            <Grid
+                            container
+                            spacing={0}
+                            direction="column"
+                            alignItems="center"
+                            justify="center">
+                                <Card 
+                                className={this.props.classes.card} 
+                                variant="outlined"
+                                justify="center">
+                                    <CardContent>
+                                    {/* School Code */}
+                                    <Typography className={this.props.classes.subHeading} color="textPrimary" variant="h6" display="inline" >
+                                        School Code: &nbsp;
+                                    </Typography>
+                                    <Typography className={this.props.classes.body} color="textPrimary" variant="body1" display="inline" gutterBottom>
+                                        {rowData.schoolCode}<br/>
+                                    </Typography>
+
+                                    {/* School Address */}
+                                    <Typography className={this.props.classes.subHeading} color="textPrimary" variant="h6" display="inline" >
+                                        Address: &nbsp;
+                                    </Typography>
+                                    <Typography className={this.props.classes.body} color="textPrimary" variant="body1" display="inline" gutterBottom>
+                                        {rowData.address}<br/>
+                                    </Typography>
+
+                                    {/* City, State*/}
+                                    <Typography className={this.props.classes.subHeading} color="textPrimary" variant="h6" display="inline" >
+                                        City/State: &nbsp;
+                                    </Typography>
+                                    <Typography className={this.props.classes.body} color="textPrimary" variant="body1" display="inline" gutterBottom>
+                                        {rowData.city},  {rowData.state}<br/>
+                                    </Typography>
+
+                                    {/* Zip Code*/}
+                                    <Typography className={this.props.classes.subHeading} color="textPrimary" variant="h6" display="inline" >
+                                        Zip Code: &nbsp;
+                                    </Typography>
+                                    <Typography className={this.props.classes.body} color="textPrimary" variant="body1" display="inline" gutterBottom>
+                                        {rowData.zipCode}<br/>
+                                    </Typography>
+
+                                     {/* is Active*/}
+                                     <Typography className={this.props.classes.subHeading} color="textPrimary" variant="h6" display="inline" >
+                                        Activation status: &nbsp;
+                                    </Typography>
+                                    <Typography className={this.props.classes.body} variant="h6" display="inline" color={this.setColor(rowData.isActive)} gutterBottom>
+                                        {rowData.isActive ? 'Active' : 'Not Active'}<br/>
+                                    </Typography>
+
+
+
+                                        </CardContent>
+                                </Card>
+                            </Grid>
                             </div>
+                            </ThemeProvider>
+
                         )
 
 
