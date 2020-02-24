@@ -151,7 +151,7 @@ class AddSchoolPersonnelDialog extends Component {
                         style={{marginBottom : "15px"}}
                         margin="dense"
                         label="Password"
-                        name="Password"
+                        name="password"
                         placeholder='••••••••••'
                         onChange={this.handleInput}
                         type="password"
@@ -188,35 +188,21 @@ class AddSchoolPersonnelDialog extends Component {
                         //helperText={this.props.errors.title}
                     />
 
-                      {/* School Code: */} 
-                      <TextField 
-                        style={{marginBottom : "15px"}}
-                        margin="dense"
-                        name="schoolCode"
-                        onChange={this.handleInput}
-                        value={this.state.schoolCode}
-                        type="text"
-                        fullWidth
-                        label="School Code"
-                        //error={!isEmpty(this.props.errors.schoolCode)}
-                        //helperText={this.props.errors.schoolCode}
-                    />
-
-                    {/* isActive: */}
+                    {/* School list: */}
                     <FormControl fullWidth /* error={this.props.errors.isActive} */>
-                        <InputLabel fullWidth id="isActive">Is Active</InputLabel>
+                        <InputLabel fullWidth id="schoolCode">Associated School</InputLabel>
                         <Select
-                        labelId="isActive"
-                        name='isActive'
+                        labelId="schoolCode"
+                        name='schoolCode'
                         margin="dense"
                         onChange={this.handleInput}
-                        value={this.state.isActive}
                         fullWidth
                         >
-                            <MenuItem value={true}>Yes</MenuItem>
-                            <MenuItem value={false}>No</MenuItem>
+                            {this.props.schools.map( school => (
+                                <MenuItem value={school.schoolCode}>{school.schoolCode} - {school.schoolName}</MenuItem>
+                            ))}
                         </Select>
-                        {<FormHelperText>{this.props.errors.isActive}</FormHelperText>}
+                        {<FormHelperText>{this.props.errors.schoolCode}</FormHelperText>}
                     </FormControl>
                    
                     <br></br>   
@@ -233,11 +219,13 @@ class AddSchoolPersonnelDialog extends Component {
 
 AddSchoolPersonnelDialog.propTypes = {
     addSchoolPersonnel: PropTypes.func.isRequired,
+    schools: PropTypes.array.isRequired,
     errors: PropTypes.object.isRequired
   };
 
 const mapStateToProps = state => ({
-    errors: state.errors
+    errors: state.errors,
+    schools: state.schoolData.schools,
   });
 
 export default connect (

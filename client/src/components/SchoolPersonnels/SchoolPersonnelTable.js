@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getSchoolPersonnels } from '../../actions/schoolPersonnelActions';
+import { getSchools } from '../../actions/schoolActions';
 import AddSchoolPersonnelDialog from './AddSchoolPersonnelDialog';
 import EditSchoolPersonnelDialog from './EditSchoolPersonnelDialog'
 
@@ -22,6 +23,7 @@ class SchoolPersonnelTable extends Component {
 
     componentDidMount() {
         this.props.getSchoolPersonnels();
+        this.props.getSchools();
     }
 
     toggleAddSchoolPersonnelDialog() {
@@ -100,15 +102,18 @@ class SchoolPersonnelTable extends Component {
 SchoolPersonnelTable.propTypes = {
     getSchoolPersonnels: PropTypes.func.isRequired,
     schoolPersonnels: PropTypes.array.isRequired,
+    getSchools: PropTypes.func.isRequired,
+    schools: PropTypes.array.isRequired,
     errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
     schoolPersonnels: state.schoolPersonnels.schoolPersonnels,
+    schools: state.schoolData.schools,
     errors: state.errors
 });
 
 export default connect (
     mapStateToProps,
-    { getSchoolPersonnels }  
+    { getSchoolPersonnels, getSchools }  
 )(withRouter((SchoolPersonnelTable)));

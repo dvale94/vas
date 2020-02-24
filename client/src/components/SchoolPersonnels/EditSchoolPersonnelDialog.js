@@ -207,19 +207,23 @@ class EditSchoolPersonnelDialog extends Component {
                         //helperText={this.props.errors.title}
                     />
 
-                      {/* School Code: */} 
-                      <TextField 
-                        style={{marginBottom : "15px"}}
+                      {/* School list: */}
+                    <FormControl fullWidth /* error={this.props.errors.isActive} */>
+                        <InputLabel fullWidth id="schoolCode">Associated School</InputLabel>
+                        <Select
+                        labelId="schoolCode"
+                        name='schoolCode'
                         margin="dense"
-                        name="schoolCode"
                         onChange={this.handleInput}
                         value={this.state.schoolCode}
-                        type="text"
                         fullWidth
-                        label="School Code"
-                        //error={!isEmpty(this.props.errors.schoolCode)}
-                        //helperText={this.props.errors.schoolCode}
-                    />
+                        >
+                            {this.props.schools.map( school => (
+                                <MenuItem value={school.schoolCode}>{school.schoolCode} - {school.schoolName}</MenuItem>
+                            ))}
+                        </Select>
+                        {<FormHelperText>{this.props.errors.schoolCode}</FormHelperText>}
+                    </FormControl>
 
                     {/* isActive: */}
                     <FormControl fullWidth /* error={this.props.errors.isActive} */>
@@ -252,11 +256,13 @@ class EditSchoolPersonnelDialog extends Component {
 
 EditSchoolPersonnelDialog.propTypes = {
     editSchoolPersonnel: PropTypes.func.isRequired,
+    schools: PropTypes.array.isRequired,
     errors: PropTypes.object.isRequired
   };
 
 const mapStateToProps = state => ({
-    errors: state.errors
+    errors: state.errors,
+    schools: state.schoolData.schools,
   });
 
 export default connect (
