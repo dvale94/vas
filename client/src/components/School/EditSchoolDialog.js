@@ -154,14 +154,13 @@ class EditSchoolDialog extends Component {
 
                     {/* Educational Level: */}
                     <FormControl fullWidth error={this.props.errors.level}>
-                        <InputLabel fullWidth id="level">Educational Level</InputLabel>
+                        <InputLabel id="level">Educational Level</InputLabel>
                         <Select
                         labelId="level"
                         name='level'
                         margin="dense"
                         onChange={this.handleInput}
                         value={this.state.level}
-                        fullWidth
                         >
                             <MenuItem value={"Elementary School"}>Elementary School</MenuItem>
                             <MenuItem value={"Middle School"}>Middle School</MenuItem>
@@ -243,14 +242,13 @@ class EditSchoolDialog extends Component {
 
                     {/* isActive: */}
                     <FormControl fullWidth error={this.props.errors.isActive}>
-                        <InputLabel fullWidth id="isActive">Is Active</InputLabel>
+                        <InputLabel id="isActive">Is Active</InputLabel>
                         <Select
                         labelId="isActive"
                         name='isActive'
                         margin="dense"
                         onChange={this.handleInput}
                         value={this.state.isActive}
-                        fullWidth
                         >
                             <MenuItem value={true}>Yes</MenuItem>
                             <MenuItem value={false}>No</MenuItem>

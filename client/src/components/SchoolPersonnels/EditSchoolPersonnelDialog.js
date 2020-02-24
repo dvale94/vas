@@ -209,14 +209,14 @@ class EditSchoolPersonnelDialog extends Component {
 
                       {/* School list: */}
                     <FormControl fullWidth /* error={this.props.errors.isActive} */>
-                        <InputLabel fullWidth id="schoolCode">Associated School</InputLabel>
+                        <InputLabel id="schoolCode">Associated School</InputLabel>
                         <Select
                         labelId="schoolCode"
                         name='schoolCode'
                         margin="dense"
+                        style={{marginBottom : "15px"}}
                         onChange={this.handleInput}
                         value={this.state.schoolCode}
-                        fullWidth
                         >
                             {this.props.schools.map( school => (
                                 <MenuItem value={school.schoolCode}>{school.schoolCode} - {school.schoolName}</MenuItem>
@@ -227,14 +227,14 @@ class EditSchoolPersonnelDialog extends Component {
 
                     {/* isActive: */}
                     <FormControl fullWidth /* error={this.props.errors.isActive} */>
-                        <InputLabel fullWidth id="isActive">Is Active</InputLabel>
+                        <InputLabel id="isActive">Is Active</InputLabel>
                         <Select
                         labelId="isActive"
                         name='isActive'
                         margin="dense"
+                        style={{marginBottom : "15px"}}
                         onChange={this.handleInput}
                         value={this.state.isActive}
-                        fullWidth
                         >
                             <MenuItem value={true}>Yes</MenuItem>
                             <MenuItem value={false}>No</MenuItem>

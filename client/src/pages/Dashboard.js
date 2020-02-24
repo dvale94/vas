@@ -27,7 +27,6 @@ class Dashboard extends Component{
                 <br></br>
                 <Button
                     type="submit"
-                    color=""
                     size="small"
                     variant="contained"
                     onClick={this.redirect_to_VolunteerManagement}
@@ -38,7 +37,6 @@ class Dashboard extends Component{
                 <p>       </p>
                 <Button
                     type="submit"
-                    color=""
                     size="small"
                     variant="contained"
                     onClick={this.redirect_to_SchoolManagement}
@@ -49,7 +47,6 @@ class Dashboard extends Component{
                 <p>       </p>
                 <Button
                     type="submit"
-                    color=""
                     size="small"
                     variant="contained"
                     onClick={this.redirect_to_SchoolPersonnelManagement}

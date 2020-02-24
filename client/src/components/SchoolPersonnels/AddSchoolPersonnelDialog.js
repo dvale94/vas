@@ -183,20 +183,20 @@ class AddSchoolPersonnelDialog extends Component {
                         value={this.state.title}
                         type="text"
                         fullWidth
-                        label="Title"
+                        placeholder= "e.g. Teacher"
+                        label="Title/Position"
                         //error={!isEmpty(this.props.errors.title)}
                         //helperText={this.props.errors.title}
                     />
 
                     {/* School list: */}
                     <FormControl fullWidth /* error={this.props.errors.isActive} */>
-                        <InputLabel fullWidth id="schoolCode">Associated School</InputLabel>
+                        <InputLabel id="schoolCode">Associated School</InputLabel>
                         <Select
                         labelId="schoolCode"
                         name='schoolCode'
                         margin="dense"
                         onChange={this.handleInput}
-                        fullWidth
                         >
                             {this.props.schools.map( school => (
                                 <MenuItem value={school.schoolCode}>{school.schoolCode} - {school.schoolName}</MenuItem>

@@ -138,13 +138,12 @@ class AddSchoolDialog extends Component {
 
                     {/* Educational Level: */}
                     <FormControl fullWidth error={this.props.errors.level}>
-                        <InputLabel fullWidth id="level">Educational Level</InputLabel>
+                        <InputLabel id="level">Educational Level</InputLabel>
                         <Select
                         labelId="level"
                         name='level'
                         margin="dense"
                         onChange={this.handleInput}
-                        fullWidth
                         >
                             <MenuItem value={"Elementary School"}>Elementary School</MenuItem>
                             <MenuItem value={"Middle School"}>Middle School</MenuItem>
