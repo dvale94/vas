@@ -231,7 +231,7 @@ class EditVolunteerDialog extends Component {
                     </FormControl>
                     
                     <FormControl fullWidth style={{marginBottom : "15px"}} margin='dense'>
-                        <InputLabel id="volunteer-status">Is Active</InputLabel>
+                        <InputLabel id="volunteer-status">Volunteer Status</InputLabel>
                         <Select
                             labelId='volunteer-status'
                             name='volunteerStatus'
