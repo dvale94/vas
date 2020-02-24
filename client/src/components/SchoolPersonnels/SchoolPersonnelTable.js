@@ -85,7 +85,7 @@ class SchoolPersonnelTable extends Component {
                             <div>
                                 <p><strong>Phone #:</strong> {rowData.phoneNumber}</p>
                                 <p><strong>Title:</strong> {rowData.title}</p>
-                                <p><strong>School ID:</strong> {rowData.schoolID}</p>
+                                <p><strong>School Code:</strong> {rowData.schoolCode}</p>
                             </div>
                         )
                     }}

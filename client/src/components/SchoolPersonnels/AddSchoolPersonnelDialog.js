@@ -14,7 +14,12 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
 import { addSchoolPersonnel } from "../../actions/schoolPersonnelActions";
-
+import InputLabel from '@material-ui/core/InputLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import isEmpty from 'is-empty';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 const theme = createMuiTheme({
     palette: {
       primary: blue,
@@ -37,23 +42,30 @@ class AddSchoolPersonnelDialog extends Component {
         super(props);
         this.state = {
             firstName: '',
-            lastName: '',
-            email: '',
-            password: '',
-            phoneNumber: '',
+            lastName: '', 
+            email: '', 
+            password: '', 
+            phoneNumber: '', 
             title: '',
-            schoolID: '',
-            server: {}
+            schoolCode: '',
+            isActive: true, 
         }
 
         this.addSchoolPersonnel = this.addSchoolPersonnel.bind(this);
         this.handleInput = this.handleInput.bind(this);
+        this.exitDialog = this.exitDialog.bind(this);
     }    
 
     addSchoolPersonnel() {
+        //this.props.clearErrors();
+        //this.props.clearSuccess();
         this.props.addSchoolPersonnel(this.state);
+    }
 
-        this.props.close()
+    exitDialog() {
+        //this.props.clearErrors();
+        //this.props.clearSuccess();
+        this.props.close();
     }
 
     handleInput = (e) =>{
@@ -67,97 +79,151 @@ class AddSchoolPersonnelDialog extends Component {
         console.log(this.state)
     }
 
-    inputError = (error) => {
-        return (
-          <div style={{color: "red"}}>
-              {error}
-            </div>
-        )
-    };
-
+    /* successMessage() {
+        if (!isEmpty(this.props.success.message)) {
+            return <Alert severity="success">{this.props.success.message}</Alert> 
+        }
+    }
+ */
+   
     render() {
 
-        const {open, close} = this.props
+        const { open } = this.props
 
         return (
             <ThemeProvider theme={theme}>
             <Dialog
             open={open}
+            maxWidth="sm"
             >
                 <DialogTitle >Add School Personnel</DialogTitle>
+             {/*    { this.successMessage() } */}
                 <DialogContent>
                     <DialogContentText>
                     To add a School Personnel, fill out the following form and click submit.
                     </DialogContentText>
                     <br></br>
-                    First Name: 
-                    <TextField 
+
+                   {/* First Name: */} 
+                   <TextField 
                         style={{marginBottom : "15px"}}
                         margin="dense"
                         name="firstName"
                         onChange={this.handleInput}
+                        value={this.state.firstName}
                         type="text"
                         fullWidth
+                        label="First Name"
+                        //error={!isEmpty(this.props.errors.firstName)}
+                        //helperText={this.props.errors.firstName}
                     />
-                    Last Name:
+
+                    {/* Last Name: */} 
                     <TextField 
                         style={{marginBottom : "15px"}}
                         margin="dense"
                         name="lastName"
                         onChange={this.handleInput}
+                        value={this.state.lastName}
                         type="text"
                         fullWidth
+                        label="Last Name"
+                        //error={!isEmpty(this.props.errors.lastName)}
+                        //helperText={this.props.errors.lastName}
                     />
-                    Email:
+
+                    {/* Email: */} 
                     <TextField 
                         style={{marginBottom : "15px"}}
                         margin="dense"
                         name="email"
                         onChange={this.handleInput}
+                        value={this.state.email}
                         type="text"
                         fullWidth
+                        label="Email"
+                        //error={!isEmpty(this.props.errors.email)}
+                        //helperText={this.props.errors.email}
                     />
-                    Password:
+
+                    {/* Password: */} 
                     <TextField 
                         style={{marginBottom : "15px"}}
                         margin="dense"
-                        name="password"
+                        label="Password"
+                        name="Password"
+                        placeholder='••••••••••'
                         onChange={this.handleInput}
                         type="password"
                         fullWidth
+                        //error={!isEmpty(this.props.errors.password)}
+                        //helperText={this.props.errors.password}
                     />
-                    Phone Number:
-                    <TextField 
+
+                     {/* Phone Number: */} 
+                     <TextField 
                         style={{marginBottom : "15px"}}
                         margin="dense"
                         name="phoneNumber"
                         onChange={this.handleInput}
+                        value={this.state.phoneNumber}
                         type="text"
                         fullWidth
+                        label="Phone Number"
+                        //error={!isEmpty(this.props.errors.phoneNumber)}
+                        //helperText={this.props.errors.phoneNumber}
                     />
-                    Title:
-                    <TextField 
+
+                     {/* Title: */} 
+                     <TextField 
                         style={{marginBottom : "15px"}}
                         margin="dense"
                         name="title"
                         onChange={this.handleInput}
+                        value={this.state.title}
                         type="text"
                         fullWidth
+                        label="Title"
+                        //error={!isEmpty(this.props.errors.title)}
+                        //helperText={this.props.errors.title}
                     />
-                    School ID: 
-                    <TextField 
+
+                      {/* School Code: */} 
+                      <TextField 
                         style={{marginBottom : "15px"}}
                         margin="dense"
-                        name="schoolID"
+                        name="schoolCode"
                         onChange={this.handleInput}
+                        value={this.state.schoolCode}
                         type="text"
                         fullWidth
+                        label="School Code"
+                        //error={!isEmpty(this.props.errors.schoolCode)}
+                        //helperText={this.props.errors.schoolCode}
                     />
+
+                    {/* isActive: */}
+                    <FormControl fullWidth /* error={this.props.errors.isActive} */>
+                        <InputLabel fullWidth id="isActive">Is Active</InputLabel>
+                        <Select
+                        labelId="isActive"
+                        name='isActive'
+                        margin="dense"
+                        onChange={this.handleInput}
+                        value={this.state.isActive}
+                        fullWidth
+                        >
+                            <MenuItem value={true}>Yes</MenuItem>
+                            <MenuItem value={false}>No</MenuItem>
+                        </Select>
+                        {<FormHelperText>{this.props.errors.isActive}</FormHelperText>}
+                    </FormControl>
+                   
                     <br></br>   
                 </DialogContent>
                 <DialogActions>
                     <Button className={this.props.classes.bottomButtons} onClick={this.addSchoolPersonnel}  variant="contained" color="primary">Add</Button>
-                    <Button className={this.props.classes.bottomButtons} onClick={close} variant="contained" color="primary">Cancel</Button>
+                    <Button className={this.props.classes.bottomButtons} onClick={this.exitDialog} variant="contained" color="primary">Exit</Button>
                 </DialogActions>
             </Dialog>
             </ThemeProvider>

@@ -55,8 +55,6 @@ class AddSchoolDialog extends Component {
             state: '',
             zipCode: '',
             isActive: true,
-            server: {},
-            error123: {}
         }
 
         this.addSchool = this.addSchool.bind(this);
@@ -69,8 +67,8 @@ class AddSchoolDialog extends Component {
         this.props.clearErrors();
         this.props.clearSuccess();
         this.props.addSchool(this.state);
-        //this.props.close()
     }
+
     exitDialog() {
         this.props.clearErrors();
         this.props.clearSuccess();
@@ -87,6 +85,7 @@ class AddSchoolDialog extends Component {
 
         console.log(this.state)
     }
+    
     successMessage() {
         if (!isEmpty(this.props.success.message)) {
             return <Alert severity="success">{this.props.success.message}</Alert> 

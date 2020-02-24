@@ -216,7 +216,7 @@ function volunteerSignUp (req, res) {
 function schoolPersonnelSignUp (req, res) {
     const { body } = req;
     const { 
-        schoolID,
+        schoolCode,
         firstName,
         lastName,
         password,
@@ -227,7 +227,7 @@ function schoolPersonnelSignUp (req, res) {
             email
         } = body;
 
-        if (!schoolID) {
+        if (!schoolCode) {
             return res.send({
                 success: false,
                 message: 'Error: School ID cannot be blank.'
@@ -291,7 +291,7 @@ function schoolPersonnelSignUp (req, res) {
         newSchPersonnel.lastName = lastName;
         newSchPersonnel.email = email;
         newSchPersonnel.phoneNumber = phoneNumber;
-        newSchPersonnel.schoolID = schoolID;
+        newSchPersonnel.schoolCode = schoolCode;
         newSchPersonnel.title = title;
         newSchPersonnel.isActive = 'true'
         
@@ -424,7 +424,7 @@ function login (req, res) {
                                 email: personnel.email,
                                 phoneNumber: personnel.phoneNumber,
                                 title: personnel.title,
-                                schoolID: personnel.schoolID
+                                schoolCode: personnel.schoolCode
                             }
 
                             jwt.sign(

@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
 const SchoolPersonnelSchema = new mongoose.Schema({
-    schoolID: {
+    schoolCode: {
         type: String,
         required: true
     },

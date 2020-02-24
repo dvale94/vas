@@ -17,6 +17,10 @@ import { connect } from "react-redux";
 import { editSchoolPersonnel } from "../../actions/schoolPersonnelActions";
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import Alert from '@material-ui/lab/Alert';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
 
 const theme = createMuiTheme({
     palette: {
@@ -38,16 +42,31 @@ const useStyles = {
 class EditSchoolPersonnelDialog extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            server: {}
-        }
+        this.state = {}
 
         this.editSchoolPersonnel = this.editSchoolPersonnel.bind(this);
         this.handleInput = this.handleInput.bind(this);
-    }    
+        this.exitDialog = this.exitDialog.bind(this);
+    }
+
+    componentDidMount(){
+        this.setState({
+            firstName: this.props.schoolPersonnel.firstName,
+            lastName: this.props.schoolPersonnel.lastName,
+            email: this.props.schoolPersonnel.email,
+            password: this.props.schoolPersonnel.password,
+            phoneNumber: this.props.schoolPersonnel.phoneNumber,
+            title: this.props.schoolPersonnel.title,
+            schoolCode: this.props.schoolPersonnel.schoolCode,
+            isActive: this.props.schoolPersonnel.isActive,
+        });
+        console.log(this.state)
+    }
 
     editSchoolPersonnel() {
-
+        //this.props.clearErrors();
+        //this.props.clearSuccess();
+        
         let form = this.state
         delete form.server
 
@@ -63,6 +82,12 @@ class EditSchoolPersonnelDialog extends Component {
         this.props.close()
     }
 
+    exitDialog() {
+        //this.props.clearErrors();
+        //this.props.clearSuccess();
+        this.props.close();
+    }
+
     handleInput = (e) =>{
         const value = e.target.value
         const name = e.target.name
@@ -73,116 +98,151 @@ class EditSchoolPersonnelDialog extends Component {
 
     }
 
-    inputError = (error) => {
-        return (
-          <div style={{color: "red"}}>
-              {error}
-            </div>
-        )
-    };
+    /* successMessage() {
+        if (!isEmpty(this.props.success.message)) {
+            return <Alert severity="success">{this.props.success.message}</Alert> 
+        }
+    } */
+
 
     render() {
 
-        const {schoolPersonnel, open, close} = this.props
+        const { open } = this.props
 
         return (
             <ThemeProvider theme={theme}>
             <Dialog
             open={open}
+            maxWidth="sm"
             >
                 <DialogTitle >Edit School Personnel</DialogTitle>
+                {/* { this.successMessage() } */}
                 <DialogContent>
                     <DialogContentText>
                     To edit a School Personnel, make the changes and click submit.
                     </DialogContentText>
                     <br></br>
-                    First Name: 
+
+                    {/* First Name: */} 
                     <TextField 
                         style={{marginBottom : "15px"}}
                         margin="dense"
                         name="firstName"
-                        placeholder={schoolPersonnel.firstName}
                         onChange={this.handleInput}
+                        value={this.state.firstName}
                         type="text"
                         fullWidth
+                        label="First Name"
+                        //error={!isEmpty(this.props.errors.firstName)}
+                        //helperText={this.props.errors.firstName}
                     />
-                    Last Name:
+
+                    {/* Last Name: */} 
                     <TextField 
                         style={{marginBottom : "15px"}}
                         margin="dense"
                         name="lastName"
-                        placeholder={schoolPersonnel.lastName}
                         onChange={this.handleInput}
+                        value={this.state.lastName}
                         type="text"
                         fullWidth
+                        label="Last Name"
+                        //error={!isEmpty(this.props.errors.lastName)}
+                        //helperText={this.props.errors.lastName}
                     />
-                    Email:
+
+                    {/* Email: */} 
                     <TextField 
                         style={{marginBottom : "15px"}}
                         margin="dense"
                         name="email"
-                        placeholder={schoolPersonnel.email}
                         onChange={this.handleInput}
+                        value={this.state.email}
                         type="text"
                         fullWidth
+                        label="Email"
+                        //error={!isEmpty(this.props.errors.email)}
+                        //helperText={this.props.errors.email}
                     />
-                    Password:
+
+                    {/* Password: */} 
                     <TextField 
                         style={{marginBottom : "15px"}}
                         margin="dense"
+                        label="Password"
                         name="password"
-                        placeholder='**********'
+                        defaultValue='••••••••••'
                         onChange={this.handleInput}
                         type="password"
-                        fullWidth 
+                        fullWidth
+                        //error={!isEmpty(this.props.errors.password)}
+                        //helperText={this.props.errors.password}
                     />
-                    Phone Number:
-                    <TextField 
+
+                     {/* Phone Number: */} 
+                     <TextField 
                         style={{marginBottom : "15px"}}
                         margin="dense"
                         name="phoneNumber"
-                        placeholder={schoolPersonnel.phoneNumber}
                         onChange={this.handleInput}
+                        value={this.state.phoneNumber}
                         type="text"
                         fullWidth
+                        label="Phone Number"
+                        //error={!isEmpty(this.props.errors.phoneNumber)}
+                        //helperText={this.props.errors.phoneNumber}
                     />
-                    Title:
-                    <TextField 
+
+                     {/* Title: */} 
+                     <TextField 
                         style={{marginBottom : "15px"}}
                         margin="dense"
                         name="title"
-                        placeholder={schoolPersonnel.title}
                         onChange={this.handleInput}
+                        value={this.state.title}
                         type="text"
                         fullWidth
+                        label="Title"
+                        //error={!isEmpty(this.props.errors.title)}
+                        //helperText={this.props.errors.title}
                     />
-                    School ID: 
-                    <TextField 
+
+                      {/* School Code: */} 
+                      <TextField 
                         style={{marginBottom : "15px"}}
                         margin="dense"
-                        name="schoolID"
-                        placeholder={schoolPersonnel.schoolID}
+                        name="schoolCode"
                         onChange={this.handleInput}
+                        value={this.state.schoolCode}
                         type="text"
                         fullWidth
+                        label="School Code"
+                        //error={!isEmpty(this.props.errors.schoolCode)}
+                        //helperText={this.props.errors.schoolCode}
                     />
-                    Is Active: 
-                    <Select
-                    style={{marginBottom : "15px"}}
-                    name='isActive'
-                    margin="dense"
-                    defaultValue={schoolPersonnel.isActive}
-                    onChange={this.handleInput}
-                    fullWidth
-                    >
-                        <MenuItem value={true}>Yes</MenuItem>
-                        <MenuItem value={false}>No</MenuItem>
-                    </Select>
+
+                    {/* isActive: */}
+                    <FormControl fullWidth /* error={this.props.errors.isActive} */>
+                        <InputLabel fullWidth id="isActive">Is Active</InputLabel>
+                        <Select
+                        labelId="isActive"
+                        name='isActive'
+                        margin="dense"
+                        onChange={this.handleInput}
+                        value={this.state.isActive}
+                        fullWidth
+                        >
+                            <MenuItem value={true}>Yes</MenuItem>
+                            <MenuItem value={false}>No</MenuItem>
+                        </Select>
+                        {<FormHelperText>{this.props.errors.isActive}</FormHelperText>}
+                    </FormControl>
+
                     <br></br>   
                 </DialogContent>
                 <DialogActions>
                     <Button className={this.props.classes.bottomButtons} onClick={this.editSchoolPersonnel}  variant="contained" color="primary">Update</Button>
-                    <Button className={this.props.classes.bottomButtons} onClick={close} variant="contained" color="primary">Cancel</Button>
+                    <Button className={this.props.classes.bottomButtons} onClick={this.exitDialog} variant="contained" color="primary">Exit</Button>
                 </DialogActions>
             </Dialog>
             </ThemeProvider>
