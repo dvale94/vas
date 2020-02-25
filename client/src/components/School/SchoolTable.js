@@ -137,7 +137,7 @@ class SchoolTable extends Component {
                             height: 1
                         },
                           pageSizeOptions: [10, 20, 50, 100],
-                          pageSize: 20,
+                          pageSize: 10,
                           paging: true,
                           exportButton: true,
                     }}
@@ -213,6 +213,7 @@ class SchoolTable extends Component {
                 {this.state.editSchoolDialog && <EditSchoolDialog open={this.state.editSchoolDialog} close={this.toggleEditSchoolDialog} school={this.state.selectedSchool}/>}
                 {this.state.addSchoolDialog && <AddSchoolDialog open={this.state.addSchoolDialog} close={this.toggleAddSchoolDialog}/>}
             </Fragment>
+            
         );
     }
 }

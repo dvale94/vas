@@ -134,8 +134,8 @@ class SchoolPersonnelTable extends Component {
                           searchFieldStyle: {
                             backgroundColor: '#eeeeee',
                         },
-                          pageSizeOptions: [10, 20, 50, 100],
-                          pageSize: 10,
+                          pageSizeOptions: [4, 10, 20, 50, 100],
+                          pageSize: 4,
                           paging: true,
                           exportButton: true,
                     }}
