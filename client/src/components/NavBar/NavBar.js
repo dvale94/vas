@@ -84,7 +84,8 @@ redirect_to_Profile = () =>{
 
     // Hides logout button after being clicked
     this.setState({
-      loggedIn: false
+      loggedIn: false,
+      open: false
     });
   
     this.props.logoutUser(); 
@@ -123,14 +124,14 @@ redirect_to_Profile = () =>{
 }
 
 renderMenu(){
-if(this.state.loggedIn){
+/* if(this.state.loggedIn && this.state.open){ */
   return(
   <Menu id="fade-menu" anchorEl={this.state.anchorEl} open={this.state.open} onClose={this.handleClose} TransitionComponent={Fade}>
         <MenuItem onClick={this.handleClose && this.redirect_to_Profile}>Profile</MenuItem>
         <MenuItem onClick={this.handleClose && this.submitLogout}>Logout</MenuItem>
     </Menu>
    )
-  } 
+/*   }  */
 }
 
 

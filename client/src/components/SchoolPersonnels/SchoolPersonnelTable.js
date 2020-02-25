@@ -29,7 +29,7 @@ const useStyles = ({
     },
     all: {
         backgroundColor: '#fafafa',
-        height: '10vh'
+        height: 127
     },
     card: {
         marginTop: 10,

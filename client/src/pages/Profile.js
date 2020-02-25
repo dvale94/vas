@@ -25,7 +25,6 @@ class Profile extends Component{
 
 // define types
 Profile.propTypes = {
-    classes: PropTypes.object.isRequired,
     auth: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired
   };
