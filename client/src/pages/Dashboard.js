@@ -14,6 +14,9 @@ class Dashboard extends Component{
     redirect_to_SchoolPersonnelManagement = () =>{
         this.props.history.push("/school-personnel-management"); 
     }
+    redirect_to_TeamManagement = () =>{
+        this.props.history.push("/team-management"); 
+    }
 
 
     render(){
@@ -53,6 +56,16 @@ class Dashboard extends Component{
                     //
                 >
                     School Personnel Management
+                </Button>
+                <p>       </p>
+                <Button
+                    type="submit"
+                    size="small"
+                    variant="contained"
+                    onClick={this.redirect_to_TeamManagement}
+                    //
+                >
+                    Team Management
                 </Button>
 
 

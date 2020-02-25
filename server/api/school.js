@@ -4,6 +4,7 @@ const School = require('../models/Schools/school')
 
 // input validation
 import validateCreateSchoolInput from '../validation/schools/createSchool';
+import validateUpdateSchoolInput from '../validation/schools/updateSchool';
 
 const router = new express.Router();
 
@@ -85,7 +86,7 @@ function updateSchool(request, response) {
 
 
     // form validation
-    const { errors, isValid } = validateCreateSchoolInput(request.body);
+    const { errors, isValid } = validateUpdateSchoolInput(request.body);
     // check validation
     if (!isValid) {
         return response.status(400).json({success: false, errors});

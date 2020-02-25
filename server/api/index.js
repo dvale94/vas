@@ -13,7 +13,7 @@ router.use('/volunteers', volunteers.router);
 router.use('/admin', admin.router);
 router.use('/school-personnels', schoolPersonnels.router);
 router.use('/school', school.router);
-router.use('/teams', teams.router);
+router.use('/team', teams.router);
 
 router.all('*', (req, res) => {
 	res.status(400).json({

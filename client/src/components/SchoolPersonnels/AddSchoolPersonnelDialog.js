@@ -190,7 +190,7 @@ class AddSchoolPersonnelDialog extends Component {
                     />
 
                     {/* School list: */}
-                    <FormControl fullWidth /* error={this.props.errors.isActive} */>
+                    <FormControl fullWidth /* error={this.props.errors.schoolCode} */>
                         <InputLabel id="schoolCode">Associated School</InputLabel>
                         <Select
                         labelId="schoolCode"

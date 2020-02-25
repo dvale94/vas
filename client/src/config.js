@@ -28,7 +28,12 @@ const config = {
 			fetch: '/school-personnels',
 			fetchByid: '/school-personnels',
 			update: '/school-personnels/update',
-		}
+		},
+		team: {
+			create: '/team/create',
+			fetch: '/team',
+			update: '/team/update',
+		},
 	}
 };
 

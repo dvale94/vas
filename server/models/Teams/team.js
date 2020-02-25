@@ -2,6 +2,11 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
 const Team = new mongoose.Schema({
+    schoolCode: {
+        type: String,
+        required: true,
+        default: ''
+    },
     semester: {
         type: String,
         required: true,
