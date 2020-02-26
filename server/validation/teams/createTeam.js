@@ -24,9 +24,9 @@ function validateCreateTeamInput(data) {
     if (validator.isEmpty(data.year)) {
 		  errors.year = 'A year is required';
     }
-    if (data.dayOfWeek.length === 0 ) {
+    /* if (data.dayOfWeek == null ) {
 		  errors.dayOfWeek = 'At least one day of the week is required';
-    }
+    } */
     if (validator.isEmpty(data.startTime)) {
 		  errors.startTime = 'A start time is required';
     }

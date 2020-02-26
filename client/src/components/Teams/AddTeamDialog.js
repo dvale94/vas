@@ -23,7 +23,19 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import isEmpty from 'is-empty';
 import FormControl from '@material-ui/core/FormControl';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormLabel from '@material-ui/core/FormLabel';
 
+
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import ListItemText from '@material-ui/core/ListItemText';
+import IconButton from '@material-ui/core/IconButton';
+import CommentIcon from '@material-ui/icons/Comment';
 
 const theme = createMuiTheme({
     palette: {
@@ -40,25 +52,38 @@ const useStyles = {
             backgroundColor: blue[500],
         }
     },
+    days: {
+        //color: "yellow",
+        justify: "center",
+        alignItems: "center"
+    }
 };
 
 class AddTeamDialog extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            schoolName: '',
+            semester: '',
+            year: '',
             schoolCode: '',
-            level: '',
-            phoneNumber: '',
-            address: '',
-            city: '',
-            state: '',
-            zipCode: '',
+            dayOfWeek: {
+                monday: false,
+                tuesday: false,
+                wednesday: false,
+                thursday: false,
+                friday: false
+            },
+            startTime: '',
+            endTime: '',
+            volunteers: [],
             isActive: true,
+            monday: false,
+            tuesday: false,
         }
 
         this.addTeam = this.addTeam.bind(this);
         this.handleInput = this.handleInput.bind(this);
+        this.handleChange = this.handleChange.bind(this);
         this.exitDialog = this.exitDialog.bind(this);
     }
 
@@ -66,6 +91,7 @@ class AddTeamDialog extends Component {
     addTeam() {
         this.props.clearErrors();
         this.props.clearSuccess();
+        console.log("SUMBITTING THIS: ", this.state)
         this.props.addTeam(this.state);
     }
 
@@ -74,11 +100,12 @@ class AddTeamDialog extends Component {
         this.props.clearSuccess();
         this.props.close();
     }
+    
 
     handleInput = (e) =>{
         const value = e.target.value
         const name = e.target.name
-    
+
         this.setState({
           [name]: value 
         })
@@ -86,16 +113,35 @@ class AddTeamDialog extends Component {
         console.log(this.state)
     }
     
+
+    handleChange = (e) => {
+        const name = e.target.name
+        
+        this.setState({
+            [name]: !this.state[name]
+        })
+
+        this.setState({
+            dayOfWeek:{
+            ...this.state.dayOfWeek, [name]: this.state[name]
+            }
+        })
+        console.log(this.state.dayOfWeek)
+    }
+
+    
     successMessage() {
         if (!isEmpty(this.props.success.message)) {
             return <Alert severity="success">{this.props.success.message}</Alert> 
         }
     }
+    
 
     render() {
 
         const { open } = this.props
 
+        
         return (
             <ThemeProvider theme={theme}>
             <Dialog
@@ -168,7 +214,7 @@ class AddTeamDialog extends Component {
                     </FormControl>
 
                     {/* Day of the week: */}
-                    <FormControl fullWidth error={this.props.errors.dayOfWeek}>
+                    {/* <FormControl fullWidth error={this.props.errors.dayOfWeek}>
                         <InputLabel id="dayOfWeek">Days of the week</InputLabel>
                         <Select
                         labelId="dayOfWeek"
@@ -183,7 +229,55 @@ class AddTeamDialog extends Component {
                             <MenuItem value={"Friday"}>Friday</MenuItem>
                         </Select>
                         {<FormHelperText style={{marginBottom : "15px"}}>{this.props.errors.dayOfWeek}</FormHelperText>}
-                    </FormControl>
+                    </FormControl> */}
+                    
+                    <div className={this.props.classes.days}>
+                    <FormControl component="fieldset" error={this.props.errors.dayOfWeek}>
+                        <FormLabel component="legend">Days of the week</FormLabel>
+                        <FormGroup aria-label="position" row>
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                    name="monday"
+                                    value={this.state.monday}
+                                    onChange={this.handleChange} 
+                                    color="primary" />
+                                }
+                                label="Monday"
+                                labelPlacement="bottom"
+                            />
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                    name="tuesday"
+                                    value={this.state.tuesday}
+                                    onChange={this.handleChange} 
+                                    color="primary" />
+                                }
+                                label="Tuesday"
+                                labelPlacement="bottom"
+                            />
+                            <FormControlLabel
+                                value="wednesday"
+                                control={<Checkbox color="primary" />}
+                                label="Wednesday"
+                                labelPlacement="bottom"
+                            />
+                            <FormControlLabel
+                                value="thursday"
+                                control={<Checkbox color="primary" />}
+                                label="Thursday"
+                                labelPlacement="bottom"
+                            />
+                            <FormControlLabel
+                                value="friday"
+                                control={<Checkbox color="primary" />}
+                                label="Friday"
+                                labelPlacement="bottom"
+                            />
+                             </FormGroup>
+                             </FormControl>
+                             </div>{<FormHelperText style={{marginBottom : "15px"}}>{this.props.errors.dayOfWeek}</FormHelperText>}
 
                     {/* Start Time: */}
                     <TextField 
@@ -226,6 +320,8 @@ class AddTeamDialog extends Component {
                         </Select>
                         {<FormHelperText style={{marginBottom : "15px"}}>{this.props.errors.volunteerPIs}</FormHelperText>}
                     </FormControl>
+                    
+
 
                     <br></br>
                 </DialogContent>

@@ -17,9 +17,32 @@ const Team = new mongoose.Schema({
         required: true
     },
     dayOfWeek: {
-        type: Array,
-        required: true,
-        default: ''
+        monday: {
+            type: Boolean,
+            required: true,
+            default: false
+        },
+        tuesday: {
+            type: Boolean,
+            required: true,
+            default: false
+        },
+        wednesday: {
+            type: Boolean,
+            required: true,
+            default: false
+        },
+        thursday: {
+            type: Boolean,
+            required: true,
+            default: false
+        },
+        friday: {
+            type: Boolean,
+            required: true,
+            default: false
+        },
+
     },
     startTime: {
         type: String,
