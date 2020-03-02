@@ -19,7 +19,6 @@ function createTeam (req, res) {
         schoolCode,
         semester,
         year,
-        dayOfWeek,
         startTime,
         endTime,
         volunteerPIs,
@@ -39,7 +38,11 @@ function createTeam (req, res) {
         newTeam.schoolCode = schoolCode;
         newTeam.semester = semester;
         newTeam.year = year;
-        newTeam.dayOfWeek = dayOfWeek;
+        newTeam.dayOfWeek.monday = body['dayOfWeek[monday]'];
+        newTeam.dayOfWeek.tuesday = body['dayOfWeek[tuesday]'];
+        newTeam.dayOfWeek.wednesday = body['dayOfWeek[wednesday]'];
+        newTeam.dayOfWeek.thursday = body['dayOfWeek[thursday]'];
+        newTeam.dayOfWeek.friday = body['dayOfWeek[friday]'];
         newTeam.startTime = startTime;
         newTeam.endTime = endTime;
         newTeam.volunteerPIs = volunteerPIs;
@@ -49,7 +52,7 @@ function createTeam (req, res) {
             if (err) {
                 return res.send({
                     success: false,
-                    message: 'Error: Server error'
+                    errors: 'Error: Server error'
                 });
             }
             return res.send({

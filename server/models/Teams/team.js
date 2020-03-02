@@ -24,25 +24,20 @@ const Team = new mongoose.Schema({
         },
         tuesday: {
             type: Boolean,
-            required: true,
             default: false
         },
         wednesday: {
             type: Boolean,
-            required: true,
             default: false
         },
         thursday: {
             type: Boolean,
-            required: true,
             default: false
         },
         friday: {
             type: Boolean,
-            required: true,
             default: false
-        },
-
+        }
     },
     startTime: {
         type: String,
