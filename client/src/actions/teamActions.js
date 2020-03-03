@@ -25,12 +25,17 @@ export const getTeams = () => dispatch => {
 };
 
 // add teams to database and refresh the store
-export const addTeam = form => dispatch => {
+export const addTeam = uneditedform => dispatch => {
+
+    let form = JSON.parse(JSON.stringify(uneditedform));
+
+    form.volunteerPIs = form.volunteerPIs.join()
+
+    console.log(form)
 
     const endpoint = `${serverConf.uri}${serverConf.endpoints.team.create}`;
 
     request.post(endpoint, { form }, (error, response, body) => {
-        
         const res = JSON.parse(body);
 
         //REMOVE- only for debugging
@@ -59,7 +64,7 @@ export const editTeam = (id, form) => dispatch => {
     const endpoint = `${serverConf.uri}${serverConf.endpoints.team.update}/${id}`;
 
     request.post(endpoint, { form }, (error, response, body) => {
-        
+        console.log(form)
         const res = JSON.parse(body);
 
         //REMOVE- only for debugging

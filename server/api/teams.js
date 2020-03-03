@@ -13,9 +13,8 @@ router.get('/:id', fetchTeamById);
 router.get('/', fetchTeams);
 
 function createTeam (req, res) {
-
     const { body } = req;
-    const { 
+    let { 
         schoolCode,
         semester,
         year,
@@ -24,8 +23,10 @@ function createTeam (req, res) {
         volunteerPIs,
         isActive
         } = body;
-
-
+        
+        //deconstruct PIDs into an array
+        volunteerPIs = volunteerPIs.split(',')
+        
         // form validation
         const { errors, isValid } = validateCreateTeamInput(req.body);
         // check validation

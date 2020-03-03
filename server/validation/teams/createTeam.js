@@ -2,7 +2,6 @@ import validator from 'validator';
 import isEmpty from 'is-empty';
 
 function validateCreateTeamInput(data) {
-
     let errors = {};
 
     // convert empty fields to an empty string so we can use validator functions
@@ -33,7 +32,7 @@ function validateCreateTeamInput(data) {
     if (validator.isEmpty(data.endTime)) {
 		  errors.endTime = 'An end time is required';
     }
-    if (data.volunteerPIs.length === 0) {
+    if (validator.isEmpty(data.volunteerPIs)) {
 		errors.volunteerPIs = 'At least one volunteer is required to create a team';
     } 
 

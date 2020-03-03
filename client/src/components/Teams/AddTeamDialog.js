@@ -94,7 +94,6 @@ class AddTeamDialog extends Component {
         this.handleInput = this.handleInput.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.exitDialog = this.exitDialog.bind(this);
-        
     }
 
 
@@ -102,9 +101,8 @@ class AddTeamDialog extends Component {
         this.props.clearErrors();
         this.props.clearSuccess();
 
-        const form = this.state;
-        console.log("SUMBITTING THIS: ", form)
-        this.props.addTeam(form);
+        console.log("SUMBITTING THIS: ", this.state)
+        this.props.addTeam(this.state);
     }
 
     exitDialog() {
@@ -184,7 +182,6 @@ class AddTeamDialog extends Component {
         ));
       }
 
-    
     successMessage() {
         if (!isEmpty(this.props.success.message)) {
             return <Alert severity="success">{this.props.success.message}</Alert> 
@@ -366,7 +363,7 @@ class AddTeamDialog extends Component {
                     />
 
                     {/* Volunteer list: */}
-                    <FormControl fullWidth error={this.props.errors.volunteerPIs}>
+                    {/* <FormControl fullWidth error={this.props.errors.volunteerPIs}>
                         <InputLabel id="volunteerPIs">Volunteers</InputLabel>
                         <Select
                         labelId="volunteerPIs"
@@ -379,7 +376,7 @@ class AddTeamDialog extends Component {
                             ))}
                         </Select>
                         {<FormHelperText style={{marginBottom : "15px"}}>{this.props.errors.volunteerPIs}</FormHelperText>}
-                    </FormControl>
+                    </FormControl> */}
 
                     
                     {/* <FormControl fullWidth error={this.props.errors.volunteerPIs} >
@@ -408,38 +405,44 @@ class AddTeamDialog extends Component {
                             </div>
                           )}
                         //MenuProps={MenuProps}
-                        > */}
-                           {/*  <MenuItem  disabled value="">
+                        >
+                            <MenuItem  disabled value="">
                                 <em>Volunteers</em>
                             </MenuItem>
                             {this.props.volunteers.map(name => (
                                 <MenuItem key={name.pantherID} value={name.pantherID}>
                                 {name.pantherID}
                                 </MenuItem>
-                            ))} */}
-                            {/* {this.props.volunteers.map(volunteer => (
+                            ))}
+                            {this.props.volunteers.map(volunteer => (
                             <MenuItem key={volunteer.pantherID} value={volunteer.pantherID}>
                             {volunteer.pantherID}
                             </MenuItem>
-                        ))} */}
-                         {/* {this.props.volunteers.map(name => (
+                        ))}
+                         {this.props.volunteers.map(name => (
                             <option key={name.pantherID} value={name.pantherID}>
                             {name.pantherID}
                             </option>
-                        ))} */}
+                        ))}
                         
-                       {/*  </Select>
+                        </Select>
                         {<FormHelperText style={{marginBottom : "15px"}}>{this.props.errors.volunteerPIs}</FormHelperText>}
+                </FormControl> */}
+                <FormControl fullWidth style={{marginBottom : "15px"}} margin='dense' error={this.props.errors.volunteerPIs}>
+                    <InputLabel id="volunteers">Volunteer(s)</InputLabel>
+                    <Select
+                        multiple
+                        labelId='volunteers'
+                        name='volunteerPIs'
+                        onChange={this.handleInput}
+                        defaultValue={[]}
+                    >
+                        {this.props.volunteers.map( volunteer => (
+                            <MenuItem value={volunteer.pantherID}>{volunteer.firstName} {volunteer.lastName} - {volunteer.pantherID}</MenuItem>
+                        ))}
+                    </Select>
+                    <FormHelperText style={{marginBottom : "15px"}}>{this.props.errors.volunteerPIs}</FormHelperText>
                 </FormControl>
-                <Select
-                    multiple
-                    floatingLabelText={floatingLabelText}
-                    value={this.state.volunteers}
-                    onChange={this.handleChange2}
-                    selectionRenderer={this.selectionRenderer}
-                >
-                    {this.menuItems(values)}
-                </Select> */}
 
 
                     <br></br>
