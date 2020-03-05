@@ -21,6 +21,8 @@ import Alert from '@material-ui/lab/Alert';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
+import { clearErrors } from '../../actions/server/errorActions'
+import { clearSuccess } from '../../actions/server/successActions'
 
 const theme = createMuiTheme({
     palette: {
@@ -59,13 +61,13 @@ class EditSchoolPersonnelDialog extends Component {
             title: this.props.schoolPersonnel.title,
             schoolCode: this.props.schoolPersonnel.schoolCode,
             isActive: this.props.schoolPersonnel.isActive,
+            prevEmail: this.props.schoolPersonnel.email
         });
-        console.log(this.state)
     }
 
     editSchoolPersonnel() {
-        //this.props.clearErrors();
-        //this.props.clearSuccess();
+        this.props.clearErrors();
+        this.props.clearSuccess();
         
         let form = this.state
         delete form.server
@@ -78,13 +80,11 @@ class EditSchoolPersonnelDialog extends Component {
         } 
 
         this.props.editSchoolPersonnel(this.props.schoolPersonnel._id,form);
-
-        this.props.close()
     }
 
     exitDialog() {
-        //this.props.clearErrors();
-        //this.props.clearSuccess();
+        this.props.clearErrors();
+        this.props.clearSuccess();
         this.props.close();
     }
 
@@ -98,11 +98,11 @@ class EditSchoolPersonnelDialog extends Component {
 
     }
 
-    /* successMessage() {
+    successMessage() {
         if (!isEmpty(this.props.success.message)) {
             return <Alert severity="success">{this.props.success.message}</Alert> 
         }
-    } */
+    }
 
 
     render() {
@@ -116,7 +116,7 @@ class EditSchoolPersonnelDialog extends Component {
             maxWidth="sm"
             >
                 <DialogTitle >Edit School Personnel</DialogTitle>
-                {/* { this.successMessage() } */}
+                { this.successMessage() }
                 <DialogContent>
                     <DialogContentText>
                     To edit a School Personnel, make the changes and click submit.
@@ -133,8 +133,8 @@ class EditSchoolPersonnelDialog extends Component {
                         type="text"
                         fullWidth
                         label="First Name"
-                        //error={!isEmpty(this.props.errors.firstName)}
-                        //helperText={this.props.errors.firstName}
+                        error={!isEmpty(this.props.errors.firstName)}
+                        helperText={this.props.errors.firstName}
                     />
 
                     {/* Last Name: */} 
@@ -147,8 +147,8 @@ class EditSchoolPersonnelDialog extends Component {
                         type="text"
                         fullWidth
                         label="Last Name"
-                        //error={!isEmpty(this.props.errors.lastName)}
-                        //helperText={this.props.errors.lastName}
+                        error={!isEmpty(this.props.errors.lastName)}
+                        helperText={this.props.errors.lastName}
                     />
 
                     {/* Email: */} 
@@ -161,8 +161,8 @@ class EditSchoolPersonnelDialog extends Component {
                         type="text"
                         fullWidth
                         label="Email"
-                        //error={!isEmpty(this.props.errors.email)}
-                        //helperText={this.props.errors.email}
+                        error={!isEmpty(this.props.errors.email)}
+                        helperText={this.props.errors.email}
                     />
 
                     {/* Password: */} 
@@ -175,8 +175,8 @@ class EditSchoolPersonnelDialog extends Component {
                         onChange={this.handleInput}
                         type="password"
                         fullWidth
-                        //error={!isEmpty(this.props.errors.password)}
-                        //helperText={this.props.errors.password}
+                        error={!isEmpty(this.props.errors.password)}
+                        helperText={this.props.errors.password}
                     />
 
                      {/* Phone Number: */} 
@@ -189,8 +189,8 @@ class EditSchoolPersonnelDialog extends Component {
                         type="text"
                         fullWidth
                         label="Phone Number"
-                        //error={!isEmpty(this.props.errors.phoneNumber)}
-                        //helperText={this.props.errors.phoneNumber}
+                        error={!isEmpty(this.props.errors.phoneNumber)}
+                        helperText={this.props.errors.phoneNumber}
                     />
 
                      {/* Title: */} 
@@ -203,12 +203,12 @@ class EditSchoolPersonnelDialog extends Component {
                         type="text"
                         fullWidth
                         label="Title"
-                        //error={!isEmpty(this.props.errors.title)}
-                        //helperText={this.props.errors.title}
+                        error={!isEmpty(this.props.errors.title)}
+                        helperText={this.props.errors.title}
                     />
 
                       {/* School list: */}
-                    <FormControl fullWidth /* error={this.props.errors.isActive} */>
+                    <FormControl fullWidth error={this.props.errors.schoolCode}>
                         <InputLabel id="schoolCode">Associated School</InputLabel>
                         <Select
                         labelId="schoolCode"
@@ -226,7 +226,7 @@ class EditSchoolPersonnelDialog extends Component {
                     </FormControl>
 
                     {/* isActive: */}
-                    <FormControl fullWidth /* error={this.props.errors.isActive} */>
+                    <FormControl fullWidth error={this.props.errors.isActive}>
                         <InputLabel id="isActive">Is Active</InputLabel>
                         <Select
                         labelId="isActive"
@@ -257,15 +257,19 @@ class EditSchoolPersonnelDialog extends Component {
 EditSchoolPersonnelDialog.propTypes = {
     editSchoolPersonnel: PropTypes.func.isRequired,
     schools: PropTypes.array.isRequired,
-    errors: PropTypes.object.isRequired
+    clearErrors: PropTypes.func.isRequired,
+    clearSuccess: PropTypes.func.isRequired,
+    errors: PropTypes.object.isRequired,
+    success: PropTypes.object.isRequired
   };
 
 const mapStateToProps = state => ({
     errors: state.errors,
     schools: state.schoolData.schools,
+    success: state.success
   });
 
 export default connect (
     mapStateToProps,
-    { editSchoolPersonnel }  
+    { editSchoolPersonnel, clearErrors, clearSuccess }  
 )(withRouter(withStyles(useStyles)(EditSchoolPersonnelDialog)));

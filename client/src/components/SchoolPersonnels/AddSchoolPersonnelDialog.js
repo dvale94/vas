@@ -20,6 +20,10 @@ import isEmpty from 'is-empty';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import { clearErrors } from '../../actions/server/errorActions'
+import { clearSuccess } from '../../actions/server/successActions'
+import Alert from '@material-ui/lab/Alert';
+
 const theme = createMuiTheme({
     palette: {
       primary: blue,
@@ -57,14 +61,14 @@ class AddSchoolPersonnelDialog extends Component {
     }    
 
     addSchoolPersonnel() {
-        //this.props.clearErrors();
-        //this.props.clearSuccess();
+        this.props.clearErrors();
+        this.props.clearSuccess();
         this.props.addSchoolPersonnel(this.state);
     }
 
     exitDialog() {
-        //this.props.clearErrors();
-        //this.props.clearSuccess();
+        this.props.clearErrors();
+        this.props.clearSuccess();
         this.props.close();
     }
 
@@ -79,12 +83,12 @@ class AddSchoolPersonnelDialog extends Component {
         console.log(this.state)
     }
 
-    /* successMessage() {
+    successMessage() {
         if (!isEmpty(this.props.success.message)) {
             return <Alert severity="success">{this.props.success.message}</Alert> 
         }
     }
- */
+
    
     render() {
 
@@ -97,7 +101,7 @@ class AddSchoolPersonnelDialog extends Component {
             maxWidth="sm"
             >
                 <DialogTitle >Add School Personnel</DialogTitle>
-             {/*    { this.successMessage() } */}
+                { this.successMessage() }
                 <DialogContent>
                     <DialogContentText>
                     To add a School Personnel, fill out the following form and click submit.
@@ -114,8 +118,8 @@ class AddSchoolPersonnelDialog extends Component {
                         type="text"
                         fullWidth
                         label="First Name"
-                        //error={!isEmpty(this.props.errors.firstName)}
-                        //helperText={this.props.errors.firstName}
+                        error={!isEmpty(this.props.errors.firstName)}
+                        helperText={this.props.errors.firstName}
                     />
 
                     {/* Last Name: */} 
@@ -128,8 +132,8 @@ class AddSchoolPersonnelDialog extends Component {
                         type="text"
                         fullWidth
                         label="Last Name"
-                        //error={!isEmpty(this.props.errors.lastName)}
-                        //helperText={this.props.errors.lastName}
+                        error={!isEmpty(this.props.errors.lastName)}
+                        helperText={this.props.errors.lastName}
                     />
 
                     {/* Email: */} 
@@ -142,8 +146,8 @@ class AddSchoolPersonnelDialog extends Component {
                         type="text"
                         fullWidth
                         label="Email"
-                        //error={!isEmpty(this.props.errors.email)}
-                        //helperText={this.props.errors.email}
+                        error={!isEmpty(this.props.errors.email)}
+                        helperText={this.props.errors.email}
                     />
 
                     {/* Password: */} 
@@ -156,8 +160,8 @@ class AddSchoolPersonnelDialog extends Component {
                         onChange={this.handleInput}
                         type="password"
                         fullWidth
-                        //error={!isEmpty(this.props.errors.password)}
-                        //helperText={this.props.errors.password}
+                        error={!isEmpty(this.props.errors.password)}
+                        helperText={this.props.errors.password}
                     />
 
                      {/* Phone Number: */} 
@@ -170,8 +174,8 @@ class AddSchoolPersonnelDialog extends Component {
                         type="text"
                         fullWidth
                         label="Phone Number"
-                        //error={!isEmpty(this.props.errors.phoneNumber)}
-                        //helperText={this.props.errors.phoneNumber}
+                        error={!isEmpty(this.props.errors.phoneNumber)}
+                        helperText={this.props.errors.phoneNumber}
                     />
 
                      {/* Title: */} 
@@ -185,12 +189,12 @@ class AddSchoolPersonnelDialog extends Component {
                         fullWidth
                         placeholder= "e.g. Teacher"
                         label="Title/Position"
-                        //error={!isEmpty(this.props.errors.title)}
-                        //helperText={this.props.errors.title}
+                        error={!isEmpty(this.props.errors.title)}
+                        helperText={this.props.errors.title}
                     />
 
                     {/* School list: */}
-                    <FormControl fullWidth /* error={this.props.errors.schoolCode} */>
+                    <FormControl fullWidth error={this.props.errors.schoolCode}>
                         <InputLabel id="schoolCode">Associated School</InputLabel>
                         <Select
                         labelId="schoolCode"
@@ -219,16 +223,20 @@ class AddSchoolPersonnelDialog extends Component {
 
 AddSchoolPersonnelDialog.propTypes = {
     addSchoolPersonnel: PropTypes.func.isRequired,
+    clearErrors: PropTypes.func.isRequired,
+    clearSuccess: PropTypes.func.isRequired,
     schools: PropTypes.array.isRequired,
-    errors: PropTypes.object.isRequired
+    errors: PropTypes.object.isRequired,
+    success: PropTypes.object.isRequired
   };
 
 const mapStateToProps = state => ({
     errors: state.errors,
     schools: state.schoolData.schools,
+    success: state.success
   });
 
 export default connect (
     mapStateToProps,
-    { addSchoolPersonnel }  
+    { addSchoolPersonnel, clearErrors, clearSuccess }  
 )(withRouter(withStyles(useStyles)(AddSchoolPersonnelDialog)));

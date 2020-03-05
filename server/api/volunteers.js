@@ -50,7 +50,7 @@ function updateVolunteer(request, response) {
 	const prevEmail = volunteer.prevEmail.toLowerCase();
 
 	// check if user made changes to email or password to update both auth table and volunteer table
-	// if not changes to email or password, only update volunteer table
+	// if no changes to email or password, only update volunteer table
 	if ((prevEmail != email) || !(volunteer.password === '')) {
 		
 		// both email and password
@@ -88,7 +88,7 @@ function updateVolunteer(request, response) {
 										if (result.n === 1) {
 											response.json({
 												success: true,
-												message: 'Volunteer updated'
+												message: 'Successfully updated volunteer!'
 											});
 										}
 										else {
@@ -134,7 +134,7 @@ function updateVolunteer(request, response) {
 								if (result.n === 1) {
 									response.json({
 										success: true,
-										message: 'Volunteer updated'
+										message: 'Successfully updated volunteer!'
 									});
 								}
 								else {
@@ -190,7 +190,7 @@ function updateVolunteer(request, response) {
 										if (result.n === 1) {
 											response.json({
 												success: true,
-												message: 'Volunteer updated'
+												message: 'Successfully updated volunteer!'
 											});
 										}
 										else {
@@ -225,7 +225,7 @@ function updateVolunteer(request, response) {
 				if (result.n === 1) {
 					response.json({
 						success: true,
-						message: 'Volunteer updated'
+						message: 'Successfully updated volunteer!'
 					});
 				}
 				else {

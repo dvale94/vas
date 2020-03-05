@@ -19,8 +19,9 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
 import { clearErrors } from '../../actions/server/errorActions'
+import { clearSuccess } from '../../actions/server/successActions'
 import { editVolunteer } from "../../actions/volunteerActions";
-
+import Alert from '@material-ui/lab/Alert';
 
 
 const theme = createMuiTheme({
@@ -67,8 +68,10 @@ class EditVolunteerDialog extends Component {
         })
     }
 
+
     editVolunteer() {
         this.props.clearErrors();
+        this.props.clearSuccess();
 
         let form = this.state
 
@@ -95,7 +98,14 @@ class EditVolunteerDialog extends Component {
     
     exitDialog() {
         this.props.clearErrors();
+        this.props.clearSuccess();
         this.props.close();
+    }
+
+    successMessage() {
+        if (!isEmpty(this.props.success.message)) {
+            return <Alert severity="success">{this.props.success.message}</Alert> 
+        }
     }
 
     render() {
@@ -108,6 +118,7 @@ class EditVolunteerDialog extends Component {
             open={open}
             >
                 <DialogTitle >Edit Volunteer</DialogTitle>
+                {this.successMessage()}
                 <DialogContent>
                     <DialogContentText>
                     To edit a volunteer, make the changes and click submit.
@@ -270,14 +281,17 @@ class EditVolunteerDialog extends Component {
 EditVolunteerDialog.propTypes = {
     editVolunteer: PropTypes.func.isRequired,
     clearErrors: PropTypes.func.isRequired,
-    errors: PropTypes.object.isRequired
+    clearSuccess: PropTypes.func.isRequired,
+    errors: PropTypes.object.isRequired,
+    success: PropTypes.object.isRequired
   };
 
 const mapStateToProps = state => ({
-    errors: state.errors
+    errors: state.errors,
+    success: state.success
   });
 
 export default connect (
     mapStateToProps,
-    { editVolunteer, clearErrors }  
+    { editVolunteer, clearErrors, clearSuccess }  
 )(withRouter(withStyles(useStyles)(EditVolunteerDialog)));
