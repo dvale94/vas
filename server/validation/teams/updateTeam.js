@@ -1,7 +1,7 @@
 import validator from 'validator';
 import isEmpty from 'is-empty';
 
-function validateCreateTeamInput(data) {
+function validateUpdateTeamInput(data) {
     let errors = {};
 
     // convert empty fields to an empty string so we can use validator functions

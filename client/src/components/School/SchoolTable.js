@@ -60,8 +60,8 @@ class SchoolTable extends Component {
             editSchoolDialog: false
         }
 
-        this.toggleAddSchoolDialog= this.toggleAddSchoolDialog.bind(this);
-        this.toggleEditSchoolDialog= this.toggleEditSchoolDialog.bind(this);
+        this.toggleAddSchoolDialog = this.toggleAddSchoolDialog.bind(this);
+        this.toggleEditSchoolDialog = this.toggleEditSchoolDialog.bind(this);
         //this.clearErrors = this.clearErrors.bind(this);
     }
 

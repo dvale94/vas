@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component, Fragment } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { createMuiTheme } from '@material-ui/core/styles';
@@ -27,18 +27,18 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormLabel from '@material-ui/core/FormLabel';
-
-
-
+import ListItemText from '@material-ui/core/ListItemText';
 import Chip from '@material-ui/core/Chip';
 import Input from '@material-ui/core/Input';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
+import VolunteerPreview from './volunteerPreview'
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
-import CommentIcon from '@material-ui/icons/Comment';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import Popover from '@material-ui/core/Popover';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
+
 
 const theme = createMuiTheme({
     palette: {
@@ -57,12 +57,19 @@ const useStyles = {
     },
     days: {
         //color: "yellow",
+        display: 'flex',
         justify: "center",
         alignItems: "center"
     },
     chip: {
-        margin: 2,
+        margin: 3,
+        color: "white",
+        fontSize: 15,
+        fontWeight: 500
       },
+      list:{
+          width: '50'
+      }
 };
 
 class AddTeamDialog extends Component {
@@ -79,8 +86,8 @@ class AddTeamDialog extends Component {
                 thursday: false,
                 friday: false
             },
-            startTime: '',
-            endTime: '',
+            startTime: '10:00',
+            endTime: '11:00',
             volunteerPIs: [],
             isActive: true,
             monday: false,
@@ -88,14 +95,22 @@ class AddTeamDialog extends Component {
             wednesday: false,
             thursday: false,
             friday: false,
+            openPreview: false
         }
 
         this.addTeam = this.addTeam.bind(this);
         this.handleInput = this.handleInput.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.exitDialog = this.exitDialog.bind(this);
+        this.toggleVolunteerPreview = this.toggleVolunteerPreview.bind(this);
     }
 
+    toggleVolunteerPreview() {
+        this.setState(prevState => ({
+            openPreview: !prevState.openPreview
+        }));
+        console.log(this.state.openPreview)
+    }
 
     addTeam() {
         this.props.clearErrors();
@@ -111,7 +126,6 @@ class AddTeamDialog extends Component {
         this.props.close();
     }
     
-
     handleInput = (e) =>{
         const value = e.target.value
         const name = e.target.name
@@ -122,8 +136,20 @@ class AddTeamDialog extends Component {
 
         console.log(this.state)
     }
-    
 
+    handleInput_Volunteer = (e) =>{
+        
+        const value = e.target.value.map(item => item.pantherID)
+        const name = e.target.name
+
+        this.setState({
+          [name]: value 
+        })
+
+        console.log(this.state)
+    
+    }
+    
     handleChange = (e) => {
         const name = e.target.name
         
@@ -139,48 +165,37 @@ class AddTeamDialog extends Component {
         console.log(this.state.dayOfWeek)
     }
 
-    //TESTING
-    handleChange1 = (e) => {
-        console.log(e)
-        const options = e.target;
-        const value = [];
-        //this.state.volunteerPIs.push(options.value);
+    
 
-        for (let i = 0, l = options.length; i < l; i += 1) {
-            if (options[i].selected) {
-              value.push(options[i].value);
-            }
-            //value.push(options[i].value);
-          }
-
+    /* handleClickOpen = () => {
         this.setState({
-            volunteerPIs: value
-        })
-        console.log(this.state.volunteerPIs)
-    }
-    //TESTING
-    handleChange2 = (event, key, values) => {
-        this.setState({ volunteerPIs: values });
+            setOpen: true 
+          })
+      }; */
+    
+      /* handleClose = () => {
+        this.setState({
+            setOpen: false 
+          })
       };
-      selectionRenderer = values => {
-        // change the default comma separated rendering
-        return (
-          <span style={{ color: "#ff4081" }}>
-            {values.join("; ")}
-          </span>
-        );
-      };
-      menuItems(values) {
-        return this.props.volunteers.map(name => (
-          <MenuItem
-            key={name}
-            insetChildren={true}
-            //checked={values.includes(name)}
-            value={name}
-            primaryText={name}
-          />
-        ));
-      }
+ */
+      /* handlePopoverOpen = event => {
+        this.setState({ anchorEl: event.currentTarget });
+      }; */
+
+      /* handlePopoverClose = () => {
+        this.setState({ anchorEl: null });
+      }; */
+      /* popover(volunteer){
+        return <Popover
+        id="mouse-over-popover"
+        open={this.state.setOpen}
+        onClose={this.handleClose}
+        >
+             <Typography className={this.props.classes.typography}>Content {volunteer}</Typography>
+
+            </Popover>
+      } */
 
     successMessage() {
         if (!isEmpty(this.props.success.message)) {
@@ -188,16 +203,9 @@ class AddTeamDialog extends Component {
         }
     }
     
-    
-
     render() {
 
         const { open } = this.props;
-        /* const { values } = this.state.volunteerPIs;
-        const floatingLabelText = "Names" +
-      (values.length > 1 ? ` (${values.length})` : "");
-        
- */
         
         return (
             <ThemeProvider theme={theme}>
@@ -331,8 +339,9 @@ class AddTeamDialog extends Component {
                                 labelPlacement="bottom"
                             />
                              </FormGroup>
+                             <FormHelperText style={{marginBottom : "15px"}}>{this.props.errors.dayOfWeek}</FormHelperText>
                              </FormControl>
-                             </div>{<FormHelperText style={{marginBottom : "15px"}}>{this.props.errors.dayOfWeek}</FormHelperText>}
+                             </div>
 
                     {/* Start Time: */}
                     <TextField 
@@ -341,7 +350,7 @@ class AddTeamDialog extends Component {
                         name="startTime"
                         onChange={this.handleInput}
                         type="time"
-                        defaultValue="10:00"
+                        value={this.state.startTime}
                         fullWidth
                         label="Start Time"
                         error={this.props.errors.startTime}
@@ -355,95 +364,63 @@ class AddTeamDialog extends Component {
                         name="endTime"
                         onChange={this.handleInput}
                         type="time"
-                        defaultValue="11:00"
+                        value={this.state.endTime}
                         fullWidth
                         label="End Time"
                         error={this.props.errors.endTime}
                         helperText={this.props.errors.endTime}
                     />
 
-                    {/* Volunteer list: */}
-                    {/* <FormControl fullWidth error={this.props.errors.volunteerPIs}>
-                        <InputLabel id="volunteerPIs">Volunteers</InputLabel>
+                     {/* Volunteer list: */}
+                     <FormControl fullWidth style={{marginBottom : "15px"}} margin='dense' error={this.props.errors.volunteerPIs}>
+                        <InputLabel id="volunteers">Volunteer(s)</InputLabel>
                         <Select
-                        labelId="volunteerPIs"
-                        name='volunteerPIs'
-                        margin="dense"
-                        onChange={this.handleInput}
+                            multiple
+                            labelId='volunteers'
+                            name='volunteerPIs'
+                            onChange={this.handleInput_Volunteer}
+                            defaultValue={[]}
+                            input={<Input id="select-multiple-chip" />}
+                            renderValue={selected => (
+                                <div className={this.props.classes.chips}>
+                                  {selected.map( value => {
+                                     return <Chip color="primary" key={value.pantherID} label={value.firstName + " " + value.lastName} className={this.props.classes.chip} />
+                                  })}
+                                </div>
+                            )}
                         >
+                            
                             {this.props.volunteers.map( volunteer => (
-                                <MenuItem value={volunteer.pantherID}>{volunteer.firstName} {volunteer.lastName} - {volunteer.pantherID}</MenuItem>
-                            ))}
-                        </Select>
-                        {<FormHelperText style={{marginBottom : "15px"}}>{this.props.errors.volunteerPIs}</FormHelperText>}
-                    </FormControl> */}
-
-                    
-                    {/* <FormControl fullWidth error={this.props.errors.volunteerPIs} >
-                        <InputLabel id="volunteerPIs">Volunteers</InputLabel>
-                        <Select
-                        labelId="volunteerPIs"
-                        //name="volunteerPIs"
-                        multiple
-                        value ={this.state.volunteerPIs}
-                        onChange={this.handleChange1}
-                        input={<Input />}
-                        renderValue={selected => {
-                            if (selected.length === 0) {
-                            return <em>Placeholder</em>;
-                            }
-
-                            return selected.join(', ');
-                        }}
-                        
-                        input={<Input id="select-multiple-chip" />}
-                        renderValue={selected => (
-                            <div className={this.props.classes.chips}>
-                              {selected.map(value => (
-                                <Chip key={value.pantherID} value={value.pantherID} className={this.props.classes.chip} />
-                              ))}
-                            </div>
-                          )}
-                        //MenuProps={MenuProps}
-                        >
-                            <MenuItem  disabled value="">
-                                <em>Volunteers</em>
-                            </MenuItem>
-                            {this.props.volunteers.map(name => (
-                                <MenuItem key={name.pantherID} value={name.pantherID}>
-                                {name.pantherID}
+                              /*   <Fragment> */
+                                <MenuItem value={volunteer}>
+                                    <Checkbox color= "primary" checked={this.state.volunteerPIs.includes(volunteer.pantherID)}/>
+                                    <ListItemText primary={volunteer.firstName + " " + volunteer.lastName + " - " + volunteer.pantherID} />
+                                    <IconButton edge="end" aria-label="comments" onClick={()=>this.toggleVolunteerPreview()}>
+                                             <InfoOutlinedIcon />
+                                            {/* <Typography>{volunteer.firstName}</Typography> */}
+                                            
+                                        </IconButton>
+                                    
+                                        
                                 </MenuItem>
-                            ))}
-                            {this.props.volunteers.map(volunteer => (
-                            <MenuItem key={volunteer.pantherID} value={volunteer.pantherID}>
-                            {volunteer.pantherID}
-                            </MenuItem>
-                        ))}
-                         {this.props.volunteers.map(name => (
-                            <option key={name.pantherID} value={name.pantherID}>
-                            {name.pantherID}
-                            </option>
-                        ))}
-                        
-                        </Select>
-                        {<FormHelperText style={{marginBottom : "15px"}}>{this.props.errors.volunteerPIs}</FormHelperText>}
-                </FormControl> */}
-                <FormControl fullWidth style={{marginBottom : "15px"}} margin='dense' error={this.props.errors.volunteerPIs}>
-                    <InputLabel id="volunteers">Volunteer(s)</InputLabel>
-                    <Select
-                        multiple
-                        labelId='volunteers'
-                        name='volunteerPIs'
-                        onChange={this.handleInput}
-                        defaultValue={[]}
-                    >
-                        {this.props.volunteers.map( volunteer => (
-                            <MenuItem value={volunteer.pantherID}>{volunteer.firstName} {volunteer.lastName} - {volunteer.pantherID}</MenuItem>
-                        ))}
-                    </Select>
-                    <FormHelperText style={{marginBottom : "15px"}}>{this.props.errors.volunteerPIs}</FormHelperText>
-                </FormControl>
+                                
+                      ))}
+                            {/* {this.openVolunteerCard("hello")} */}
+                            {/* {this.popover("Hellooooo")} */}
+                            {/* <Popover
+                                id="mouse-over-popover"
+                                open={open1}
+                                onClose={this.handlePopoverClose}
+                                >
+                                    <Typography className={this.props.classes.typography}>Content </Typography>
 
+                            </Popover>
+                                         */}            
+                            
+                            
+                        </Select>
+                        <FormHelperText style={{marginBottom : "15px"}}>{this.props.errors.volunteerPIs}</FormHelperText>
+                    </FormControl>
 
                     <br></br>
                 </DialogContent>
