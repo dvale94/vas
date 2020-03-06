@@ -1,6 +1,6 @@
 import request from 'request';
 import serverConf from '../config'
-import { GET_ERRORS, SET_SCHOOL_PERSONNELS, SCHOOL_PERSONNELS_LOADING} from './types';
+import { GET_ERRORS, SET_SCHOOL_PERSONNELS, SCHOOL_PERSONNELS_LOADING, GET_SUCCESS} from './types';
 
 // get school personnels from database
 export const getSchoolPersonnels = () => dispatch => {
@@ -14,7 +14,7 @@ export const getSchoolPersonnels = () => dispatch => {
         if (error) {
             dispatch({
                 type: GET_ERRORS,
-                payload: res
+                payload: res.errors
               })
         }
         else {
@@ -32,16 +32,19 @@ export const addSchoolPersonnel = form => dispatch => {
     request.post(endpoint, { form }, (error, response, body) => {
         
         const res = JSON.parse(body);
-
-        if (error) {
+        if (!res.success) {
             dispatch({
                 type: GET_ERRORS,
-                payload: res
+                payload: res.errors
               })
         }
         else {
             // set current school personnels
             dispatch(getSchoolPersonnels());
+            dispatch({
+                type: GET_SUCCESS,
+                payload: res.message
+            });
         }   
     });
  };
@@ -55,15 +58,19 @@ export const editSchoolPersonnel = (id, form) => dispatch => {
         
         const res = JSON.parse(body);
 
-        if (error) {
+        if (!res.success) {
             dispatch({
                 type: GET_ERRORS,
-                payload: res
+                payload: res.errors
               })
         }
         else {
             // get updated school personnels
             dispatch(getSchoolPersonnels());
+            dispatch({
+                type: GET_SUCCESS,
+                payload: res.message
+            });
         }   
     });
  };

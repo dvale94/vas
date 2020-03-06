@@ -20,6 +20,8 @@ import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
 import { clearErrors } from '../../actions/server/errorActions'
 import { addVolunteer } from "../../actions/volunteerActions";
+import { clearSuccess } from '../../actions/server/successActions'
+import Alert from '@material-ui/lab/Alert';
 
 const theme = createMuiTheme({
     palette: {
@@ -61,15 +63,9 @@ class AddVolunteerDialog extends Component {
     }    
 
 
-    // check if a new volunteer was added successfully to close this pop up
-    componentDidUpdate(prevProps) {
-        if(prevProps.volunteers.length != this.props.volunteers.length) {
-            this.props.close();
-        }
-    }
-
     addVolunteer() {
         this.props.clearErrors();
+        this.props.clearSuccess();
         this.props.addVolunteer(this.state)
     }
 
@@ -84,7 +80,14 @@ class AddVolunteerDialog extends Component {
 
     exitDialog() {
         this.props.clearErrors();
+        this.props.clearSuccess();
         this.props.close();
+    }
+
+    successMessage() {
+        if (!isEmpty(this.props.success.message)) {
+            return <Alert severity="success">{this.props.success.message}</Alert> 
+        }
     }
 
     render() {
@@ -97,6 +100,7 @@ class AddVolunteerDialog extends Component {
             open={open}
             >
                 <DialogTitle >Add Volunteer</DialogTitle>
+                { this.successMessage() }
                 <DialogContent>
                     <DialogContentText>
                     To add a volunteer, fill out the following form and click submit.
@@ -238,16 +242,17 @@ class AddVolunteerDialog extends Component {
 AddVolunteerDialog.propTypes = {
     addVolunteer: PropTypes.func.isRequired,
     clearErrors: PropTypes.func.isRequired,
+    clearSuccess: PropTypes.func.isRequired,
     errors: PropTypes.object.isRequired,
-    volunteers: PropTypes.array.isRequired
+    success: PropTypes.object.isRequired
   };
 
 const mapStateToProps = state => ({
     errors: state.errors,
-    volunteers: state.volunteers.volunteers
+    success: state.success
   });
 
 export default connect (
     mapStateToProps,
-    { addVolunteer, clearErrors }  
+    { addVolunteer, clearErrors, clearSuccess }  
 )(withRouter(withStyles(useStyles)(AddVolunteerDialog)));

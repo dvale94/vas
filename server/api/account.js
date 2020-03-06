@@ -10,7 +10,8 @@ const schPersonnel = require('../models/Users/school_User')
 
 // input validation
 import validateLoginInput from '../validation/login';
-import validateCreateVolunteerInput from '../validation/volunteers/createVolunteer'
+import validateCreateVolunteerInput from '../validation/volunteers/createVolunteer';
+import validateCreateSchoolPersonnelInput from '../validation/schoolPersonnels/createSchoolPersonnel';
 
 const router = new express.Router();
 
@@ -179,7 +180,7 @@ function volunteerSignUp (req, res) {
         newVolunteer.major = major;
         newVolunteer.carAvailable = carAvailable;
         newVolunteer.volunteerStatus = volunteerStatus;
-        newVolunteer.isActive = isActive;
+        newVolunteer.isActive = true;
         newVolunteer.MDCPS_ID = MDCPS_ID;
 
         newVolunteer.save((err, volunteer) => {
@@ -191,7 +192,7 @@ function volunteerSignUp (req, res) {
             }
             return res.send({
                 success: true,
-                message: 'Signed up'
+                message: 'Successfully created volunteer!'
             });
         });
 
@@ -206,7 +207,7 @@ function volunteerSignUp (req, res) {
             if (err) {
                 return res.send({
                     success: false,
-                    message: 'Error: Server error'
+                    message: {server: 'Server errors'}
                 });
             }
         });
@@ -227,42 +228,12 @@ function schoolPersonnelSignUp (req, res) {
             email
         } = body;
 
-        if (!schoolCode) {
-            return res.send({
-                success: false,
-                message: 'Error: School ID cannot be blank.'
-            });
-        }
-        if (!firstName) {
-        return res.send({
-            success: false,
-            message: 'Error: First name cannot be blank.'
-        });
-        }
-        if (!lastName) {
-            return res.send({
-                success: false,
-                message: 'Error: Last name cannot be blank.'
-            });
-        }
-        if (!password) {
-            return res.send({
-                success: false,
-                message: 'Error: Password cannot be blank'
-            });
-        }
-        if (!title) {
-            return res.send({
-                success: false,
-                message: 'Error: Title/Position cannot be blank'
-            });
-        }
-        if (!phoneNumber) {
-            return res.send({
-                success: false,
-                message: 'Error: Phone number cannot be blank'
-            });
-        }
+    // form validation
+    const { errors, isValid } = validateCreateSchoolPersonnelInput(req.body);
+    // check validation
+    if (!isValid) {
+        return res.status(400).json({success: false, errors});
+    }  
 
     email = email.toLowerCase();
 
@@ -275,16 +246,16 @@ function schoolPersonnelSignUp (req, res) {
         if (err) {
             return res.send({
                 success: false,
-                message: 'Error: Server error'
+                message: {server: 'Server errors'}
             });
         } else if (previousUsers.length > 0) {
             return res.send({
                 success: false,
-                message: 'Error: Account already exists.'
+                errors: {email: 'Account already exists'}
             });
         }
 
-        // Save new user to admin collection
+        // Save new user to school personnel collection
         const newSchPersonnel = new schPersonnel();
 
         newSchPersonnel.firstName = firstName;
@@ -293,18 +264,18 @@ function schoolPersonnelSignUp (req, res) {
         newSchPersonnel.phoneNumber = phoneNumber;
         newSchPersonnel.schoolCode = schoolCode;
         newSchPersonnel.title = title;
-        newSchPersonnel.isActive = 'true'
+        newSchPersonnel.isActive = true
         
         newSchPersonnel.save((err, schPersonnel) => {
             if (err) {
                 return res.send({
                     success: false,
-                    message: 'Error: Server error'
+                    message: {server: 'Server errors'}
                 });
             }
             return res.send({
                 success: true,
-                message: 'Signed up'
+                message: 'Successfully created school personnel!'
             });
         });
 
@@ -319,7 +290,7 @@ function schoolPersonnelSignUp (req, res) {
             if (err) {
                 return res.send({
                     success: false,
-                    message: 'Error: Server error'
+                    message: {server: 'Server errors'}
                 });
             }
         });

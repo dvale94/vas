@@ -1,6 +1,6 @@
 import request from 'request';
 import serverConf from '../config'
-import { GET_ERRORS, SET_VOLUNTEERS, VOLUNTEERS_LOADING} from './types';
+import { GET_ERRORS, SET_VOLUNTEERS, VOLUNTEERS_LOADING,GET_SUCCESS} from './types';
 
 // get volunteers from database
 export const getVolunteers = () => dispatch => {
@@ -14,7 +14,7 @@ export const getVolunteers = () => dispatch => {
         if (error) {
             dispatch({
                 type: GET_ERRORS,
-                payload: res
+                payload: res.errors
               })
         }
         else {
@@ -32,7 +32,7 @@ export const addVolunteer = form => dispatch => {
     request.post(endpoint, { form }, (error, response, body) => {
         
         const res = JSON.parse(body);
-        console.log(res)
+
         if (!res.success) {
             dispatch({
                 type: GET_ERRORS,
@@ -42,6 +42,10 @@ export const addVolunteer = form => dispatch => {
         else {
             // set current volunteers
             dispatch(getVolunteers());
+            dispatch({
+                type: GET_SUCCESS,
+                payload: res.message
+            });
         }   
     });
  };
@@ -55,18 +59,18 @@ export const editVolunteer = (id, form) => dispatch => {
         
         const res = JSON.parse(body);
 
-        //REMOVE- only for debugging
-        console.log(res)
-
-        if (error) {
+        if (!res.success) {
             dispatch({
                 type: GET_ERRORS,
-                payload: res
+                payload: res.errors
               })
         }
         else {
-            // get updated volunteers
             dispatch(getVolunteers());
+            dispatch({
+                type: GET_SUCCESS,
+                payload: res.message
+            });
         }   
     });
  };
