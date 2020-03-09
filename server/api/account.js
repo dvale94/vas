@@ -12,6 +12,8 @@ const schPersonnel = require('../models/Users/school_User')
 import validateLoginInput from '../validation/login';
 import validateCreateVolunteerInput from '../validation/volunteers/createVolunteer';
 import validateCreateSchoolPersonnelInput from '../validation/schoolPersonnels/createSchoolPersonnel';
+import validateCreateAdminInput from '../validation/admin/createAdmin';
+
 
 const router = new express.Router();
 
@@ -32,36 +34,13 @@ function adminSignUp (req, res) {
             email
         } = body;
 
-        if (!firstName) {
-            return res.send({
-                success: false,
-                message: 'Error: First name cannot be blank.'
-            });
-        }
-        if (!lastName) {
-        return res.send({
-            success: false,
-            message: 'Error: Last name cannot be blank.'
-        });
-        }
-        if (!email) {
-            return res.send({
-                success: false,
-                message: 'Error: Email cannot be blank.'
-            });
-        }
-        if (!password) {
-            return res.send({
-                success: false,
-                message: 'Error: Password cannot be blank'
-            });
-        }
-        if (!phoneNumber) {
-            return res.send({
-                success: false,
-                message: 'Error: Phone number cannot be blank'
-            });
-        }
+        // Form validation
+	const { errors, isValid } = validateCreateAdminInput(req.body);
+
+	// Check validation
+	if (!isValid) {
+		return res.status(400).json({success: false, errors});
+	}
 
     email = email.toLowerCase();
 
@@ -90,6 +69,7 @@ function adminSignUp (req, res) {
         newAdmin.lastName = lastName;
         newAdmin.email = email;
         newAdmin.phoneNumber = phoneNumber;
+        newAdmin.isActive = 'true';
         
         newAdmin.save((err, admin) => {
             if (err) {
@@ -100,7 +80,7 @@ function adminSignUp (req, res) {
             }
             return res.send({
                 success: true,
-                message: 'Signed up'
+                message: 'Successfully created administrator!'
             });
         });
 
@@ -110,7 +90,6 @@ function adminSignUp (req, res) {
         newUser.email = email;
         newUser.password = newUser.generateHash(password);
         newUser.role = 'Admin'
-        newUser.isActive = 'true'
         
         newUser.save((err, user) => {
             if (err) {

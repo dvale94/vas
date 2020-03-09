@@ -138,7 +138,7 @@ class VolunteerPreview extends Component {
                                         Volunteer: &nbsp;
                                     </Typography>
                                     <Typography className={this.props.classes.body} color="textPrimary" variant="body1" display="inline" gutterBottom>
-                                        {this.props.volunteer.pantherID}<br/>
+                                        {this.props.info.pantherID}<br/>
                                     </Typography>
                                 <Button className={this.props.classes.bottomButtons} onClick={this.exitDialog} variant="contained" color="primary">Exit</Button> 
 

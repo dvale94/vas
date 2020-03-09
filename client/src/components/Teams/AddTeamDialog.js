@@ -38,6 +38,7 @@ import Popover from '@material-ui/core/Popover';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import ListItem from '@material-ui/core/ListItem';
 
 
 const theme = createMuiTheme({
@@ -165,37 +166,25 @@ class AddTeamDialog extends Component {
         console.log(this.state.dayOfWeek)
     }
 
+    renderVolunteers() {
+        return (this.props.volunteers.map( volunteer => (
+            <MenuItem value={volunteer}>
+            {/* <ListItem key= {volunteer} value={volunteer} > */}
+            <Checkbox color= "primary" checked={this.state.volunteerPIs.includes(volunteer.pantherID)}/>
+            <ListItemText primary={volunteer.firstName + " " + volunteer.lastName + " - " + volunteer.pantherID} />
+            {/* <IconButton edge="end" aria-label="comments" onClick={()=>this.toggleVolunteerPreview()}>
+            {console.log("THIS VOLUNTEER: ", volunteer)}
+            <InfoOutlinedIcon />
+            <VolunteerPreview open={this.state.openPreview} close={this.toggleVolunteerPreview} info={volunteer}/>
+            </IconButton> */}
+            {/* </ListItem> */}
+            </MenuItem>
+
+            
+        )))
+    }
     
 
-    /* handleClickOpen = () => {
-        this.setState({
-            setOpen: true 
-          })
-      }; */
-    
-      /* handleClose = () => {
-        this.setState({
-            setOpen: false 
-          })
-      };
- */
-      /* handlePopoverOpen = event => {
-        this.setState({ anchorEl: event.currentTarget });
-      }; */
-
-      /* handlePopoverClose = () => {
-        this.setState({ anchorEl: null });
-      }; */
-      /* popover(volunteer){
-        return <Popover
-        id="mouse-over-popover"
-        open={this.state.setOpen}
-        onClose={this.handleClose}
-        >
-             <Typography className={this.props.classes.typography}>Content {volunteer}</Typography>
-
-            </Popover>
-      } */
 
     successMessage() {
         if (!isEmpty(this.props.success.message)) {
@@ -206,7 +195,7 @@ class AddTeamDialog extends Component {
     render() {
 
         const { open } = this.props;
-        
+        let arr = [];
         return (
             <ThemeProvider theme={theme}>
             <Dialog
@@ -389,22 +378,31 @@ class AddTeamDialog extends Component {
                                 </div>
                             )}
                         >
-                            
-                            {this.props.volunteers.map( volunteer => (
-                              /*   <Fragment> */
-                                <MenuItem value={volunteer}>
-                                    <Checkbox color= "primary" checked={this.state.volunteerPIs.includes(volunteer.pantherID)}/>
-                                    <ListItemText primary={volunteer.firstName + " " + volunteer.lastName + " - " + volunteer.pantherID} />
-                                    <IconButton edge="end" aria-label="comments" onClick={()=>this.toggleVolunteerPreview()}>
-                                             <InfoOutlinedIcon />
-                                            {/* <Typography>{volunteer.firstName}</Typography> */}
-                                            
-                                        </IconButton>
-                                    
-                                        
-                                </MenuItem>
+
+                        {/* List of volunteers */}
+                         {this.renderVolunteers()}   
+
+
+                           {/*  {this.props.volunteers.map( volunteer => (
+                                //<MenuItem value={volunteer}>
+                                <ListItem key= {volunteer} value={volunteer} >
+                                <Checkbox color= "primary" checked={this.state.volunteerPIs.includes(volunteer.pantherID)}/>
+                                <ListItemText primary={volunteer.firstName + " " + volunteer.lastName + " - " + volunteer.pantherID} />
+                                <IconButton key={volunteer} edge="end" aria-label="comments" onClick={()=>this.toggleVolunteerPreview()}>
+                                {console.log(volunteer)}
+                                <InfoOutlinedIcon />
+                                <VolunteerPreview key={volunteer} open={this.state.openPreview} close={this.toggleVolunteerPreview} info={volunteer}/>
+                                </IconButton>
+                                </ListItem>
+                                //</MenuItem>
+
                                 
-                      ))}
+                            ))} */}
+
+
+
+
+
                             {/* {this.openVolunteerCard("hello")} */}
                             {/* {this.popover("Hellooooo")} */}
                             {/* <Popover

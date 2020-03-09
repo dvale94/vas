@@ -5,6 +5,9 @@ import Button from '@material-ui/core/Button';
 class Dashboard extends Component{
     
     //TEMPORARY REMOVE LATER
+    redirect_to_AdminManagement = () =>{
+        this.props.history.push("/admin-management"); 
+    }
     redirect_to_VolunteerManagement = () =>{
         this.props.history.push("/volunteer-management"); 
     }
@@ -28,6 +31,16 @@ class Dashboard extends Component{
                 <strong>Temporary Shortcuts:</strong>
                 <br></br>
                 <br></br>
+                <Button
+                    type="submit"
+                    size="small"
+                    variant="contained"
+                    onClick={this.redirect_to_AdminManagement}
+                    //
+                >
+                    Admin Management
+                </Button>
+                <p>       </p>
                 <Button
                     type="submit"
                     size="small"

@@ -7,6 +7,7 @@ import schoolReducer from './schoolReducer'
 import schoolPersonnelReducer from './schoolPersonnelReducers';
 import successReducer from './server/successReducers';
 import teamReducer from './teamReducer'
+import adminReducer from './adminReducers';
 
 export default combineReducers({
   auth: authReducer,
@@ -15,6 +16,7 @@ export default combineReducers({
   schoolPersonnels: schoolPersonnelReducer,
   schoolData: schoolReducer,
   teamData: teamReducer,
+  adminData: adminReducer,
   errors: errorReducer,
   success: successReducer
 });

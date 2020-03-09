@@ -17,6 +17,7 @@ import PrivateRoute from "./components/Routes/PrivateRoute";
 import AdminRoute from './components/Routes/AdminRoute'
 import SchoolPersonnelManagement from './pages/SchoolPersonnelManagement';
 import TeamManagement from './pages/TeamManagement';
+import AdminManagement from './pages/AdminManagement';
 
 // check for token to keep user logged in
 if (localStorage.jwt) {
@@ -75,6 +76,7 @@ class App extends Component {
                 <PrivateRoute path="/profile" component={Profile}/>
                 <AdminRoute path="/schoolmanagement" component={SchoolManagement}/>
                 <AdminRoute path="/team-management" component={TeamManagement}/>
+                <AdminRoute path="/admin-management" component={AdminManagement}/>
                 
               </Switch>
             </Fragment>
