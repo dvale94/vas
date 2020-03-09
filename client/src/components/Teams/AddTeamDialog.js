@@ -39,6 +39,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import ListItem from '@material-ui/core/ListItem';
+import { Grid } from '@material-ui/core';
 
 
 const theme = createMuiTheme({
@@ -70,6 +71,9 @@ const useStyles = {
       },
       list:{
           width: '50'
+      },
+      root: {
+        flexGrow: 1,
       }
 };
 
@@ -210,8 +214,56 @@ class AddTeamDialog extends Component {
                     </DialogContentText>
                     <br></br>
 
+                    <div className={this.props.classes.root}>
+                    <Grid container wrap="nowrap" spacing={5} justify="center">
+                        <Grid item xs={12} sm={6}>
+                            {/* Semester: */}
+                            <FormControl fullWidth error={this.props.errors.semester}>
+                                <InputLabel id="semester">Semester</InputLabel>
+                                <Select
+                                fullWidth
+                                labelId="semester"
+                                name='semester'
+                                margin="dense"
+                                onChange={this.handleInput}
+                                >
+                                    <MenuItem value={"Spring"}>Spring</MenuItem>
+                                    <MenuItem value={"Fall"}>Fall</MenuItem>
+                                </Select>
+                                {<FormHelperText style={{marginBottom : "15px"}}>{this.props.errors.semester}</FormHelperText>}
+                            </FormControl>
+                        </Grid>
+                        <Grid item className={this.props.classes.yo1}xs={12} sm={6}>
+                             {/* Year: */}
+                            <FormControl fullWidth error={this.props.errors.year}>
+                                <InputLabel id="year">Year</InputLabel>
+                                <Select
+                                fullWidth
+                                labelId="year"
+                                name='year'
+                                margin="dense"
+                                onChange={this.handleInput}
+                                >
+                                    <MenuItem value={"2020"}>2020</MenuItem>
+                                    <MenuItem value={"2021"}>2021</MenuItem>
+                                    <MenuItem value={"2022"}>2022</MenuItem>
+                                    <MenuItem value={"2023"}>2023</MenuItem>
+                                    <MenuItem value={"2024"}>2024</MenuItem>
+                                    <MenuItem value={"2025"}>2025</MenuItem>
+                                    <MenuItem value={"2026"}>2026</MenuItem>
+                                    <MenuItem value={"2027"}>2027</MenuItem>
+                                    <MenuItem value={"2028"}>2028</MenuItem>
+                                    <MenuItem value={"2029"}>2029</MenuItem>
+                                    <MenuItem value={"2030"}>2030</MenuItem>
+                                </Select>
+                                {<FormHelperText style={{marginBottom : "15px"}}>{this.props.errors.year}</FormHelperText>}
+                            </FormControl>
+                        </Grid>  
+                    </Grid>
+                    </div>
+
                     {/* Semester: */}
-                    <FormControl error={this.props.errors.semester}>
+                    {/* <FormControl error={this.props.errors.semester}>
                         <InputLabel id="semester">Semester</InputLabel>
                         <Select
                         style={{width: "210px", marginRight: "50px"}}
@@ -224,10 +276,10 @@ class AddTeamDialog extends Component {
                             <MenuItem value={"Fall"}>Fall</MenuItem>
                         </Select>
                         {<FormHelperText style={{marginBottom : "15px"}}>{this.props.errors.semester}</FormHelperText>}
-                    </FormControl>
+                    </FormControl> */}
 
                     {/* Year: */}
-                    <FormControl error={this.props.errors.year}>
+                   {/*  <FormControl error={this.props.errors.year}>
                         <InputLabel id="year">Year</InputLabel>
                         <Select
                         style={{width: "210px", marginRight: "50px"}}
@@ -249,7 +301,7 @@ class AddTeamDialog extends Component {
                             <MenuItem value={"2030"}>2030</MenuItem>
                         </Select>
                         {<FormHelperText style={{marginBottom : "15px"}}>{this.props.errors.year}</FormHelperText>}
-                    </FormControl>
+                    </FormControl> */}
 
                     {/* School list: */}
                     <FormControl fullWidth error={this.props.errors.schoolCode}>

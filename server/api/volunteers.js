@@ -35,8 +35,22 @@ function updateVolunteer_Profile(request, response) {
 function updateVolunteer(request, response) {
 	let volunteer = {};
 	
-	volunteer = request.body;
-	
+	let volunteer_req = request.body;
+
+	volunteer = {
+		firstName: volunteer_req.firstName,
+		lastName: volunteer_req.lastName,
+		email: volunteer_req.email.toLowerCase(),
+        password: volunteer_req.password,
+        phoneNumber: volunteer_req.phoneNumber,
+        major: volunteer_req.major,
+        isActive: volunteer_req.isActive,
+        carAvailable: volunteer_req.carAvailable,
+        volunteerStatus: volunteer_req.volunteerStatus,
+        MDCPS_ID: volunteer_req.MDCPS_ID,
+        pantherID: volunteer_req.pantherID,
+        prevEmail: volunteer_req.email.toLowerCase(),
+	}
 
 	// Form validation
 	const { errors, isValid } = validateUpdateVolunteerInput(volunteer);

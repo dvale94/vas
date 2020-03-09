@@ -19,7 +19,6 @@ import { getTeams } from '../../actions/teamActions';
 import { getSchools } from '../../actions/schoolActions';
 import { getVolunteers } from '../../actions/volunteerActions';
 import AddTeamDialog from './AddTeamDialog';
-//import EditSchoolDialog from './EditSchoolDialog'
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -29,6 +28,7 @@ import FormControl from '@material-ui/core/FormControl';
     palette: {
       primary: {main: green[600]}, // For isActive is true
       secondary: {main: red[600]},// For isActive is false
+      blue: {main: '#2196f3'},
     }
   });
 
@@ -143,26 +143,33 @@ class TeamView extends Component {
 
     render() {
         return (
+            //<ThemeProvider theme={theme}>
             <Fragment>
                 <Button className={this.props.classes.buttons} onClick={this.toggleAddTeamDialog}  variant="contained" color="primary">Create Team</Button>
         
                 {this.state.addTeamDialog && <AddTeamDialog open={this.state.addTeamDialog} close={this.toggleAddTeamDialog}/>}
 
+                <Grid container wrap="nowrap" spacing={5} justify="center">
+                    <Grid item xs={12} sm={6}>
                 {/* Semester */}
                 <FormControl fullWidth style={{marginBottom : "15px"}} margin='dense'>
                     <InputLabel id='semester'>Semester</InputLabel>
                     <Select
                         labelId='semester'
                         name='semester'
-                        onChange={this.handleInput}
+                        /* style={theme.palette.blue} */
+                        color="primary"
+/*                         color={theme.palette.blue}
+ */                        onChange={this.handleInput}
                         value={this.state.semester}
                     >
                         <MenuItem value={'Fall'}>Fall</MenuItem>
                         <MenuItem value={'Spring'}>Spring</MenuItem>
-                        <MenuItem value={'Summer'}>Summer</MenuItem>
                     </Select>
                 </FormControl>
+                </Grid>
 
+                <Grid item xs={12} sm={6}>
                 {/* Year */}
                 <FormControl fullWidth style={{marginBottom : "15px"}} margin='dense'>
                     <InputLabel id='year'>Year</InputLabel>
@@ -185,6 +192,8 @@ class TeamView extends Component {
                         <MenuItem value={"2030"}>2030</MenuItem>
                     </Select>
                 </FormControl>
+                </Grid>
+                </Grid>
 
                 <Button className={this.props.classes.buttons} onClick={this.teamDisplay}  variant="contained" color="primary">Display Teams</Button>
 
@@ -286,6 +295,7 @@ class TeamView extends Component {
                     }}
                 />
             </Fragment>
+            //</ThemeProvider>
         );
     }
 }
