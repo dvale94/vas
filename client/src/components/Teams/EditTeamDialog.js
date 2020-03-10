@@ -110,6 +110,24 @@ class AddTeamDialog extends Component {
         this.toggleVolunteerPreview = this.toggleVolunteerPreview.bind(this);
     }
 
+    componentDidMount() {
+        this.setState({
+            semester: this.props.team.semester,
+            year: this.props.team.year,
+            schoolCode: this.props.team.schoolCode,
+            startTime: this.props.team.startTime,
+            endTime: this.props.team.endTime,
+            dayOfWeek: this.props.team.dayOfWeek,
+            volunteerPIs: this.props.team.volunteerPIs,
+            monday: this.props.team.dayOfWeek.monday,
+            tuesday: this.props.team.dayOfWeek.tuesday,
+            wednesday: this.props.team.dayOfWeek.wednesday,
+            thursday: this.props.team.dayOfWeek.thursday,
+            friday: this.props.team.dayOfWeek.friday,
+            
+        })
+    }
+
     toggleVolunteerPreview() {
         this.setState(prevState => ({
             openPreview: !prevState.openPreview
@@ -206,11 +224,11 @@ class AddTeamDialog extends Component {
             open={open}
             maxWidth="sm"
             >
-                <DialogTitle >Create Team</DialogTitle>
+                <DialogTitle >Edit Team</DialogTitle>
                 { this.successMessage() }
                 <DialogContent>
                     <DialogContentText>
-                    To create a team, fill out the following form and click CREATE.
+                    To edit a team, modify the following form and click UPDATE.
                     </DialogContentText>
                     <br></br>
 
@@ -225,6 +243,7 @@ class AddTeamDialog extends Component {
                                 labelId="semester"
                                 name='semester'
                                 margin="dense"
+                                defaultValue={this.state.semester}
                                 onChange={this.handleInput}
                                 >
                                     <MenuItem value={"Spring"}>Spring</MenuItem>
@@ -242,6 +261,7 @@ class AddTeamDialog extends Component {
                                 labelId="year"
                                 name='year'
                                 margin="dense"
+                                defaultValue={this.state.year}
                                 onChange={this.handleInput}
                                 >
                                     <MenuItem value={"2020"}>2020</MenuItem>
@@ -310,6 +330,7 @@ class AddTeamDialog extends Component {
                         labelId="schoolCode"
                         name='schoolCode'
                         margin="dense"
+                        defaultValue={this.state.schoolCode}
                         onChange={this.handleInput}
                         >
                             {this.props.schools.map( school => (
@@ -329,6 +350,7 @@ class AddTeamDialog extends Component {
                                     <Checkbox
                                     name="monday"
                                     value={this.state.monday}
+                                    defaultChecked={this.state.monday}
                                     onChange={this.handleChange} 
                                     color="primary" />
                                 }
@@ -340,6 +362,7 @@ class AddTeamDialog extends Component {
                                     <Checkbox
                                     name="tuesday"
                                     value={this.state.tuesday}
+                                    defaultChecked={this.state.tuesday}
                                     onChange={this.handleChange} 
                                     color="primary" />
                                 }
@@ -351,6 +374,7 @@ class AddTeamDialog extends Component {
                                     <Checkbox
                                     name="wednesday"
                                     value={this.state.wednesday}
+                                    defaultChecked={this.state.wednesday}
                                     onChange={this.handleChange} 
                                     color="primary" />
                                 }
@@ -362,6 +386,7 @@ class AddTeamDialog extends Component {
                                     <Checkbox
                                     name="thursday"
                                     value={this.state.thursday}
+                                    defaultChecked={this.state.thursday}
                                     onChange={this.handleChange} 
                                     color="primary" />
                                 }
@@ -373,6 +398,7 @@ class AddTeamDialog extends Component {
                                     <Checkbox
                                     name="friday"
                                     value={this.state.friday}
+                                    defaultChecked={this.state.friday}
                                     onChange={this.handleChange} 
                                     color="primary" />
                                 }
@@ -420,7 +446,7 @@ class AddTeamDialog extends Component {
                             labelId='volunteers'
                             name='volunteerPIs'
                             onChange={this.handleInput_Volunteer}
-                            defaultValue={[]}
+                            defaultValue={this.state.volunteerPIs}
                             input={<Input id="select-multiple-chip" />}
                             renderValue={selected => (
                                 <div className={this.props.classes.chips}>

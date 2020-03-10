@@ -169,7 +169,7 @@ class SchoolPersonnelTable extends Component {
                                     </Typography>
                                     <Typography className={this.props.classes.body} color="textPrimary" variant="body1" display="inline" gutterBottom>
                                      {rowData.schoolCode} - &nbsp;
-                                        {this.props.schools.map( school =>{
+                                        {this.props.schools.map( school => {
                                             if (school.schoolCode === rowData.schoolCode){
                                                 return school.schoolName 
                                             }

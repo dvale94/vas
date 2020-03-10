@@ -1,4 +1,4 @@
-// This component is the equivalent to VolunteerTable etx...
+// This component is the equivalent to VolunteerTable etc..
 
 import React, { Component, Fragment } from 'react';
 import MaterialTable from 'material-table';
@@ -19,6 +19,7 @@ import { getTeams } from '../../actions/teamActions';
 import { getSchools } from '../../actions/schoolActions';
 import { getVolunteers } from '../../actions/volunteerActions';
 import AddTeamDialog from './AddTeamDialog';
+import EditTeamDialog from './EditTeamDialog';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -75,12 +76,14 @@ class TeamView extends Component {
         this.state = {
             selectedTeam: {},
             addTeamDialog: false,
-            //editSchoolDialog: false
-            filteredTeams: []
+            editSchoolDialog: false,
+            filteredTeams: [],
+            semester: 'Fall',
+            year: '2030'
         }
 
         this.toggleAddTeamDialog= this.toggleAddTeamDialog.bind(this);
-        //this.toggleEditSchoolDialog= this.toggleEditSchoolDialog.bind(this);
+        this.toggleEditTeamDialog= this.toggleEditTeamDialog.bind(this);
         //this.clearErrors = this.clearErrors.bind(this);
         this.teamDisplay = this.teamDisplay.bind(this);
     }
@@ -89,17 +92,41 @@ class TeamView extends Component {
         this.props.getTeams();
         this.props.getSchools();
         this.props.getVolunteers();
+        
+        let dateInfo = this.set_Semester_Year()
 
-        //Default select options to current semester and year
         this.setState({
-            semester: 'Spring',
-            year: '2020'
+            semester: dateInfo[0].toString(),
+            year: dateInfo[1].toString()
         })
+        
+        console.log(this.state)
+    }
+
+    set_Semester_Year() {
+        let semester, year = '';
+        const date = new Date();
+
+        if (date.getMonth() > 6) {
+            semester = 'Fall'
+        } else {
+            semester = 'Spring'
+        }
+        
+        year = date.getFullYear()
+
+        return ([semester, year]);
+
     }
 
     toggleAddTeamDialog() {
         this.setState(prevState => ({
             addTeamDialog: !prevState.addTeamDialog
+        }));
+    }
+    toggleEditTeamDialog() {
+        this.setState(prevState => ({
+            editTeamDialog: !prevState.editTeamDialog
         }));
     }
 
@@ -111,12 +138,6 @@ class TeamView extends Component {
             filteredTeams: teams
         })
     }
-
-    /* toggleEditSchoolDialog() {
-        this.setState(prevState => ({
-            editSchoolDialog: !prevState.editSchoolDialog
-        }));
-    } */
 
     handleInput = (e) =>{
         const value = e.target.value
@@ -157,11 +178,8 @@ class TeamView extends Component {
                     <Select
                         labelId='semester'
                         name='semester'
-                        /* style={theme.palette.blue} */
-                        color="primary"
-/*                         color={theme.palette.blue}
- */                        onChange={this.handleInput}
                         value={this.state.semester}
+                        onChange={this.handleInput}
                     >
                         <MenuItem value={'Fall'}>Fall</MenuItem>
                         <MenuItem value={'Spring'}>Spring</MenuItem>
@@ -176,8 +194,8 @@ class TeamView extends Component {
                     <Select
                         labelId='year'
                         name='year'
-                        onChange={this.handleInput}
                         value={this.state.year}
+                        onChange={this.handleInput}
                     >
                         <MenuItem value={"2020"}>2020</MenuItem>
                         <MenuItem value={"2021"}>2021</MenuItem>
@@ -203,8 +221,19 @@ class TeamView extends Component {
                     title="Teams"
                     columns={
                         [
+                            { title: 'Semester', field: 'semester'},
+
                             { title: 'Year', field: 'year' },
-                            { title: 'Semester', field: 'semester' }
+
+                            { title: 'School',
+                              field: 'school', 
+                              render: rowData => { return (this.props.schools.map(school =>{
+                                if (school.schoolCode === rowData.schoolCode) {
+                                    return school.schoolName
+                                }
+                            }))}
+                            }
+                            
                         ]
                     }
                     data={this.state.filteredTeams}
@@ -212,7 +241,7 @@ class TeamView extends Component {
                         {
                         icon: 'edit',
                         tooltip: 'Edit Team',
-                        onClick: (event, rowData) => {this.setState({selectedTeam: rowData});}
+                        onClick: (event, rowData) => {this.setState({selectedTeam: rowData}); this.toggleEditTeamDialog()}
                         }
                     ]}
                     options={{
@@ -225,8 +254,10 @@ class TeamView extends Component {
                             backgroundColor: '#eeeeee',
                         },
                         cellStyle: {
-                            width: 250,
-                            maxWidth: 700
+                            /* width: 250,
+                            maxWidth: 700 */
+                            width: 10,
+                            maxWidth: 10
                           },
                           pageSizeOptions: [10, 20, 50, 100],
                           pageSize: 10,
@@ -251,10 +282,15 @@ class TeamView extends Component {
                                     <CardContent>
                                     {/* School Code */}
                                     <Typography className={this.props.classes.subHeading} color="textPrimary" variant="h6" display="inline" >
-                                        School Code: &nbsp;
+                                        School Name: &nbsp;
                                     </Typography>
                                     <Typography className={this.props.classes.body} color="textPrimary" variant="body1" display="inline" gutterBottom>
-                                        {rowData.schoolCode}<br/>
+                                    {rowData.schoolCode} - &nbsp;
+                                        {this.props.schools.map( school => {
+                                            if (school.schoolCode === rowData.schoolCode){
+                                                return school.schoolName 
+                                            }
+                                        })}<br/>
                                     </Typography>
 
                                     {/* Start Time */}
@@ -294,6 +330,7 @@ class TeamView extends Component {
 
                     }}
                 />
+                {this.state.editTeamDialog && <EditTeamDialog open={this.state.editTeamDialog} close={this.toggleEditTeamDialog} team={this.state.selectedTeam}/>}
             </Fragment>
             //</ThemeProvider>
         );

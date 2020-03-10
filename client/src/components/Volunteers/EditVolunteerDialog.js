@@ -121,7 +121,7 @@ class EditVolunteerDialog extends Component {
                 {this.successMessage()}
                 <DialogContent>
                     <DialogContentText>
-                    To edit a volunteer, make the changes and click submit.
+                    To edit a volunteer, modify the following form and click UPDATE.
                     </DialogContentText>
                     <br></br>
                     <TextField 
