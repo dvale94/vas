@@ -105,7 +105,14 @@ class TeamView extends Component {
 
     teamDisplay() {
 
+        // get the teams that match the semester and year
         let teams = this.props.teams.filter( team => team.semester === this.state.semester && team.year === this.state.year)
+
+        // get the name of the school that matches the teams school code
+        teams.forEach( team => {
+            const school = this.props.schools.find(school => school.schoolCode === team.schoolCode)
+            team.schoolName = school.schoolName
+        })
 
         this.setState({
             filteredTeams: teams
@@ -139,6 +146,30 @@ class TeamView extends Component {
         else {
             return "textPrimary";
         }
+    }
+
+    displayDays(data) {
+        let days = []
+       
+            if (data['monday']) days.push('Mondays') 
+            if (data['tuesday']) days.push('Tuesdays ')
+            if (data['wednesday']) days.push('Wednesdays')
+            if (data['thursday']) days.push('Thursdays')
+            if (data['friday']) days.push('Fridays')
+
+        return days.join(', ')
+    }
+
+    displayVolunteers(data) {
+        let names = []
+
+        // get the name of the volunteers that matches the volunteers PID
+        data.forEach( id => {
+            const vol = this.props.volunteers.find( volunteer => parseInt(id) == volunteer.pantherID)
+            names.push(vol.firstName + ' ' + vol.lastName)
+        })
+
+        return names.join(', ')
     }
 
     render() {
@@ -194,6 +225,7 @@ class TeamView extends Component {
                     title="Teams"
                     columns={
                         [
+                            { title: 'School', field: 'schoolName'},
                             { title: 'Year', field: 'year' },
                             { title: 'Semester', field: 'semester' }
                         ]
@@ -248,6 +280,15 @@ class TeamView extends Component {
                                         {rowData.schoolCode}<br/>
                                     </Typography>
 
+                                    {/* Days of week */}
+                                    <Typography className={this.props.classes.subHeading} color="textPrimary" variant="h6" display="inline" >
+                                        Days: &nbsp;
+                                    </Typography>
+                                    <Typography className={this.props.classes.body} color="textPrimary" variant="body1" display="inline" gutterBottom>
+                                        {this.displayDays(rowData.dayOfWeek)}
+                                        <br/>
+                                    </Typography>
+
                                     {/* Start Time */}
                                     <Typography className={this.props.classes.subHeading} color="textPrimary" variant="h6" display="inline" >
                                         Start Time: &nbsp;
@@ -262,6 +303,15 @@ class TeamView extends Component {
                                     </Typography>
                                     <Typography className={this.props.classes.body} color="textPrimary" variant="body1" display="inline" gutterBottom>
                                         {rowData.endTime}<br/>
+                                    </Typography>
+
+                                    {/* Volunteers */}
+                                    <Typography className={this.props.classes.subHeading} color="textPrimary" variant="h6" display="inline" >
+                                        Volunteers: &nbsp;
+                                    </Typography>
+                                    <Typography className={this.props.classes.body} color="textPrimary" variant="body1" display="inline" gutterBottom>
+                                        {this.displayVolunteers(rowData.volunteerPIs)}
+                                        <br/>
                                     </Typography>
 
                                      {/* is Active*/}
