@@ -219,15 +219,8 @@ class AddTeamDialog extends Component {
     renderVolunteers() {
         return (this.props.volunteers.map( volunteer => (
             <MenuItem value={volunteer}>
-            {/* <ListItem key= {volunteer} value={volunteer} > */}
-            <Checkbox color= "primary" checked={this.state.volunteerPIs.includes(volunteer.pantherID.toString())}/>
+            <Checkbox color= "primary" checked={this.state.volunteerPIs.includes(volunteer.pantherID)}/>
             <ListItemText primary={volunteer.firstName + " " + volunteer.lastName + " - " + volunteer.pantherID} />
-            {/* <IconButton edge="end" aria-label="comments" onClick={()=>this.toggleVolunteerPreview()}>
-            {console.log("THIS VOLUNTEER: ", volunteer)}
-            <InfoOutlinedIcon />
-            <VolunteerPreview open={this.state.openPreview} close={this.toggleVolunteerPreview} info={volunteer}/>
-            </IconButton> */}
-            {/* </ListItem> */}
             </MenuItem>
 
             
@@ -437,8 +430,8 @@ class AddTeamDialog extends Component {
                             renderValue={selected => (
                                 <div className={this.props.classes.chips}>
                                     {selected.map( value => {
-            return <Chip color="primary" key={value.pantherID} label={value.firstName + " " + value.lastName} className={this.props.classes.chip} />
-        })}
+                                        return <Chip color="primary" key={value.pantherID} label={value.firstName + " " + value.lastName} className={this.props.classes.chip} />
+                                    })}
                                 </div>
                             )}
                         >
