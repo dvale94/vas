@@ -68,19 +68,10 @@ function createTeam (req, res) {
 function updateTeam (request, response) {
   console.log(request.params);
     console.log(request.body);
-  const { body } = request;
-  let { 
-      schoolCode,
-      semester,
-      year,
-      startTime,
-      endTime,
-      volunteerPIs,
-      isActive
-      } = body;
+  let { body } = request;
       
       //deconstruct PIDs into an array
-      //volunteerPIs = volunteerPIs.split(',')
+      body.volunteerPIs = body.volunteerPIs.split(',')
       
       // form validation
       const { errors, isValid } = validateUpdateTeamInput(request.body);
@@ -89,7 +80,7 @@ function updateTeam (request, response) {
           return response.status(400).json({success: false, errors});
       }
 
-      Team.updateOne({_id: request.params.id}, request.body, (err, result) => {
+      Team.updateOne({_id: request.params.id}, body, (err, result) => {
         if (err) {
           console.log(err);
           } else {

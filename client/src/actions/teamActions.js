@@ -59,12 +59,18 @@ export const addTeam = uneditedform => dispatch => {
  };
 
  // make changes to teams in the database and refresh the store
-export const editTeam = (id, form) => dispatch => {
+export const editTeam = (id, uneditedform) => dispatch => {
+
+    let form = JSON.parse(JSON.stringify(uneditedform));
+
+    form.volunteerPIs = form.volunteerPIs.join()
+
+    console.log(form)
 
     const endpoint = `${serverConf.uri}${serverConf.endpoints.team.update}/${id}`;
 
     request.post(endpoint, { form }, (error, response, body) => {
-        console.log(form)
+        
         const res = JSON.parse(body);
 
         //REMOVE- only for debugging

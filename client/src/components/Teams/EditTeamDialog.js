@@ -111,6 +111,15 @@ class AddTeamDialog extends Component {
     }
 
     componentDidMount() {
+
+        let volunteers = []
+
+        // get the volunteers that matches the volunteers PID
+        this.props.team.volunteerPIs.forEach( id => {
+            const vol = this.props.volunteers.find( volunteer => parseInt(id) === volunteer.pantherID)
+            volunteers.push(vol)
+        })
+
         this.setState({
             semester: this.props.team.semester,
             year: this.props.team.year,
@@ -118,14 +127,14 @@ class AddTeamDialog extends Component {
             startTime: this.props.team.startTime,
             endTime: this.props.team.endTime,
             dayOfWeek: this.props.team.dayOfWeek,
-            volunteerPIs: this.props.team.volunteerPIs.map(Number),
+            volunteerPIs: this.props.team.volunteerPIs,
             monday: this.props.team.dayOfWeek.monday,
             tuesday: this.props.team.dayOfWeek.tuesday,
             wednesday: this.props.team.dayOfWeek.wednesday,
             thursday: this.props.team.dayOfWeek.thursday,
             friday: this.props.team.dayOfWeek.friday,
-            isActive: this.props.team.isActive,
-            
+            isActive: this.props.team.isActive,  
+            volunteers: volunteers
         })
     }
 
@@ -175,11 +184,20 @@ class AddTeamDialog extends Component {
         const value = e.target.value.map(item => item.pantherID)
         const name = e.target.name
 
-        this.setState({
-          [name]: value 
+        let volunteers = []
+
+        // get the volunteers that matches the volunteers PID
+        this.props.team.volunteerPIs.forEach( id => {
+            const vol = this.props.volunteers.find( volunteer => parseInt(id) === volunteer.pantherID)
+            volunteers.push(vol)
         })
 
-        console.log(this.state)
+        this.setState({
+            [name]: value,
+            volunteers: volunteers
+        })
+
+        
     
     }
     
@@ -202,7 +220,7 @@ class AddTeamDialog extends Component {
         return (this.props.volunteers.map( volunteer => (
             <MenuItem value={volunteer}>
             {/* <ListItem key= {volunteer} value={volunteer} > */}
-            <Checkbox color= "primary" checked={this.state.volunteerPIs.includes(volunteer.pantherID)}/>
+            <Checkbox color= "primary" checked={this.state.volunteerPIs.includes(volunteer.pantherID.toString())}/>
             <ListItemText primary={volunteer.firstName + " " + volunteer.lastName + " - " + volunteer.pantherID} />
             {/* <IconButton edge="end" aria-label="comments" onClick={()=>this.toggleVolunteerPreview()}>
             {console.log("THIS VOLUNTEER: ", volunteer)}
@@ -216,12 +234,6 @@ class AddTeamDialog extends Component {
         )))
     }
 
- /*    doIt(x) {
-        return parseInt(x)
-    }
-     */
-
-
     successMessage() {
         if (!isEmpty(this.props.success.message)) {
             return <Alert severity="success">{this.props.success.message}</Alert> 
@@ -231,7 +243,6 @@ class AddTeamDialog extends Component {
     render() {
 
         const { open } = this.props;
-        let arr = [];
         return (
             <ThemeProvider theme={theme}>
             <Dialog
@@ -421,19 +432,13 @@ class AddTeamDialog extends Component {
                             labelId='volunteers'
                             name='volunteerPIs'
                             onChange={this.handleInput_Volunteer}
-                            //defaultValue={this.state.volunteerPIs}
-                            defaultValue={['brad, pitt']}
+                            value={this.state.volunteers}
                             input={<Input id="select-multiple-chip" />}
                             renderValue={selected => (
                                 <div className={this.props.classes.chips}>
-                                    {/* <Chip color="primary" key={selected.pantherID} label={selected + " " + selected} className={this.props.classes.chip} /> */}
-                                  {selected.map( value => {
-                                      console.log(typeof(value))
-                                      return <Chip color="primary" key={value.pantherID} label={value.firstName + " " + value.lastName} className={this.props.classes.chip} />
-                                  })}
-                                  {/* {selected.map( value => {
-                                     return <Chip color="primary" key={value.pantherID} label={value.firstName + " " + value.lastName} className={this.props.classes.chip} />
-                                  })} */}
+                                    {selected.map( value => {
+            return <Chip color="primary" key={value.pantherID} label={value.firstName + " " + value.lastName} className={this.props.classes.chip} />
+        })}
                                 </div>
                             )}
                         >

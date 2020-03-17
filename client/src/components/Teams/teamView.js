@@ -130,8 +130,6 @@ class TeamView extends Component {
             semester: dateInfo[0].toString(),
             year: dateInfo[1].toString()
         })
-        
-        console.log(this.state)
     }
 
     set_Semester_Year() {

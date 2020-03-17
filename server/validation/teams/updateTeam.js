@@ -38,7 +38,7 @@ function validateUpdateTeamInput(data) {
     if (validator.isEmpty(data.endTime)) {
 		  errors.endTime = 'An end time is required';
     }
-    if (validator.isEmpty(data.volunteerPIs)) {
+    if (data.volunteerPIs.length == 0) {
 		errors.volunteerPIs = 'At least one volunteer is required to create a team';
     } 
     
