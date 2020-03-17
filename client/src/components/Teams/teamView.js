@@ -14,7 +14,7 @@ import { green, red } from '@material-ui/core/colors';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import { blueGrey, blue } from '@material-ui/core/colors';
+import { blueGrey, blue, grey } from '@material-ui/core/colors';
 import { getTeams } from '../../actions/teamActions';
 import { getSchools } from '../../actions/schoolActions';
 import { getVolunteers } from '../../actions/volunteerActions';
@@ -24,6 +24,10 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
+import Box from '@material-ui/core/Box';
+import SyncIcon from '@material-ui/icons/Sync';
+
+
 
   const theme = createMuiTheme({
     palette: {
@@ -39,16 +43,18 @@ const useStyles = ({
     },
     all: {
         backgroundColor: '#fafafa',
-        height: 172
+        height: 187
     },
-    card: {
+    card_details: {
         marginTop: 10,
         minWidth: 300,
-        maxWidth: 450,
-        height: 150
+        maxWidth: 750,
+        height: 165
     },
     title: {
-        fontSize: 14,
+        fontSize: 18,
+        fontWeight: 800,
+        color: grey[800],
         alignItems: 'right'
     },
     subHeading: {
@@ -67,6 +73,29 @@ const useStyles = ({
             backgroundColor: blue[500],
         }
     },
+    paper: {
+        marginTop: theme.spacing(1),
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        marginBottom: 10,
+      },
+      card: {
+        marginTop: 10,
+        minWidth: 800,
+        maxWidth: 1000,
+        height: 200,
+        backgroundColor: 'white'
+    },
+    here: {
+        
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justify: 'right',
+        //backgroundColor: 'red',
+        //paddingLeft:'250'
+    }
   });
 
 
@@ -79,13 +108,15 @@ class TeamView extends Component {
             editSchoolDialog: false,
             filteredTeams: [],
             semester: 'Fall',
-            year: '2030'
+            year: '2030',
+            showTable: false
         }
 
         this.toggleAddTeamDialog= this.toggleAddTeamDialog.bind(this);
         this.toggleEditTeamDialog= this.toggleEditTeamDialog.bind(this);
         //this.clearErrors = this.clearErrors.bind(this);
         this.teamDisplay = this.teamDisplay.bind(this);
+        this.showTable = this.showTable.bind(this);
     }
 
     componentDidMount() {
@@ -129,10 +160,23 @@ class TeamView extends Component {
             editTeamDialog: !prevState.editTeamDialog
         }));
     }
+    showTable() {
+        this.setState({
+            showTable: true
+        });
+    }
 
     teamDisplay() {
+        this.showTable()
 
+        // get the teams that match the semester and year
         let teams = this.props.teams.filter( team => team.semester === this.state.semester && team.year === this.state.year)
+
+        // get the name of the school that matches the teams school code
+        teams.forEach( team => {
+            const school = this.props.schools.find(school => school.schoolCode === team.schoolCode)
+            team.schoolName = school.schoolName
+        })
 
         this.setState({
             filteredTeams: teams
@@ -162,16 +206,59 @@ class TeamView extends Component {
         }
     }
 
+    displayDays(data) {
+        let days = []
+       
+            if (data['monday']) days.push('Mondays') 
+            if (data['tuesday']) days.push('Tuesdays ')
+            if (data['wednesday']) days.push('Wednesdays')
+            if (data['thursday']) days.push('Thursdays')
+            if (data['friday']) days.push('Fridays')
+
+        return days.join(', ')
+    }
+
+    displayVolunteers(data) {
+        let names = []
+
+        // get the name of the volunteers that matches the volunteers PID
+        data.forEach( id => {
+            const vol = this.props.volunteers.find( volunteer => parseInt(id) == volunteer.pantherID)
+            names.push(vol.firstName + ' ' + vol.lastName)
+        })
+
+        return names.join(', ')
+    }
+
     render() {
         return (
             //<ThemeProvider theme={theme}>
             <Fragment>
-                <Button className={this.props.classes.buttons} onClick={this.toggleAddTeamDialog}  variant="contained" color="primary">Create Team</Button>
+                {/* <Button className={this.props.classes.buttons} onClick={this.toggleAddTeamDialog}  variant="contained" color="primary">Create Team</Button> */}
         
                 {this.state.addTeamDialog && <AddTeamDialog open={this.state.addTeamDialog} close={this.toggleAddTeamDialog}/>}
 
-                <Grid container wrap="nowrap" spacing={5} justify="center">
+
+
+                {/* QUERY */}
+                <Grid
+                container
+                spacing={0}
+                direction="column"
+                alignItems="center"
+                justify="center">
+                    <Box 
+                    borderRadius="3px"
+                    boxShadow={2}
+                    className={this.props.classes.card} 
+                    variant="outlined"
+                    justify="center">
+{/*                         <CardContent>
+ */}                            <Box style={{paddingTop: '30px', paddingLeft: '50px', paddingRight: '50px'}}>
+                <Typography className={this.props.classes.title}>Query</Typography>
+                <Grid style={{marginBottom: '-10px'}} container wrap="nowrap" spacing={5} justify="center">
                     <Grid item xs={12} sm={6}>
+                
                 {/* Semester */}
                 <FormControl fullWidth style={{marginBottom : "15px"}} margin='dense'>
                     <InputLabel id='semester'>Semester</InputLabel>
@@ -210,13 +297,35 @@ class TeamView extends Component {
                         <MenuItem value={"2030"}>2030</MenuItem>
                     </Select>
                 </FormControl>
+                
                 </Grid>
-                </Grid>
+                </Grid >
+                
+                {/* </CardContent> */}
 
-                <Button className={this.props.classes.buttons} onClick={this.teamDisplay}  variant="contained" color="primary">Display Teams</Button>
+                <div className={this.props.classes.here}>
+                <Button
+                    className={this.props.classes.buttons}
+                    endIcon={<SyncIcon />}
+                    onClick={this.teamDisplay}
+                    variant="contained" 
+                    color="primary">
+                        Display Teams
+                </Button>
+                </div>
+
+                </Box>
+                </Box>
+
+                </Grid>
+                {/* END QUERY */}
+
+
+
+
 
                 <br></br><br></br>
-
+{ this.state.showTable &&
                 <MaterialTable
                     title="Teams"
                     columns={
@@ -238,6 +347,12 @@ class TeamView extends Component {
                     }
                     data={this.state.filteredTeams}
                     actions={[
+                        {
+                            icon: 'person_add',
+                            tooltip: 'Add Team',
+                            isFreeAction: true,
+                            onClick: this.toggleAddTeamDialog
+                            },
                         {
                         icon: 'edit',
                         tooltip: 'Edit Team',
@@ -276,13 +391,13 @@ class TeamView extends Component {
                             alignItems="center"
                             justify="center">
                                 <Card 
-                                className={this.props.classes.card} 
+                                className={this.props.classes.card_details} 
                                 variant="outlined"
                                 justify="center">
                                     <CardContent>
                                     {/* School Code */}
                                     <Typography className={this.props.classes.subHeading} color="textPrimary" variant="h6" display="inline" >
-                                        School Name: &nbsp;
+                                        Associated School: &nbsp;
                                     </Typography>
                                     <Typography className={this.props.classes.body} color="textPrimary" variant="body1" display="inline" gutterBottom>
                                     {rowData.schoolCode} - &nbsp;
@@ -291,6 +406,15 @@ class TeamView extends Component {
                                                 return school.schoolName 
                                             }
                                         })}<br/>
+                                    </Typography>
+
+                                    {/* Days of week */}
+                                    <Typography className={this.props.classes.subHeading} color="textPrimary" variant="h6" display="inline" >
+                                        Days: &nbsp;
+                                    </Typography>
+                                    <Typography className={this.props.classes.body} color="textPrimary" variant="body1" display="inline" gutterBottom>
+                                        {this.displayDays(rowData.dayOfWeek)}
+                                        <br/>
                                     </Typography>
 
                                     {/* Start Time */}
@@ -307,6 +431,15 @@ class TeamView extends Component {
                                     </Typography>
                                     <Typography className={this.props.classes.body} color="textPrimary" variant="body1" display="inline" gutterBottom>
                                         {rowData.endTime}<br/>
+                                    </Typography>
+
+                                    {/* Volunteers */}
+                                    <Typography className={this.props.classes.subHeading} color="textPrimary" variant="h6" display="inline" >
+                                        Volunteers: &nbsp;
+                                    </Typography>
+                                    <Typography className={this.props.classes.body} color="textPrimary" variant="body1" display="inline" gutterBottom>
+                                        {this.displayVolunteers(rowData.volunteerPIs)}
+                                        <br/>
                                     </Typography>
 
                                      {/* is Active*/}
@@ -330,6 +463,7 @@ class TeamView extends Component {
 
                     }}
                 />
+    }
                 {this.state.editTeamDialog && <EditTeamDialog open={this.state.editTeamDialog} close={this.toggleEditTeamDialog} team={this.state.selectedTeam}/>}
             </Fragment>
             //</ThemeProvider>

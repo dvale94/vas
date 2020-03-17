@@ -41,6 +41,7 @@ function validateUpdateTeamInput(data) {
     if (validator.isEmpty(data.volunteerPIs)) {
 		errors.volunteerPIs = 'At least one volunteer is required to create a team';
     } 
+    
 
     return {
 		errors,
@@ -48,4 +49,4 @@ function validateUpdateTeamInput(data) {
 	};
 };
 
-export default validateCreateTeamInput;
+export default validateUpdateTeamInput;

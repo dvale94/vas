@@ -485,7 +485,7 @@ class AddTeamDialog extends Component {
 }
 
 AddTeamDialog.propTypes = {
-    addTeams: PropTypes.func.isRequired,
+    addTeam: PropTypes.func.isRequired,
     clearErrors: PropTypes.func.isRequired,
     clearSuccess: PropTypes.func.isRequired,
     errors: PropTypes.object.isRequired,

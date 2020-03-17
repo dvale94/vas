@@ -17,7 +17,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
 import { clearErrors } from '../../actions/server/errorActions'
 import { clearSuccess } from '../../actions/server/successActions'
-import { addTeam } from "../../actions/teamActions";
+import { editTeam } from "../../actions/teamActions";
 import Alert from '@material-ui/lab/Alert';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -103,7 +103,7 @@ class AddTeamDialog extends Component {
             openPreview: false
         }
 
-        this.addTeam = this.addTeam.bind(this);
+        this.editTeam = this.editTeam.bind(this);
         this.handleInput = this.handleInput.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.exitDialog = this.exitDialog.bind(this);
@@ -118,12 +118,13 @@ class AddTeamDialog extends Component {
             startTime: this.props.team.startTime,
             endTime: this.props.team.endTime,
             dayOfWeek: this.props.team.dayOfWeek,
-            volunteerPIs: this.props.team.volunteerPIs,
+            volunteerPIs: this.props.team.volunteerPIs.map(Number),
             monday: this.props.team.dayOfWeek.monday,
             tuesday: this.props.team.dayOfWeek.tuesday,
             wednesday: this.props.team.dayOfWeek.wednesday,
             thursday: this.props.team.dayOfWeek.thursday,
             friday: this.props.team.dayOfWeek.friday,
+            isActive: this.props.team.isActive,
             
         })
     }
@@ -135,12 +136,21 @@ class AddTeamDialog extends Component {
         console.log(this.state.openPreview)
     }
 
-    addTeam() {
+    editTeam() {
         this.props.clearErrors();
         this.props.clearSuccess();
 
-        console.log("SUMBITTING THIS: ", this.state)
-        this.props.addTeam(this.state);
+        let form = this.state
+        delete form.server
+
+        console.log("SUMBITTING THIS: ", form)
+        // check if any of the fields are empty, and remove them so it dosen't get sent to the server update
+        for (let property in form) {
+            if (isEmpty(form[property])) {
+                delete form[property];
+            }
+        }
+        this.props.editTeam(this.props.team._id, form);
     }
 
     exitDialog() {
@@ -205,7 +215,11 @@ class AddTeamDialog extends Component {
             
         )))
     }
-    
+
+ /*    doIt(x) {
+        return parseInt(x)
+    }
+     */
 
 
     successMessage() {
@@ -234,6 +248,7 @@ class AddTeamDialog extends Component {
 
                     <div className={this.props.classes.root}>
                     <Grid container wrap="nowrap" spacing={5} justify="center">
+
                         <Grid item xs={12} sm={6}>
                             {/* Semester: */}
                             <FormControl fullWidth error={this.props.errors.semester}>
@@ -252,6 +267,7 @@ class AddTeamDialog extends Component {
                                 {<FormHelperText style={{marginBottom : "15px"}}>{this.props.errors.semester}</FormHelperText>}
                             </FormControl>
                         </Grid>
+
                         <Grid item xs={12} sm={6}>
                              {/* Year: */}
                             <FormControl fullWidth error={this.props.errors.year}>
@@ -281,47 +297,6 @@ class AddTeamDialog extends Component {
                         </Grid>  
                     </Grid>
                     </div>
-
-                    {/* Semester: */}
-                    {/* <FormControl error={this.props.errors.semester}>
-                        <InputLabel id="semester">Semester</InputLabel>
-                        <Select
-                        style={{width: "210px", marginRight: "50px"}}
-                        labelId="semester"
-                        name='semester'
-                        margin="dense"
-                        onChange={this.handleInput}
-                        >
-                            <MenuItem value={"Spring"}>Spring</MenuItem>
-                            <MenuItem value={"Fall"}>Fall</MenuItem>
-                        </Select>
-                        {<FormHelperText style={{marginBottom : "15px"}}>{this.props.errors.semester}</FormHelperText>}
-                    </FormControl> */}
-
-                    {/* Year: */}
-                   {/*  <FormControl error={this.props.errors.year}>
-                        <InputLabel id="year">Year</InputLabel>
-                        <Select
-                        style={{width: "210px", marginRight: "50px"}}
-                        labelId="year"
-                        name='year'
-                        margin="dense"
-                        onChange={this.handleInput}
-                        >
-                            <MenuItem value={"2020"}>2020</MenuItem>
-                            <MenuItem value={"2021"}>2021</MenuItem>
-                            <MenuItem value={"2022"}>2022</MenuItem>
-                            <MenuItem value={"2023"}>2023</MenuItem>
-                            <MenuItem value={"2024"}>2024</MenuItem>
-                            <MenuItem value={"2025"}>2025</MenuItem>
-                            <MenuItem value={"2026"}>2026</MenuItem>
-                            <MenuItem value={"2027"}>2027</MenuItem>
-                            <MenuItem value={"2028"}>2028</MenuItem>
-                            <MenuItem value={"2029"}>2029</MenuItem>
-                            <MenuItem value={"2030"}>2030</MenuItem>
-                        </Select>
-                        {<FormHelperText style={{marginBottom : "15px"}}>{this.props.errors.year}</FormHelperText>}
-                    </FormControl> */}
 
                     {/* School list: */}
                     <FormControl fullWidth error={this.props.errors.schoolCode}>
@@ -446,62 +421,46 @@ class AddTeamDialog extends Component {
                             labelId='volunteers'
                             name='volunteerPIs'
                             onChange={this.handleInput_Volunteer}
-                            defaultValue={this.state.volunteerPIs}
+                            //defaultValue={this.state.volunteerPIs}
+                            defaultValue={['brad, pitt']}
                             input={<Input id="select-multiple-chip" />}
                             renderValue={selected => (
                                 <div className={this.props.classes.chips}>
+                                    {/* <Chip color="primary" key={selected.pantherID} label={selected + " " + selected} className={this.props.classes.chip} /> */}
                                   {selected.map( value => {
-                                     return <Chip color="primary" key={value.pantherID} label={value.firstName + " " + value.lastName} className={this.props.classes.chip} />
+                                      console.log(typeof(value))
+                                      return <Chip color="primary" key={value.pantherID} label={value.firstName + " " + value.lastName} className={this.props.classes.chip} />
                                   })}
+                                  {/* {selected.map( value => {
+                                     return <Chip color="primary" key={value.pantherID} label={value.firstName + " " + value.lastName} className={this.props.classes.chip} />
+                                  })} */}
                                 </div>
                             )}
                         >
 
                         {/* List of volunteers */}
-                         {this.renderVolunteers()}   
-
-
-                           {/*  {this.props.volunteers.map( volunteer => (
-                                //<MenuItem value={volunteer}>
-                                <ListItem key= {volunteer} value={volunteer} >
-                                <Checkbox color= "primary" checked={this.state.volunteerPIs.includes(volunteer.pantherID)}/>
-                                <ListItemText primary={volunteer.firstName + " " + volunteer.lastName + " - " + volunteer.pantherID} />
-                                <IconButton key={volunteer} edge="end" aria-label="comments" onClick={()=>this.toggleVolunteerPreview()}>
-                                {console.log(volunteer)}
-                                <InfoOutlinedIcon />
-                                <VolunteerPreview key={volunteer} open={this.state.openPreview} close={this.toggleVolunteerPreview} info={volunteer}/>
-                                </IconButton>
-                                </ListItem>
-                                //</MenuItem>
-
-                                
-                            ))} */}
-
-
-
-
-
-                            {/* {this.openVolunteerCard("hello")} */}
-                            {/* {this.popover("Hellooooo")} */}
-                            {/* <Popover
-                                id="mouse-over-popover"
-                                open={open1}
-                                onClose={this.handlePopoverClose}
-                                >
-                                    <Typography className={this.props.classes.typography}>Content </Typography>
-
-                            </Popover>
-                                         */}            
-                            
-                            
+                         {this.renderVolunteers()}    
                         </Select>
-                        <FormHelperText style={{marginBottom : "15px"}}>{this.props.errors.volunteerPIs}</FormHelperText>
+                        <FormHelperText style={{marginBottom : "0"}}>{this.props.errors.volunteerPIs}</FormHelperText>
+                    </FormControl>
+
+                    <FormControl fullWidth style={{marginBottom : "15px"}} margin='dense'>
+                        <InputLabel id="is-active">Is Active</InputLabel>
+                        <Select
+                            labelId='is-active'
+                            name='isActive'
+                            onChange={this.handleInput}
+                            value={this.state.isActive}
+                        >
+                            <MenuItem  value={true}>Yes</MenuItem >
+                            <MenuItem  value={false}>No</MenuItem >
+                        </Select>
                     </FormControl>
 
                     <br></br>
                 </DialogContent>
                 <DialogActions>
-                    <Button className={this.props.classes.bottomButtons} onClick={this.addTeam}  variant="contained" color="primary">Create</Button>
+                    <Button className={this.props.classes.bottomButtons} onClick={this.editTeam}  variant="contained" color="primary">Update</Button>
                     <Button className={this.props.classes.bottomButtons} onClick={this.exitDialog} variant="contained" color="primary">Exit</Button>
                 </DialogActions>
             </Dialog>
@@ -511,7 +470,7 @@ class AddTeamDialog extends Component {
 }
 
 AddTeamDialog.propTypes = {
-    addTeams: PropTypes.func.isRequired,
+    editTeam: PropTypes.func.isRequired,
     clearErrors: PropTypes.func.isRequired,
     clearSuccess: PropTypes.func.isRequired,
     errors: PropTypes.object.isRequired,
@@ -528,7 +487,7 @@ const mapStateToProps = state => ({
 
 export default connect (
     mapStateToProps,
-    { addTeam, clearErrors, clearSuccess}
+    { editTeam, clearErrors, clearSuccess}
 )(withRouter(withStyles(useStyles)(AddTeamDialog)));
 
 

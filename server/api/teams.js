@@ -4,11 +4,12 @@ const Team = require('../models/Teams/team')
 
 //input validation
 import validateCreateTeamInput from '../validation/teams/createTeam';
+import validateUpdateTeamInput from '../validation/teams/updateTeam';
 
 const router = new express.Router();
 
 router.post('/create', createTeam);
-//router.post('/update/:id', updateSchool);
+router.post('/update/:id', updateTeam);
 router.get('/:id', fetchTeamById);
 router.get('/', fetchTeams);
 
@@ -62,6 +63,76 @@ function createTeam (req, res) {
             });
         });
       
+}
+
+function updateTeam (request, response) {
+  console.log(request.params);
+    console.log(request.body);
+  const { body } = request;
+  let { 
+      schoolCode,
+      semester,
+      year,
+      startTime,
+      endTime,
+      volunteerPIs,
+      isActive
+      } = body;
+      
+      //deconstruct PIDs into an array
+      //volunteerPIs = volunteerPIs.split(',')
+      
+      // form validation
+      const { errors, isValid } = validateUpdateTeamInput(request.body);
+      // check validation
+      if (!isValid) {
+          return response.status(400).json({success: false, errors});
+      }
+
+      Team.updateOne({_id: request.params.id}, request.body, (err, result) => {
+        if (err) {
+          console.log(err);
+          } else {
+          if (result.n === 1) {
+            return response.send({
+                        success: true,
+                        message: 'Successfully updated team!'
+                    });
+          }
+          else {
+            response.json('failed')
+          }
+          }
+      });
+
+      /* const newTeam = new Team;
+
+      newTeam.schoolCode = schoolCode;
+      newTeam.semester = semester;
+      newTeam.year = year;
+      newTeam.dayOfWeek.monday = body['dayOfWeek[monday]'];
+      newTeam.dayOfWeek.tuesday = body['dayOfWeek[tuesday]'];
+      newTeam.dayOfWeek.wednesday = body['dayOfWeek[wednesday]'];
+      newTeam.dayOfWeek.thursday = body['dayOfWeek[thursday]'];
+      newTeam.dayOfWeek.friday = body['dayOfWeek[friday]'];
+      newTeam.startTime = startTime;
+      newTeam.endTime = endTime;
+      newTeam.volunteerPIs = volunteerPIs;
+      newTeam.isActive = 'true';
+
+      newTeam.save((err, team) => {
+          if (err) {
+              return res.send({
+                  success: false,
+                  errors: 'Error: Server error'
+              });
+          }
+          return res.send({
+              success: true,
+              message: 'Successfully created team!'
+          });
+      }); */
+    
 }
 
 function fetchTeams(request, response) {
