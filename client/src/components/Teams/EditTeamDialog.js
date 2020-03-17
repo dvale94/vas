@@ -187,7 +187,7 @@ class AddTeamDialog extends Component {
         let volunteers = []
 
         // get the volunteers that matches the volunteers PID
-        this.props.team.volunteerPIs.forEach( id => {
+        value.forEach( id => {
             const vol = this.props.volunteers.find( volunteer => parseInt(id) === volunteer.pantherID)
             volunteers.push(vol)
         })
