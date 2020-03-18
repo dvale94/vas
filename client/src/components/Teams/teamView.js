@@ -149,11 +149,17 @@ class TeamView extends Component {
     }
 
     toggleAddTeamDialog() {
+        if (this.state.addTeamDialog) {
+            this.teamDisplay() //Resfresh on detailed view
+        }
         this.setState(prevState => ({
             addTeamDialog: !prevState.addTeamDialog
         }));
     }
     toggleEditTeamDialog() {
+        if (this.state.editTeamDialog) {
+            this.teamDisplay() //Resfresh on detailed view
+        }
         this.setState(prevState => ({
             editTeamDialog: !prevState.editTeamDialog
         }));
@@ -251,8 +257,7 @@ class TeamView extends Component {
                     className={this.props.classes.card} 
                     variant="outlined"
                     justify="center">
-{/*                         <CardContent>
- */}                            <Box style={{paddingTop: '30px', paddingLeft: '50px', paddingRight: '50px'}}>
+                    <Box style={{paddingTop: '30px', paddingLeft: '50px', paddingRight: '50px'}}>
                 <Typography className={this.props.classes.title}>Query</Typography>
                 <Grid style={{marginBottom: '-10px'}} container wrap="nowrap" spacing={5} justify="center">
                     <Grid item xs={12} sm={6}>
@@ -299,7 +304,6 @@ class TeamView extends Component {
                 </Grid>
                 </Grid >
                 
-                {/* </CardContent> */}
 
                 <div className={this.props.classes.here}>
                 <Button

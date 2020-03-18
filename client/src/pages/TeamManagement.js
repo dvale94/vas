@@ -10,7 +10,7 @@ const useStyles = {
     },
     table: {
         marginTop: 20,
-        minWidth: 100,
+        minWidth:'80%',
         maxWidth: 1100,
         height: 900
     }
