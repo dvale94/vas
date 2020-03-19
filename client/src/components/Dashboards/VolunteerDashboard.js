@@ -79,7 +79,7 @@ class AdminDashboard extends Component {
                      <Typography
                         className={this.props.classes.main}
                         style={{marginBottom: '15px'}}>
-                            Dashboard
+                            Welcome Aurelien
                     </Typography>
                     </Grid>
                     {/* </div> */}

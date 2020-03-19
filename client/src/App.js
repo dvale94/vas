@@ -31,13 +31,13 @@ if (localStorage.jwt) {
 
     // set user
     store.dispatch(setAuth(decoded));
-    if (decoded.role == "Admin") {
+    if (decoded.role === "Admin") {
       store.dispatch(getAdmin(decoded.id))
     }
-    if (decoded.role == "Volunteer") {
+    if (decoded.role === "Volunteer") {
       store.dispatch(getVolunteer(decoded.id))
     }
-    if (decoded.role == "School Personnel") {
+    if (decoded.role === "School Personnel") {
       store.dispatch(getSchoolPersonnel(decoded.id))
     }
     //store.dispatch(setCurrentUser(decoded));

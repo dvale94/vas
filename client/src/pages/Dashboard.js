@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { Grid } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import AdminDashboard from '../components/Dashboards/AdminDashboard';
-
+import VolunteerDashboard from '../components/Dashboards/VolunteerDashboard';
 
 const useStyles = {
     all: {
@@ -31,25 +31,21 @@ class Dashboard extends Component{
             <div className={this.props.classes.all}
                 style={{backgroundImage: 'url(' + require('../images/FIU_1_10.png') + ')',
                 backgroundPosition: 'center',
-                backgroundSize: 'cover',
-                //opacity: '100%'
-                }}>
+                backgroundSize: 'cover' }}>
+                
                 <Grid
-                container
-                spacing={0}
-                direction="column"
-                alignItems="center"
-                justify="center">
+                    container
+                    spacing={0}
+                    direction="column"
+                    alignItems="center"
+                    justify="center">
+
                     <Grid item className={this.props.classes.cell}>
                     { auth.role === "Admin" && <AdminDashboard/>}
+                    { auth.role === "Volunteer" && <VolunteerDashboard/>}
                     </Grid>
                     
                 </Grid>
-                {/* <img
-                    src={require('../images/FIU_1.JPG')}
-                    alt="portrait"
-                    className="portraitIMG"
-            /> */}
             </div>
             
         )

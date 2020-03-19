@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { createMuiTheme } from '@material-ui/core/styles';
@@ -30,15 +30,6 @@ import FormLabel from '@material-ui/core/FormLabel';
 import ListItemText from '@material-ui/core/ListItemText';
 import Chip from '@material-ui/core/Chip';
 import Input from '@material-ui/core/Input';
-import VolunteerPreview from './volunteerPreview'
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import IconButton from '@material-ui/core/IconButton';
-import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
-import Popover from '@material-ui/core/Popover';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import ListItem from '@material-ui/core/ListItem';
 import { Grid } from '@material-ui/core';
 
 
@@ -176,15 +167,7 @@ class AddTeamDialog extends Component {
             {/* <ListItem key= {volunteer} value={volunteer} > */}
             <Checkbox color= "primary" checked={this.state.volunteerPIs.includes(volunteer.pantherID)}/>
             <ListItemText primary={volunteer.firstName + " " + volunteer.lastName + " - " + volunteer.pantherID} />
-            {/* <IconButton edge="end" aria-label="comments" onClick={()=>this.toggleVolunteerPreview()}>
-            {console.log("THIS VOLUNTEER: ", volunteer)}
-            <InfoOutlinedIcon />
-            <VolunteerPreview open={this.state.openPreview} close={this.toggleVolunteerPreview} info={volunteer}/>
-            </IconButton> */}
-            {/* </ListItem> */}
             </MenuItem>
-
-            
         )))
     }
     
@@ -199,7 +182,7 @@ class AddTeamDialog extends Component {
     render() {
 
         const { open } = this.props;
-        let arr = [];
+
         return (
             <ThemeProvider theme={theme}>
             <Dialog

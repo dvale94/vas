@@ -82,10 +82,10 @@ class VolunteerTable extends Component {
     }
 
     setColor(text) {
-        if (text == true) {
+        if (text === true) {
             return "primary";
         }
-        else if (text == false) {
+        else if (text === false) {
             return "secondary";
         }
         else {

@@ -87,13 +87,10 @@ const useStyles = ({
         backgroundColor: 'white'
     },
     here: {
-        
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justify: 'right',
-        //backgroundColor: 'red',
-        //paddingLeft:'250'
     }
   });
 
@@ -198,10 +195,10 @@ class TeamView extends Component {
     }
 
     setColor(text) {
-        if (text == true) {
+        if (text === true) {
             return "primary";
         }
-        else if (text == false) {
+        else if (text === false) {
             return "secondary";
         }
         else {
@@ -226,7 +223,7 @@ class TeamView extends Component {
 
         // get the name of the volunteers that matches the volunteers PID
         data.forEach( id => {
-            const vol = this.props.volunteers.find( volunteer => parseInt(id) == volunteer.pantherID)
+            const vol = this.props.volunteers.find( volunteer => parseInt(id) === volunteer.pantherID)
             names.push(vol.firstName + ' ' + vol.lastName)
         })
 
