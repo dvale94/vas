@@ -26,8 +26,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Box from '@material-ui/core/Box';
 import SyncIcon from '@material-ui/icons/Sync';
-
-
+import AddIcon from '@material-ui/icons/Add';
 
   const theme = createMuiTheme({
     palette: {
@@ -84,7 +83,7 @@ const useStyles = ({
         marginTop: 10,
         minWidth: 800,
         maxWidth: 1000,
-        height: 200,
+        height: 210,
         backgroundColor: 'white'
     },
     here: {
@@ -247,18 +246,36 @@ class TeamView extends Component {
                 {/* QUERY */}
                 <Grid
                 container
-                spacing={0}
+                spacing={3}
                 direction="column"
                 alignItems="center"
-                justify="center">
+                justify="space-evenly">
                     <Box 
                     borderRadius="3px"
                     boxShadow={2}
                     className={this.props.classes.card} 
                     variant="outlined"
                     justify="center">
-                    <Box style={{paddingTop: '30px', paddingLeft: '50px', paddingRight: '50px'}}>
-                <Typography className={this.props.classes.title}>Query</Typography>
+                        
+                    <Box style={{paddingTop: '18px', paddingLeft: '50px', paddingRight: '50px'}}>
+                    <Grid 
+                        container
+                        direction="row-reverse"
+                        justify="flex-start"
+                        alignItems="flex-start">
+                        <div className={this.props.classes.here}>
+                        <Button
+                            className={this.props.classes.buttons}
+                            endIcon={<AddIcon />}
+                            onClick={this.toggleAddTeamDialog}
+                            variant="contained"
+                            size="small"
+                            color="primary">
+                                Create Team
+                        </Button>
+                        </div>
+                    </Grid>
+                <Typography className={this.props.classes.title}>Query Teams:</Typography>
                 <Grid style={{marginBottom: '-10px'}} container wrap="nowrap" spacing={5} justify="center">
                     <Grid item xs={12} sm={6}>
                 
@@ -305,16 +322,23 @@ class TeamView extends Component {
                 </Grid >
                 
 
-                <div className={this.props.classes.here}>
+                {/* <div className={this.props.classes.here}> */}
+                <Grid container item xs >
                 <Button
                     className={this.props.classes.buttons}
                     endIcon={<SyncIcon />}
                     onClick={this.teamDisplay}
-                    variant="contained" 
+                    variant="contained"
+                    fullWidth
+                    size="small"
                     color="primary">
                         Display Teams
                 </Button>
-                </div>
+                </Grid>
+
+                
+
+                {/* </div> */}
 
                 </Box>
                 </Box>
@@ -349,12 +373,12 @@ class TeamView extends Component {
                     }
                     data={this.state.filteredTeams}
                     actions={[
-                        {
+                        /* {
                             icon: 'person_add',
                             tooltip: 'Add Team',
                             isFreeAction: true,
                             onClick: this.toggleAddTeamDialog
-                            },
+                            }, */
                         {
                         icon: 'edit',
                         tooltip: 'Edit Team',
