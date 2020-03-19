@@ -18,6 +18,7 @@ import { blueGrey, blue, grey } from '@material-ui/core/colors';
 import { getTeams } from '../../actions/teamActions';
 import { getSchools } from '../../actions/schoolActions';
 import { getVolunteers } from '../../actions/volunteerActions';
+import { getSchoolPersonnels } from '../../actions/schoolPersonnelActions';
 import AddTeamDialog from './AddTeamDialog';
 import EditTeamDialog from './EditTeamDialog';
 import Select from '@material-ui/core/Select';
@@ -48,7 +49,8 @@ const useStyles = ({
         marginTop: 10,
         minWidth: 300,
         maxWidth: 750,
-        height: 165
+        height: 165,
+        overflow: 'auto'
     },
     title: {
         fontSize: 18,
@@ -119,6 +121,7 @@ class TeamView extends Component {
         this.props.getTeams();
         this.props.getSchools();
         this.props.getVolunteers();
+        this.props.getSchoolPersonnels();
         
         let dateInfo = this.set_Semester_Year()
 
@@ -219,15 +222,43 @@ class TeamView extends Component {
     }
 
     displayVolunteers(data) {
-        let names = []
+        let volunteers = []
 
-        // get the name of the volunteers that matches the volunteers PID
+        // get the volunteers that matches the volunteers PID
         data.forEach( id => {
             const vol = this.props.volunteers.find( volunteer => parseInt(id) === volunteer.pantherID)
-            names.push(vol.firstName + ' ' + vol.lastName)
+            volunteers.push(vol)
         })
 
-        return names.join(', ')
+        return (
+            volunteers.map( volunteer => 
+                <div>
+                    &emsp;
+                    {volunteer.firstName + ' ' + volunteer.lastName} &ensp;-&ensp;
+                    {volunteer.email} &ensp;-&ensp;
+                    {volunteer.phoneNumber}
+                </div>
+            )
+        )
+    }
+
+    displaySchoolPersonnels(data) {
+        let personnels = []
+
+        // get the School Personnels that are related to the school code and are active.
+        personnels = this.props.schoolPersonnels.filter( personnel => personnel.schoolCode === data && personnel.isActive)
+        
+        return (
+            personnels.map( personnel => 
+                <div>
+                    &emsp;
+                    {personnel.firstName + ' ' + personnel.lastName} &ensp;-&ensp;
+                    {personnel.title} &ensp;-&ensp;
+                    {personnel.email} &ensp;-&ensp;
+                    {personnel.phoneNumber}
+                </div>
+            )
+        )
     }
 
     render() {
@@ -462,7 +493,14 @@ class TeamView extends Component {
                                     </Typography>
                                     <Typography className={this.props.classes.body} color="textPrimary" variant="body1" display="inline" gutterBottom>
                                         {this.displayVolunteers(rowData.volunteerPIs)}
-                                        <br/>
+                                    </Typography>
+
+                                    {/* School Personnels */}
+                                    <Typography className={this.props.classes.subHeading} color="textPrimary" variant="h6" display="inline" >
+                                        School Personnels: &nbsp;
+                                    </Typography>
+                                    <Typography className={this.props.classes.body} color="textPrimary" variant="body1" display="inline" gutterBottom>
+                                        {this.displaySchoolPersonnels(rowData.schoolCode)}
                                     </Typography>
 
                                      {/* is Active*/}
@@ -500,6 +538,7 @@ TeamView.propTypes = {
     teams: PropTypes.array.isRequired,
     schools: PropTypes.array.isRequired,
     volunteers: PropTypes.array.isRequired,
+    schoolPersonnels: PropTypes.array.isRequired,
     errors: PropTypes.object.isRequired
 };
 
@@ -507,10 +546,11 @@ const mapStateToProps = state => ({
     teams: state.teamData.teams,
     schools: state.schoolData.schools,
     volunteers: state.volunteers.volunteers,
+    schoolPersonnels: state.schoolPersonnels.schoolPersonnels,
     errors: state.errors
 });
 
 export default connect (
     mapStateToProps,
-    { getTeams, getSchools, getVolunteers }  
+    { getTeams, getSchools, getVolunteers, getSchoolPersonnels }  
 )(withRouter(withStyles(useStyles)(TeamView)));
