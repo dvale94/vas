@@ -11,7 +11,9 @@ const router = new express.Router();
 router.post('/create', createTeam);
 router.post('/update/:id', updateTeam);
 router.get('/:id', fetchTeamById);
+router.get('/hello/:pid', fetchTeamByPantherID);
 router.get('/', fetchTeams);
+
 
 function createTeam (req, res) {
     const { body } = req;
@@ -95,34 +97,6 @@ function updateTeam (request, response) {
           }
           }
       });
-
-      /* const newTeam = new Team;
-
-      newTeam.schoolCode = schoolCode;
-      newTeam.semester = semester;
-      newTeam.year = year;
-      newTeam.dayOfWeek.monday = body['dayOfWeek[monday]'];
-      newTeam.dayOfWeek.tuesday = body['dayOfWeek[tuesday]'];
-      newTeam.dayOfWeek.wednesday = body['dayOfWeek[wednesday]'];
-      newTeam.dayOfWeek.thursday = body['dayOfWeek[thursday]'];
-      newTeam.dayOfWeek.friday = body['dayOfWeek[friday]'];
-      newTeam.startTime = startTime;
-      newTeam.endTime = endTime;
-      newTeam.volunteerPIs = volunteerPIs;
-      newTeam.isActive = 'true';
-
-      newTeam.save((err, team) => {
-          if (err) {
-              return res.send({
-                  success: false,
-                  errors: 'Error: Server error'
-              });
-          }
-          return res.send({
-              success: true,
-              message: 'Successfully created team!'
-          });
-      }); */
     
 }
 
@@ -145,5 +119,30 @@ function fetchTeamById(request, response) {
 		  }
 	});
 }
+function fetchTeamByPantherID(request, response) {
+  console.log(request.params);
+	Team.find(request.params.id, (err, result) => {
+		if (err) {
+			console.log(err);
+		  } else {
+			response.json(result);
+		  }
+	});
+}
+
+/* function fetchTeamByPantherID(request, response) {
+  const pantherID = request.params;
+  console.log("HEREEEEEE: ", pantherID)
+
+	/* Team.find({
+            volunteerPIs: pantherID
+        }, (err, result) => {
+            if (err) {
+		  console.log(err);
+		} else {
+		  response.json(result);
+		}
+	}); */
+//} */
 
 export default {router};
