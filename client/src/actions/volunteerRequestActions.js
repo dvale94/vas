@@ -36,7 +36,7 @@ export const getTeamRequest = pid => dispatch => {
 export const getVolunteersRequest = pids => dispatch => {
     let volunteerInfo = []
     console.log("ORIGINAL:", pids)
-    let pantherIDs = (pids.join()).toString()
+    let pantherIDs = (pids.join())
     console.log("CHANGED:", pantherIDs)
     const endpoint = `${serverConf.uri}${serverConf.endpoints.volunteers.getVolunteerInfo}/${pantherIDs}`;
 
