@@ -17,3 +17,5 @@ export const SET_TEAMS = 'SET_TEAMS';
 export const TEAMS_LOADING = 'TEAMS_LOADING';
 export const SET_ADMINS = 'SET_ADMINS';
 export const ADMINS_LOADING = 'ADMINS_LOADING';
+export const SET_TEAMS_REQ = 'SET_TEAMS_REQ';
+export const SET_VOLUNTEERS_REQ = 'SET_VOLUNTEERS_REQ';

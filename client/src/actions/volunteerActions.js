@@ -50,7 +50,7 @@ export const addVolunteer = form => dispatch => {
     });
  };
 
-// make chanhes to volunteer in the database and refresh the store
+// make changes to volunteer in the database and refresh the store
 export const editVolunteer = (id, form) => dispatch => {
 
     const endpoint = `${serverConf.uri}${serverConf.endpoints.volunteers.update}/${id}`;

@@ -11,6 +11,7 @@ const router = new express.Router();
 router.post('/create', createSchool);
 router.post('/update/:id', updateSchool);
 router.get('/:id', fetchSchoolById);
+router.get('/getSchoolInfo/:code', fetchSchoolByCode);
 router.get('/', fetchSchools);
 
 function createSchool (req, res) {
@@ -128,5 +129,22 @@ function fetchSchoolById(request, response) {
 		  }
 	});
 }
+
+function fetchSchoolByCode(request, response) {
+
+    const schoolCode = request.params.code
+  
+    console.log("CODE: ", schoolCode);
+  
+    School.find({
+        schoolCode: schoolCode
+          }, (err, result) => {
+              if (err) {
+            console.log(err);
+          } else {
+            response.json(result);
+          }
+      });
+  }
 
 export default {router};

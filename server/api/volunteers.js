@@ -12,6 +12,8 @@ router.put('/update/:id', updateVolunteer);
 router.put('/updateProfile/:id', updateVolunteer_Profile);
 router.get('/', fetchVolunteers);
 router.get('/:id', fetchVolunteerById);
+/* router.get('/getVolunteerInfo/:pid', fetchVolunteerByPID); */
+router.get('/getVolunteerInfo/:pids', fetchVolunteerByPID);
 
 function updateVolunteer_Profile(request, response) {
 	console.log(request.params);
@@ -286,5 +288,46 @@ function fetchVolunteerById(request, response) {
 		  }
 	});
 }
+
+/* function fetchVolunteerByPID(request, response) {
+
+    const pantherID = request.params.pid
+  
+    console.log("PID: ", pantherID);
+  
+    Volunteer.find({
+        pantherID: pantherID
+          }, (err, result) => {
+              if (err) {
+            console.log(err);
+          } else {
+            response.json(result);
+          }
+      });
+  } */
+
+  function fetchVolunteerByPID(request, response) {
+	  
+
+	const pantherIDs = request.params.pids
+	console.log("PIDs: ", pantherIDs);
+
+	var PIDs = pantherIDs.split(',');
+	console.log("ARRAY: ", PIDs);
+	PIDs = PIDs.map(Number)
+	console.log("ARRAY: ", PIDs);
+	
+		 Volunteer.find({
+			pantherID: PIDs
+			}, (err, result) => {
+				if (err) {
+				console.log(err);
+			} else {
+				console.log(result)
+				response.json(result);
+				/* response.json(result); */
+			}
+		})
+  }
 
 export default {router};

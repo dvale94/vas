@@ -1,11 +1,14 @@
 import React, { Component, Fragment } from 'react';
 import Button from '@material-ui/core/Button';
 import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { connect } from "react-redux";
 import { withStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { blueGrey, blue, grey } from '@material-ui/core/colors';
+import { getTeamRequest } from "../../actions/volunteerRequestActions";
 
 const useStyles = {
     all: {
@@ -48,8 +51,33 @@ const useStyles = {
       },
 }
 
+
 class AdminDashboard extends Component {
-    
+
+    constructor(props) {
+        super(props);
+        this.state = {}
+
+        this.getTeamRequest = this.getTeamRequest.bind(this);
+    }  
+
+    componentDidMount() {
+        /* console.log(this.state)
+        this.setState({
+            pantherID: this.props.user.pantherID
+        })
+        console.log(this.state) */
+        /* console.log(this.getPID()) */
+
+        this.getTeamRequest();
+
+    }
+
+    /* async getPID(){
+        return await this.props.user.pantherID
+    } */
+      
+
     // LINKS
     redirect_to_AdminManagement = () =>{
         this.props.history.push("/admin-management"); 
@@ -67,9 +95,25 @@ class AdminDashboard extends Component {
         this.props.history.push("/team-management"); 
     }
 
+    getTeamRequest() {
+        const pantherID = this.props.user.pantherID
+        console.log("SEND THIS: ", pantherID)
+        this.props.getTeamRequest(5920331);
+    }
+
+    getthis() {
+        const teams = this.props.teams
+         teams.forEach( team => {
+            console.log(team.endTime)
+         return <Typography>Volunteers</Typography>
+        })
+        
+    }
 
     render(){
+        const teams = this.props.teams
         return (
+            
             <Fragment>
             {/* <div className={this.props.classes.this}> */}
             
@@ -79,7 +123,7 @@ class AdminDashboard extends Component {
                      <Typography
                         className={this.props.classes.main}
                         style={{marginBottom: '15px'}}>
-                            Welcome Aurelien
+                            Welcome {this.props.user.firstName} !
                     </Typography>
                     </Grid>
                     {/* </div> */}
@@ -102,7 +146,7 @@ class AdminDashboard extends Component {
                             <Typography
                             className={this.props.classes.title}
                             style={{marginBottom: '15px', alignItems: 'left'}}>
-                                Administrator Management Tools:
+                                Your Team Information:
                             </Typography>
 
                             <Grid
@@ -114,19 +158,15 @@ class AdminDashboard extends Component {
                             >
 
                                 <Grid container item xs >
-                                    <Button
-                                    className={this.props.classes.buttons}
-                                    onClick={this.redirect_to_AdminManagement}
-                                    variant="contained" 
-                                    color="primary"
-                                    size='medium'
-                                    fullWidth>
-                                        Admins
-                                    </Button>
+                                <Typography>Volunteers {this.props.teams.endTime}</Typography>
+                                {this.getthis()}
+                                
+                               
+                                    {/* <Typography>Volunteers: {this.props.team.volunteerPIs}</Typography> */}
                                 </Grid>
 
                                 <Grid container item xs >
-                                    <Button
+                                    {/* <Button
                                     className={this.props.classes.buttons}
                                     onClick={this.redirect_to_VolunteerManagement}
                                     variant="contained" 
@@ -134,46 +174,10 @@ class AdminDashboard extends Component {
                                     size='medium'
                                     fullWidth>
                                         Volunteers
-                                    </Button>
+                                    </Button> */}
                                 </Grid>
 
-                                <Grid container item xs >
-                                    <Button
-                                    className={this.props.classes.buttons}
-                                    onClick={this.redirect_to_SchoolPersonnelManagement}
-                                    variant="contained" 
-                                    color="primary"
-                                    //style={{width: '90%'}}
-                                    fullWidth
-                                    size='medium'
-                                    >
-                                        School Personnel
-                                    </Button>
-                                </Grid>
-
-                                <Grid container item xs >
-                                    <Button
-                                    className={this.props.classes.buttons}
-                                    onClick={this.redirect_to_SchoolManagement}
-                                    variant="contained" 
-                                    color="primary"
-                                    size='medium'
-                                    fullWidth>
-                                        Schools
-                                    </Button>
-                                </Grid>
-
-                                <Grid container item xs >
-                                    <Button
-                                    className={this.props.classes.buttons}
-                                    onClick={this.redirect_to_TeamManagement}
-                                    variant="contained" 
-                                    color="primary"
-                                    size='medium'
-                                    fullWidth>
-                                        Teams
-                                    </Button>
-                                </Grid>
+                                
 
                         </Grid>
 
@@ -190,4 +194,19 @@ class AdminDashboard extends Component {
     }
 }
 
-export default (withRouter(withStyles(useStyles)(AdminDashboard)));
+AdminDashboard.propTypes = {
+    getTeamRequest: PropTypes.func.isRequired,
+  };
+
+const mapStateToProps = state => ({
+    user: state.userData.user,
+    teams: state.volunteerRequests.teams,
+    errors: state.errors,
+    success: state.success
+  });
+
+
+  export default connect (
+    mapStateToProps,
+    { getTeamRequest }  
+)(withRouter(withStyles(useStyles)(AdminDashboard)));

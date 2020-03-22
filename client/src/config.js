@@ -19,6 +19,7 @@ const config = {
 			fetchByid: '/volunteers',
 			update: '/volunteers/update',
 			updateProfile: '/volunteers/updateProfile',
+			getVolunteerInfo: '/volunteers/getVolunteerInfo'
 		},
 		schools: {
 			create: '/school/create',
@@ -35,6 +36,7 @@ const config = {
 			create: '/team/create',
 			fetch: '/team',
 			update: '/team/update',
+			getTeamInfo: '/team/getTeamInfo'
 		},
 	}
 };

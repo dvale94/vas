@@ -11,7 +11,7 @@ const router = new express.Router();
 router.post('/create', createTeam);
 router.post('/update/:id', updateTeam);
 router.get('/:id', fetchTeamById);
-router.get('/hello/:pid', fetchTeamByPantherID);
+router.get('/getTeamInfo/:pid', fetchTeamByPantherID);
 router.get('/', fetchTeams);
 
 
@@ -119,30 +119,23 @@ function fetchTeamById(request, response) {
 		  }
 	});
 }
+
 function fetchTeamByPantherID(request, response) {
-  console.log(request.params);
-	Team.find(request.params.id, (err, result) => {
-		if (err) {
-			console.log(err);
-		  } else {
-			response.json(result);
-		  }
-	});
-}
 
-/* function fetchTeamByPantherID(request, response) {
-  const pantherID = request.params;
-  console.log("HEREEEEEE: ", pantherID)
+  const pantherID = request.params.pid
 
-	/* Team.find({
-            volunteerPIs: pantherID
+  console.log("PID: ", pantherID);
+
+	Team.find({
+    volunteerPIs: pantherID
         }, (err, result) => {
             if (err) {
 		  console.log(err);
 		} else {
 		  response.json(result);
 		}
-	}); */
-//} */
+	});
+}
+
 
 export default {router};
