@@ -313,9 +313,7 @@ function fetchVolunteerById(request, response) {
 	console.log("PIDs: ", pantherIDs);
 
 	var PIDs = pantherIDs.split(',');
-	console.log("ARRAY: ", PIDs);
 	PIDs = PIDs.map(Number)
-	console.log("ARRAY: ", PIDs);
 	
 		 Volunteer.find({
 			pantherID: PIDs

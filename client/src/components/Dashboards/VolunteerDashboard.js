@@ -68,8 +68,8 @@ class AdminDashboard extends Component {
         })
         console.log(this.state) */
         /* console.log(this.getPID()) */
-        setTimeout(function(){ this.getTeamRequest()}, 3000);
-        /* this.getTeamRequest(); */
+        /* setTimeout(function(){ this.getTeamRequest()}, 3000); */
+        this.getTeamRequest();
 
     }
 
@@ -98,7 +98,7 @@ class AdminDashboard extends Component {
     getTeamRequest() {
         const pantherID = this.props.user.pantherID
         console.log("SEND THIS: ", pantherID)
-        this.props.getTeamRequest(pantherID);
+        this.props.getTeamRequest(5920331);
     }
 
     getthis() {

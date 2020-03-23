@@ -1,6 +1,6 @@
 import request from 'request';
 import serverConf from '../config'
-import { GET_ERRORS, SET_TEAMS_REQ, SET_VOLUNTEERS_REQ } from './types';
+import { GET_ERRORS, SET_TEAMS_REQ, SET_VOLUNTEERS_REQ, SET_SCHOOLS_REQ, SET_SCHOOL_PERSONNEL_REQ } from './types';
 
 // get teams from database
 export const getTeamRequest = pid => dispatch => {
@@ -12,8 +12,6 @@ export const getTeamRequest = pid => dispatch => {
         
         const res = JSON.parse(body);
 
-        console.log("RES_Teams: ", res)
-
         if (error) {
             dispatch({
                 type: GET_ERRORS,
@@ -21,23 +19,33 @@ export const getTeamRequest = pid => dispatch => {
               })
         }
         else {
-            res.forEach(pids => {
-                console.log("PID ARRAY: ", pids.volunteerPIs)
-                dispatch(getVolunteersRequest(pids.volunteerPIs))
+            let allVolunteers = []
+            let allSchools = []
+            let allSchPersonnels = []
+
+            res.forEach(team => {
+                console.log("PID ARRAY: ", team.volunteerPIs)
+                allVolunteers.push(team.volunteerPIs)
+
+                console.log("SCHOOL_CODE ARRAY: ", team.schoolCode)
+                allSchools.push(team.schoolCode)
+
+
             });
 
-            // set current teams
+            allVolunteers.pop(pid) // Removes current loggedin user
+            dispatch(getVolunteersRequest(allVolunteers))
+            dispatch(getSchoolsRequest(allSchools))
+            dispatch(getSchoolPersonnelsRequest(allSchools))
             dispatch(setTeams(res));
-            //dispatch(getVolunteersRequest(pids.volunteerPIs))
         }    
     });
 };
 
 export const getVolunteersRequest = pids => dispatch => {
-    let volunteerInfo = []
-    console.log("ORIGINAL:", pids)
-    let pantherIDs = (pids.join())
-    console.log("CHANGED:", pantherIDs)
+
+    let pantherIDs = pids.join()
+
     const endpoint = `${serverConf.uri}${serverConf.endpoints.volunteers.getVolunteerInfo}/${pantherIDs}`;
 
     request.get(endpoint, (error, response, body) => {
@@ -59,32 +67,54 @@ export const getVolunteersRequest = pids => dispatch => {
 
 };
 
- function getVolunteerRequest(pid) {
+export const getSchoolsRequest = schoolCodes => dispatch => {
 
-    var EventEmitter = require("events").EventEmitter;
-    var finalResult = new EventEmitter();
-    const endpoint = `${serverConf.uri}${serverConf.endpoints.volunteers.getVolunteerInfo}/${pid}`;
+    let codes = schoolCodes.join()
+
+    const endpoint = `${serverConf.uri}${serverConf.endpoints.schools.getSchoolInfo}/${codes}`;
 
     request.get(endpoint, (error, response, body) => {
         
         const res = JSON.parse(body);
 
-        console.log("RES_Volunteers: ", res)
+        console.log("RES_Schools ", res)
 
         if (error) {
-            finalResult = null
+            dispatch({
+                type: GET_ERRORS,
+                payload: res
+              })
         }
         else {
-            // set current teams
-           /*  dispatch(setVolunteers(res)); */
-           finalResult.res = res
-           finalResult.emit('update');
+            dispatch(setSchools(res));
         }    
     });
-    finalResult.on('update', function () {
-        console.log("Yo", finalResult.res); 
-        return finalResult.res
+
+};
+
+export const getSchoolPersonnelsRequest = schoolCodes => dispatch => {
+
+    let codes = schoolCodes.join()
+
+    const endpoint = `${serverConf.uri}${serverConf.endpoints.schoolPersonnels.getPersonnelInfo}/${codes}`;
+
+    request.get(endpoint, (error, response, body) => {
+        
+        const res = JSON.parse(body);
+
+        console.log("RES_Personnels ", res)
+
+        if (error) {
+            dispatch({
+                type: GET_ERRORS,
+                payload: res
+              })
+        }
+        else {
+            dispatch(setSchool_Personnel(res));
+        }    
     });
+
 };
 
 // set teams
@@ -95,10 +125,26 @@ export const setTeams = teams => {
     };
 };
 
-// set teams
+// set volunteers
 export const setVolunteers = volunteers => {
     return {
         type: SET_VOLUNTEERS_REQ,
         payload: volunteers
+    };
+};
+
+// set schools
+export const setSchools = schools => {
+    return {
+        type: SET_SCHOOLS_REQ,
+        payload: schools
+    };
+};
+
+// set school personnel
+export const setSchool_Personnel = schPersonnel => {
+    return {
+        type: SET_SCHOOL_PERSONNEL_REQ,
+        payload: schPersonnel
     };
 };

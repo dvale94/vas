@@ -11,7 +11,7 @@ const router = new express.Router();
 router.post('/create', createSchool);
 router.post('/update/:id', updateSchool);
 router.get('/:id', fetchSchoolById);
-router.get('/getSchoolInfo/:code', fetchSchoolByCode);
+router.get('/getSchoolInfo/:codes', fetchSchoolByCode);
 router.get('/', fetchSchools);
 
 function createSchool (req, res) {
@@ -132,12 +132,14 @@ function fetchSchoolById(request, response) {
 
 function fetchSchoolByCode(request, response) {
 
-    const schoolCode = request.params.code
-  
-    console.log("CODE: ", schoolCode);
+    const schoolCodes = request.params.codes
+    console.log("CODEs: ", schoolCodes);
+
+    var CODES = schoolCodes.split(',');
+	CODES = CODES.map(Number)
   
     School.find({
-        schoolCode: schoolCode
+        schoolCode: CODES
           }, (err, result) => {
               if (err) {
             console.log(err);

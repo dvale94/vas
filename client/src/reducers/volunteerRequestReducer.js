@@ -1,8 +1,10 @@
-import { SET_TEAMS_REQ, SET_VOLUNTEERS_REQ} from '../actions/types';
+import { SET_TEAMS_REQ, SET_VOLUNTEERS_REQ, SET_SCHOOLS_REQ, SET_SCHOOL_PERSONNEL_REQ} from '../actions/types';
 
   const initialState = {
     teams: [],
     volunteers: [],
+    schools: [],
+    school_personnel: []
   };
 
   export default function(state = initialState, action) {
@@ -16,6 +18,16 @@ import { SET_TEAMS_REQ, SET_VOLUNTEERS_REQ} from '../actions/types';
         return {
           ...state,
           volunteers: action.payload
+      };
+      case SET_SCHOOLS_REQ:
+        return {
+          ...state,
+          schools: action.payload
+      };
+      case SET_SCHOOL_PERSONNEL_REQ:
+        return {
+          ...state,
+          school_personnel: action.payload
       };
       default:
         return state;

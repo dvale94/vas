@@ -25,12 +25,14 @@ const config = {
 			create: '/school/create',
 			fetch: '/school',
 			update: '/school/update',
+			getSchoolInfo: '/school/getSchoolInfo'
 		},	
 		schoolPersonnels: {
 			signup: '/account/school-personnel/signup',
 			fetch: '/school-personnels',
 			fetchByid: '/school-personnels',
 			update: '/school-personnels/update',
+			getPersonnelInfo: '/school-personnels/getPersonnelInfo'
 		},
 		team: {
 			create: '/team/create',
