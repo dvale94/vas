@@ -313,7 +313,7 @@ function fetchVolunteerById(request, response) {
 	console.log("PIDs: ", pantherIDs);
 
 	var PIDs = pantherIDs.split(',');
-	PIDs = PIDs.map(Number)
+	//PIDs = PIDs.map(Number)
 	
 		 Volunteer.find({
 			pantherID: PIDs

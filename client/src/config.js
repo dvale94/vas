@@ -14,12 +14,13 @@ const config = {
 			fetchByid: '/admin',
 		},
 		volunteers: {
+			getVolunteerInfo: '/volunteers/getVolunteerInfo',
 			signup: '/account/volunteer/signup',
 			fetch: '/volunteers',
 			fetchByid: '/volunteers',
 			update: '/volunteers/update',
 			updateProfile: '/volunteers/updateProfile',
-			getVolunteerInfo: '/volunteers/getVolunteerInfo'
+			
 		},
 		schools: {
 			create: '/school/create',

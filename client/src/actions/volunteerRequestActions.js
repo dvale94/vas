@@ -21,7 +21,6 @@ export const getTeamRequest = pid => dispatch => {
         else {
             let allVolunteers = []
             let allSchools = []
-            let allSchPersonnels = []
 
             res.forEach(team => {
                 console.log("PID ARRAY: ", team.volunteerPIs)
@@ -30,14 +29,14 @@ export const getTeamRequest = pid => dispatch => {
                 console.log("SCHOOL_CODE ARRAY: ", team.schoolCode)
                 allSchools.push(team.schoolCode)
 
-
             });
 
             allVolunteers.pop(pid) // Removes current loggedin user
+            dispatch(setTeams(res));
             dispatch(getVolunteersRequest(allVolunteers))
             dispatch(getSchoolsRequest(allSchools))
             dispatch(getSchoolPersonnelsRequest(allSchools))
-            dispatch(setTeams(res));
+            
         }    
     });
 };
@@ -47,6 +46,7 @@ export const getVolunteersRequest = pids => dispatch => {
     let pantherIDs = pids.join()
 
     const endpoint = `${serverConf.uri}${serverConf.endpoints.volunteers.getVolunteerInfo}/${pantherIDs}`;
+    console.log(endpoint)
 
     request.get(endpoint, (error, response, body) => {
         
