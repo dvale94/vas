@@ -28,6 +28,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Box from '@material-ui/core/Box';
 import SyncIcon from '@material-ui/icons/Sync';
 import AddIcon from '@material-ui/icons/Add';
+import isEmpty from 'is-empty';
 
   const theme = createMuiTheme({
     palette: {
@@ -233,10 +234,13 @@ class TeamView extends Component {
         return (
             volunteers.map( volunteer => 
                 <div>
-                    &emsp;
+                    &#9642; &nbsp;
                     {volunteer.firstName + ' ' + volunteer.lastName} &ensp;-&ensp;
                     {volunteer.email} &ensp;-&ensp;
-                    {volunteer.phoneNumber}
+                    {volunteer.phoneNumber} &ensp;-&ensp;
+                    <Typography className={this.props.classes.body} variant="h6" display="inline" color={this.setColor(volunteer.isActive)} gutterBottom>
+                        {volunteer.isActive ? 'Active' : 'Not Active'}<br/>
+                    </Typography>
                 </div>
             )
         )
@@ -248,17 +252,26 @@ class TeamView extends Component {
         // get the School Personnels that are related to the school code and are active.
         personnels = this.props.schoolPersonnels.filter( personnel => personnel.schoolCode === data && personnel.isActive)
         
-        return (
-            personnels.map( personnel => 
+        if (!isEmpty(personnels)) {
+            return (
+                personnels.map( personnel => 
+                    <div>
+                        &#9642; &nbsp;
+                        {personnel.firstName + ' ' + personnel.lastName} &ensp;-&ensp;
+                        {personnel.title} &ensp;-&ensp;
+                        {personnel.email} &ensp;-&ensp;
+                        {personnel.phoneNumber}
+                    </div>
+                )
+            )
+        }
+        else {
+            return (
                 <div>
-                    &emsp;
-                    {personnel.firstName + ' ' + personnel.lastName} &ensp;-&ensp;
-                    {personnel.title} &ensp;-&ensp;
-                    {personnel.email} &ensp;-&ensp;
-                    {personnel.phoneNumber}
+                    &#9642; &nbsp; None available at the moment
                 </div>
             )
-        )
+        }    
     }
 
     render() {
