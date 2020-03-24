@@ -98,7 +98,7 @@ class AdminDashboard extends Component {
     getTeamRequest() {
         const pantherID = this.props.user.pantherID
         console.log("SEND THIS: ", pantherID)
-        this.props.getTeamRequest(5920331);
+        this.props.getTeamRequest(5920312);
     }
 
     getthis() {

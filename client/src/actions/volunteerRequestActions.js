@@ -1,6 +1,8 @@
 import request from 'request';
 import serverConf from '../config'
 import { GET_ERRORS, SET_TEAMS_REQ, SET_VOLUNTEERS_REQ, SET_SCHOOLS_REQ, SET_SCHOOL_PERSONNEL_REQ } from './types';
+import { compose } from 'redux';
+const _ = require("underscore"); 
 
 // get teams from database
 export const getTeamRequest = pid => dispatch => {
@@ -31,9 +33,17 @@ export const getTeamRequest = pid => dispatch => {
 
             });
 
-            allVolunteers.pop(pid) // Removes current loggedin user
+
+            console.log("THIS IS WHAT NEEDS TO BE REMOVED: ", pid.toString())
+            let allVolunteers_INT = allVolunteers.map(String).toString().split(',').map(x=>+x)
+            console.log(allVolunteers_INT)
+
+            var filtered_Volunteers = allVolunteers_INT.filter(item => item !== pid )
+            
+            console.log("FILTERED: ", filtered_Volunteers)
+
             dispatch(setTeams(res));
-            dispatch(getVolunteersRequest(allVolunteers))
+            dispatch(getVolunteersRequest(filtered_Volunteers))
             dispatch(getSchoolsRequest(allSchools))
             dispatch(getSchoolPersonnelsRequest(allSchools))
             
@@ -42,9 +52,9 @@ export const getTeamRequest = pid => dispatch => {
 };
 
 export const getVolunteersRequest = pids => dispatch => {
-
+    console.log(pids)
     let pantherIDs = pids.join()
-
+    console.log(pantherIDs)
     const endpoint = `${serverConf.uri}${serverConf.endpoints.volunteers.getVolunteerInfo}/${pantherIDs}`;
     console.log(endpoint)
 
