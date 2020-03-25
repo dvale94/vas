@@ -14,6 +14,7 @@ router.get('/:id', fetchSchoolById);
 router.get('/getSchoolInfo/:codes', fetchSchoolByCode);
 router.get('/', fetchSchools);
 
+
 function createSchool (req, res) {
 
     const { body } = req;

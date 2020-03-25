@@ -1,14 +1,12 @@
 import request from 'request';
 import serverConf from '../config'
-import { GET_ERRORS, SET_TEAMS_REQ, SET_VOLUNTEERS_REQ, SET_SCHOOLS_REQ, SET_SCHOOL_PERSONNEL_REQ } from './types';
-import { compose } from 'redux';
-const _ = require("underscore"); 
+import { GET_ERRORS, SET_TEAMS_REQ_SCH, SET_VOLUNTEERS_REQ_SCH, SET_SCHOOL_REQ_SCH, SET_SCHOOL_PERSONNEL_REQ_SCH} from './types';
 
 // get teams from database
-export const getTeamRequest = pid => dispatch => {
-    console.log("pid: ", pid)
+export const getTeamRequest = schoolCode => dispatch => {
+    console.log("schhol code: ", schoolCode)
 
-    const endpoint = `${serverConf.uri}${serverConf.endpoints.team.getTeamInfo}/${pid}`;
+    const endpoint = `${serverConf.uri}${serverConf.endpoints.team.getTeamInfoSch}/${schoolCode}`;
 
     request.get(endpoint, (error, response, body) => {
         
@@ -22,39 +20,25 @@ export const getTeamRequest = pid => dispatch => {
         }
         else {
             let allVolunteers = []
-            let allSchools = []
 
             res.forEach(team => {
                 console.log("PID ARRAY: ", team.volunteerPIs)
                 allVolunteers.push(team.volunteerPIs)
-
-                console.log("SCHOOL_CODE ARRAY: ", team.schoolCode)
-                allSchools.push(team.schoolCode)
-
             });
 
-
-            //console.log("THIS IS WHAT NEEDS TO BE REMOVED: ", pid.toString())
-            let allVolunteers_INT = allVolunteers.map(String).toString().split(',').map(x=>+x)
-            console.log(allVolunteers_INT)
-
-            var filtered_Volunteers = allVolunteers_INT.filter(item => item !== pid )
-            
-            console.log("FILTERED: ", filtered_Volunteers)
-
             dispatch(setTeams(res));
-            dispatch(getVolunteersRequest(filtered_Volunteers))
-            dispatch(getSchoolsRequest(allSchools))
-            dispatch(getSchoolPersonnelsRequest(allSchools))
+            dispatch(getVolunteersRequest(allVolunteers))
+            dispatch(getSchoolRequest(schoolCode))
+            dispatch(getSchoolPersonnelsRequest(schoolCode))
             
         }    
     });
 };
 
 export const getVolunteersRequest = pids => dispatch => {
-    console.log(pids)
+
     let pantherIDs = pids.join()
-    console.log(pantherIDs)
+
     const endpoint = `${serverConf.uri}${serverConf.endpoints.volunteers.getVolunteerInfo}/${pantherIDs}`;
     console.log(endpoint)
 
@@ -77,11 +61,9 @@ export const getVolunteersRequest = pids => dispatch => {
 
 };
 
-export const getSchoolsRequest = schoolCodes => dispatch => {
+export const getSchoolRequest = schoolCode => dispatch => {
 
-    let codes = schoolCodes.join()
-
-    const endpoint = `${serverConf.uri}${serverConf.endpoints.schools.getSchoolInfo}/${codes}`;
+    const endpoint = `${serverConf.uri}${serverConf.endpoints.schools.getSchoolInfo}/${schoolCode}`;
 
     request.get(endpoint, (error, response, body) => {
         
@@ -96,17 +78,15 @@ export const getSchoolsRequest = schoolCodes => dispatch => {
               })
         }
         else {
-            dispatch(setSchools(res));
+            dispatch(setSchool(res));
         }    
     });
 
 };
 
-export const getSchoolPersonnelsRequest = schoolCodes => dispatch => {
+export const getSchoolPersonnelsRequest = schoolCode => dispatch => {
 
-    let codes = schoolCodes.join()
-
-    const endpoint = `${serverConf.uri}${serverConf.endpoints.schoolPersonnels.getPersonnelInfo}/${codes}`;
+    const endpoint = `${serverConf.uri}${serverConf.endpoints.schoolPersonnels.getPersonnelInfo}/${schoolCode}`;
 
     request.get(endpoint, (error, response, body) => {
         
@@ -130,7 +110,7 @@ export const getSchoolPersonnelsRequest = schoolCodes => dispatch => {
 // set teams
 export const setTeams = teams => {
     return {
-        type: SET_TEAMS_REQ,
+        type: SET_TEAMS_REQ_SCH,
         payload: teams
     };
 };
@@ -138,23 +118,23 @@ export const setTeams = teams => {
 // set volunteers
 export const setVolunteers = volunteers => {
     return {
-        type: SET_VOLUNTEERS_REQ,
+        type: SET_VOLUNTEERS_REQ_SCH,
         payload: volunteers
     };
 };
 
 // set schools
-export const setSchools = schools => {
+export const setSchool = school => {
     return {
-        type: SET_SCHOOLS_REQ,
-        payload: schools
+        type: SET_SCHOOL_REQ_SCH,
+        payload: school
     };
 };
 
 // set school personnel
 export const setSchool_Personnel = schPersonnel => {
     return {
-        type: SET_SCHOOL_PERSONNEL_REQ,
+        type: SET_SCHOOL_PERSONNEL_REQ_SCH,
         payload: schPersonnel
     };
 };

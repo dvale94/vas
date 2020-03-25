@@ -244,7 +244,6 @@ function fetchSchoolPersonnelByCode(request, response) {
     console.log("CODEs: ", schoolCodes);
 
     var CODES = schoolCodes.split(',');
-	//CODES = CODES.map(Number)
   
     schPersonnel.find({
         schoolCode: CODES

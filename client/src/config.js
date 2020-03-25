@@ -39,7 +39,8 @@ const config = {
 			create: '/team/create',
 			fetch: '/team',
 			update: '/team/update',
-			getTeamInfo: '/team/getTeamInfo'
+			getTeamInfo: '/team/getTeamInfo',
+			getTeamInfoSch: '/team/getTeamInfoSch'
 		},
 	}
 };

@@ -13,6 +13,7 @@ router.post('/update/:id', updateTeam);
 router.get('/:id', fetchTeamById);
 router.get('/getTeamInfo/:pid', fetchTeamByPantherID);
 router.get('/', fetchTeams);
+router.get('/getTeamInfoSch/:schoolCode', fetchTeamBySchoolCode);
 
 
 function createTeam (req, res) {
@@ -137,5 +138,21 @@ function fetchTeamByPantherID(request, response) {
 	});
 }
 
+function fetchTeamBySchoolCode(request, response) {
+
+  const schoolCode = request.params.schoolCode
+
+  console.log("School Code: ", schoolCode);
+
+	Team.find({
+    schoolCode: schoolCode
+        }, (err, result) => {
+            if (err) {
+		  console.log(err);
+		} else {
+		  response.json(result);
+		}
+	});
+}
 
 export default {router};
