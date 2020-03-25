@@ -30,6 +30,7 @@ export const getTeamRequest = pid => dispatch => {
 
                 console.log("SCHOOL_CODE ARRAY: ", team.schoolCode)
                 allSchools.push(team.schoolCode)
+                
 
             });
 
