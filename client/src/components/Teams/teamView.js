@@ -44,13 +44,13 @@ const useStyles = ({
     },
     all: {
         backgroundColor: '#fafafa',
-        height: 187
+        height: 280
     },
     card_details: {
         marginTop: 10,
         minWidth: 300,
         maxWidth: 750,
-        height: 165,
+        height: 255,
         overflow: 'auto'
     },
     title: {
@@ -234,7 +234,7 @@ class TeamView extends Component {
         return (
             volunteers.map( volunteer => 
                 <div>
-                    &#9642; &nbsp;
+                    &nbsp; &#8226; &nbsp;
                     {volunteer.firstName + ' ' + volunteer.lastName} &ensp;-&ensp;
                     {volunteer.email} &ensp;-&ensp;
                     {volunteer.phoneNumber} &ensp;-&ensp;
@@ -256,7 +256,7 @@ class TeamView extends Component {
             return (
                 personnels.map( personnel => 
                     <div>
-                        &#9642; &nbsp;
+                        &nbsp; &#8226; &nbsp;
                         {personnel.firstName + ' ' + personnel.lastName} &ensp;-&ensp;
                         {personnel.title} &ensp;-&ensp;
                         {personnel.email} &ensp;-&ensp;
@@ -276,13 +276,9 @@ class TeamView extends Component {
 
     render() {
         return (
-            //<ThemeProvider theme={theme}>
             <Fragment>
-                {/* <Button className={this.props.classes.buttons} onClick={this.toggleAddTeamDialog}  variant="contained" color="primary">Create Team</Button> */}
         
                 {this.state.addTeamDialog && <AddTeamDialog open={this.state.addTeamDialog} close={this.toggleAddTeamDialog}/>}
-
-
 
                 {/* QUERY */}
                 <Grid
@@ -392,7 +388,7 @@ class TeamView extends Component {
 
 
                 <br></br><br></br>
-{ this.state.showTable &&
+    { this.state.showTable &&
                 <MaterialTable
                     title="Teams"
                     columns={
@@ -414,12 +410,6 @@ class TeamView extends Component {
                     }
                     data={this.state.filteredTeams}
                     actions={[
-                        /* {
-                            icon: 'person_add',
-                            tooltip: 'Add Team',
-                            isFreeAction: true,
-                            onClick: this.toggleAddTeamDialog
-                            }, */
                         {
                         icon: 'edit',
                         tooltip: 'Edit Team',
@@ -436,8 +426,6 @@ class TeamView extends Component {
                             backgroundColor: '#eeeeee',
                         },
                         cellStyle: {
-                            /* width: 250,
-                            maxWidth: 700 */
                             width: 10,
                             maxWidth: 10
                           },
@@ -518,7 +506,7 @@ class TeamView extends Component {
 
                                      {/* is Active*/}
                                      <Typography className={this.props.classes.subHeading} color="textPrimary" variant="h6" display="inline" >
-                                        Activation status: &nbsp;
+                                        Team status: &nbsp;
                                     </Typography>
                                     <Typography className={this.props.classes.body} variant="h6" display="inline" color={this.setColor(rowData.isActive)} gutterBottom>
                                         {rowData.isActive ? 'Active' : 'Not Active'}<br/>

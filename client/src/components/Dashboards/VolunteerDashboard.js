@@ -98,7 +98,7 @@ class AdminDashboard extends Component {
     getTeamRequest() {
         const pantherID = this.props.user.pantherID
         console.log("SEND THIS: ", pantherID)
-        this.props.getTeamRequest(5920312);
+        this.props.getTeamRequest(6987468);
     }
 
     getthis() {
@@ -115,7 +115,6 @@ class AdminDashboard extends Component {
         return (
             
             <Fragment>
-            {/* <div className={this.props.classes.this}> */}
             
             <Grid
                 container
@@ -126,7 +125,7 @@ class AdminDashboard extends Component {
                             Welcome {this.props.user.firstName} !
                     </Typography>
                     </Grid>
-                    {/* </div> */}
+                    
             <Grid
                 container
                 spacing={0}

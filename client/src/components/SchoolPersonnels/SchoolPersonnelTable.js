@@ -135,7 +135,7 @@ class SchoolPersonnelTable extends Component {
                             backgroundColor: '#eeeeee',
                         },
                           pageSizeOptions: [4, 10, 20, 50, 100],
-                          pageSize: 4,
+                          pageSize: 10,
                           paging: true,
                           exportButton: true,
                     }}
