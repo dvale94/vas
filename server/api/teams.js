@@ -12,6 +12,7 @@ router.post('/create', createTeam);
 router.post('/update/:id', updateTeam);
 router.get('/:id', fetchTeamById);
 router.get('/', fetchTeams);
+router.get('/getTeamInfoSch/:schoolCode', fetchTeamBySchoolCode);
 
 function createTeam (req, res) {
     const { body } = req;
@@ -143,6 +144,23 @@ function fetchTeamById(request, response) {
 		  } else {
 			response.json(result);
 		  }
+	});
+}
+
+function fetchTeamBySchoolCode(request, response) {
+
+  const schoolCode = request.params.schoolCode
+
+  console.log("School Code: ", schoolCode);
+
+	Team.find({
+    schoolCode: schoolCode
+        }, (err, result) => {
+            if (err) {
+		  console.log(err);
+		} else {
+		  response.json(result);
+		}
 	});
 }
 

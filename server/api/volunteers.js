@@ -12,6 +12,7 @@ router.put('/update/:id', updateVolunteer);
 router.put('/updateProfile/:id', updateVolunteer_Profile);
 router.get('/', fetchVolunteers);
 router.get('/:id', fetchVolunteerById);
+router.get('/getVolunteerInfo/:pids', fetchVolunteerByPID);
 
 function updateVolunteer_Profile(request, response) {
 	console.log(request.params);
@@ -286,5 +287,27 @@ function fetchVolunteerById(request, response) {
 		  }
 	});
 }
+
+function fetchVolunteerByPID(request, response) {
+	  
+
+	const pantherIDs = request.params.pids
+	console.log("PIDs: ", pantherIDs);
+
+	var PIDs = pantherIDs.split(',');
+	//PIDs = PIDs.map(Number)
+	
+		 Volunteer.find({
+			pantherID: PIDs
+			}, (err, result) => {
+				if (err) {
+				console.log(err);
+			} else {
+				console.log(result)
+				response.json(result);
+				/* response.json(result); */
+			}
+		})
+  }
 
 export default {router};

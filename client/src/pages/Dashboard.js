@@ -6,6 +6,8 @@ import { Grid } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import AdminDashboard from '../components/Dashboards/AdminDashboard';
 import VolunteerDashboard from '../components/Dashboards/VolunteerDashboard';
+import SchoolPersonnelDashboard from '../components/Dashboards/SchoolPersonnelDashboard';
+import isEmpty from 'is-empty';
 
 const useStyles = {
     all: {
@@ -42,7 +44,8 @@ class Dashboard extends Component{
 
                     <Grid item className={this.props.classes.cell}>
                     { auth.role === "Admin" && <AdminDashboard/>}
-                    { auth.role === "Volunteer" && <VolunteerDashboard/>}
+                    { !isEmpty(this.props.user) && auth.role === "Volunteer" && <VolunteerDashboard/>}
+                    { !isEmpty(this.props.user) && auth.role === "School Personnel" && <SchoolPersonnelDashboard/>}
                     </Grid>
                     
                 </Grid>
@@ -60,6 +63,7 @@ Dashboard.propTypes = {
   // allows us to get our state from Redux and map it to props
   const mapStateToProps = state => ({
     auth: state.auth,
+    user: state.userData.user,
   });
   
   export default connect (

@@ -11,6 +11,7 @@ const router = new express.Router();
 router.post('/update/:id', updateSchoolPersonnel);
 router.get('/', fetchSchoolPersonnels);
 router.get('/:id', fetchSchoolPersonnelById);
+router.get('/getPersonnelInfo/:codes', fetchSchoolPersonnelByCode);
 
 function updateSchoolPersonnel(request, response) {
 	let schoolPersonnel = {}
@@ -236,5 +237,23 @@ function fetchSchoolPersonnelById(request, response) {
 		  }
 	});
 }
+
+function fetchSchoolPersonnelByCode(request, response) {
+
+    const schoolCodes = request.params.codes
+    console.log("CODEs: ", schoolCodes);
+
+    var CODES = schoolCodes.split(',');
+  
+    schPersonnel.find({
+        schoolCode: CODES
+          }, (err, result) => {
+              if (err) {
+            console.log(err);
+          } else {
+            response.json(result);
+          }
+      });
+  }
 
 export default {router};

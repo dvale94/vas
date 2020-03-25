@@ -14,6 +14,7 @@ const config = {
 			fetchByid: '/admin',
 		},
 		volunteers: {
+			getVolunteerInfo: '/volunteers/getVolunteerInfo',
 			signup: '/account/volunteer/signup',
 			fetch: '/volunteers',
 			fetchByid: '/volunteers',
@@ -24,17 +25,21 @@ const config = {
 			create: '/school/create',
 			fetch: '/school',
 			update: '/school/update',
+			getSchoolInfo: '/school/getSchoolInfo'
 		},	
 		schoolPersonnels: {
 			signup: '/account/school-personnel/signup',
 			fetch: '/school-personnels',
 			fetchByid: '/school-personnels',
 			update: '/school-personnels/update',
+			getPersonnelInfo: '/school-personnels/getPersonnelInfo'
+			
 		},
 		team: {
 			create: '/team/create',
 			fetch: '/team',
 			update: '/team/update',
+			getTeamInfoSch: '/team/getTeamInfoSch'
 		},
 	}
 };
