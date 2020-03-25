@@ -62,21 +62,11 @@ class AdminDashboard extends Component {
     }  
 
     componentDidMount() {
-        /* console.log(this.state)
-        this.setState({
-            pantherID: this.props.user.pantherID
-        })
-        console.log(this.state) */
-        /* console.log(this.getPID()) */
-        /* setTimeout(function(){ this.getTeamRequest()}, 3000); */
+
         this.getTeamRequest();
 
     }
 
-    /* async getPID(){
-        return await this.props.user.pantherID
-    } */
-      
 
     // LINKS
     redirect_to_AdminManagement = () =>{
@@ -125,7 +115,7 @@ class AdminDashboard extends Component {
                             Welcome {this.props.user.firstName} !
                     </Typography>
                     </Grid>
-                    
+
             <Grid
                 container
                 spacing={0}
@@ -165,15 +155,7 @@ class AdminDashboard extends Component {
                                 </Grid>
 
                                 <Grid container item xs >
-                                    {/* <Button
-                                    className={this.props.classes.buttons}
-                                    onClick={this.redirect_to_VolunteerManagement}
-                                    variant="contained" 
-                                    color="primary"
-                                    size='medium'
-                                    fullWidth>
-                                        Volunteers
-                                    </Button> */}
+
                                 </Grid>
 
                                 
