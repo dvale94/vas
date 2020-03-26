@@ -4,10 +4,9 @@ import { connect } from "react-redux";
 import { withRouter } from 'react-router-dom';
 import { Grid } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import AdminDashboard from '../components/Dashboards/AdminDashboard';
-import Volunteer_Dashbaord_MiddleMan from '../components/Dashboards/Volunteer_Dashbaord_MiddleMan';
-import Personnel_Dashbaord_MiddleMan from '../components/Dashboards/Personnel_Dashbaord_MiddleMan'
+import VolunteerDashboard from './VolunteerDashboard';
 import isEmpty from 'is-empty';
+import { getTeamRequest } from "../../actions/volunteerRequestActions";
 
 const useStyles = {
     all: {
@@ -19,17 +18,32 @@ const useStyles = {
         minWidth: 200,
         width: '95%',
         height: 900,
-        
     }
 }
 
-class Dashboard extends Component {
+class VolunteerDashboardMM extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {}
+
+        this.getTeamRequest = this.getTeamRequest.bind(this);
+    }
+
+    componentDidMount() {
+        this.getTeamRequest();
+    }
+
+    getTeamRequest() {
+        const pantherID = this.props.user.pantherID
+        this.props.getTeamRequest(pantherID);
+    }
     
-    render(){
+    render() {
         const { auth } = this.props;
         return (
             <div className={this.props.classes.all}
-                style={{backgroundImage: 'url(' + require('../images/FIU_1_10.png') + ')',
+                style={{backgroundImage: 'url(' + require('../../images/FIU_1_10.png') + ')',
                 backgroundPosition: 'center',
                 backgroundSize: 'cover' }}>
                 
@@ -41,10 +55,13 @@ class Dashboard extends Component {
                     justify="center">
 
                     <Grid item className={this.props.classes.cell}>
-                    { auth.role === "Admin" && <AdminDashboard/>}
 
-                    { !isEmpty(this.props.user) && auth.role === "Volunteer" && <Volunteer_Dashbaord_MiddleMan/>}
-                    { !isEmpty(this.props.user) && auth.role === "School Personnel" && <Personnel_Dashbaord_MiddleMan/>}
+                    {/* {console.log(this.props.Info.teams, isEmpty(this.props.Info.teams), isEmpty(this.props.Info.volunteers), isEmpty(this.props.Info.schools))} */}
+
+                    { !isEmpty(this.props.Info.teams) &&
+                      !isEmpty(this.props.Info.volunteers) && 
+                      !isEmpty(this.props.Info.schools) &&
+                      <VolunteerDashboard/>}
 
                     </Grid>
                     
@@ -56,16 +73,19 @@ class Dashboard extends Component {
 }
 
 // define types
-Dashboard.propTypes = {
+VolunteerDashboardMM.propTypes = {
     auth: PropTypes.object.isRequired,
+    getTeamRequest: PropTypes.func.isRequired
   };
   
   // allows us to get our state from Redux and map it to props
   const mapStateToProps = state => ({
     auth: state.auth,
     user: state.userData.user,
+    Info: state.volunteerRequests,
   });
   
   export default connect (
     mapStateToProps,
-  )(withRouter(withStyles(useStyles)(Dashboard)));
+    { getTeamRequest }
+  )(withRouter(withStyles(useStyles)(VolunteerDashboardMM)));

@@ -4,7 +4,7 @@ import { GET_ERRORS, SET_TEAMS_REQ_SCH, SET_VOLUNTEERS_REQ_SCH, SET_SCHOOL_REQ_S
 
 // get teams from database
 export const getTeamRequest = schoolCode => dispatch => {
-    console.log("schhol code: ", schoolCode)
+    console.log("school code: ", schoolCode)
 
     const endpoint = `${serverConf.uri}${serverConf.endpoints.team.getTeamInfoSch}/${schoolCode}`;
 
@@ -40,7 +40,6 @@ export const getVolunteersRequest = pids => dispatch => {
     let pantherIDs = pids.join()
 
     const endpoint = `${serverConf.uri}${serverConf.endpoints.volunteers.getVolunteerInfo}/${pantherIDs}`;
-    console.log(endpoint)
 
     request.get(endpoint, (error, response, body) => {
         
