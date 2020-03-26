@@ -20,6 +20,7 @@ export const getTeamRequest = schoolCode => dispatch => {
         }
         else {
             let allVolunteers = []
+            console.log(res)
 
             res.forEach(team => {
                 console.log("PID ARRAY: ", team.volunteerPIs)

@@ -1,4 +1,4 @@
-import { SET_SCHOOLS, SCHOOLS_LOADING} from '../actions/types';
+import { SET_SCHOOLS, SCHOOLS_LOADING, RESET_STATE} from '../actions/types';
 
   const initialState = {
     schools: [],
@@ -16,8 +16,11 @@ import { SET_SCHOOLS, SCHOOLS_LOADING} from '../actions/types';
         return {
           ...state,
           loading: true
-        };  
+        };
+        case RESET_STATE:
+          return initialState;
       default:
         return state;
+      
     }
   }

@@ -1,4 +1,4 @@
-import { SET_ADMINS, ADMINS_LOADING} from '../actions/types';
+import { SET_ADMINS, ADMINS_LOADING, RESET_STATE} from '../actions/types';
 
   const initialState = {
     admins: [],
@@ -16,7 +16,9 @@ import { SET_ADMINS, ADMINS_LOADING} from '../actions/types';
         return {
           ...state,
           loading: true
-        };  
+        };
+      case RESET_STATE:
+          return initialState;
       default:
         return state;
     }

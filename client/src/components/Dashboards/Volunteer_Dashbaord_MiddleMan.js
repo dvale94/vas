@@ -42,10 +42,6 @@ class VolunteerDashboardMM extends Component {
     render() {
         const { auth } = this.props;
         return (
-            <div className={this.props.classes.all}
-                style={{backgroundImage: 'url(' + require('../../images/FIU_1_10.png') + ')',
-                backgroundPosition: 'center',
-                backgroundSize: 'cover' }}>
                 
                 <Grid
                     container
@@ -66,7 +62,6 @@ class VolunteerDashboardMM extends Component {
                     </Grid>
                     
                 </Grid>
-            </div>
             
         )
     }

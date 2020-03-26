@@ -1,4 +1,4 @@
-import { SET_AUTH, AUTH_LOADING} from '../actions/types';
+import { SET_AUTH, AUTH_LOADING, RESET_STATE} from '../actions/types';
 import isEmpty from 'is-empty';
 
   const initialState = {
@@ -20,6 +20,8 @@ import isEmpty from 'is-empty';
           ...state,
           loading: true
         };
+        case RESET_STATE:
+          return initialState;
       default:
         return state;
     }
