@@ -19,7 +19,7 @@ const useStyles = {
         marginTop: 10,
         minWidth: '80%',
         maxWidth: 750,
-        height: '100%',
+        height: 300,
         backgroundColor: 'white'
     },
     buttons: {
@@ -49,59 +49,51 @@ const useStyles = {
         alignItems: 'left',
         minWidth: '80%',
       },
+      subHeading: {
+        fontSize: 15,
+        alignItems: 'right'
+    },
+    body: {
+        fontSize: 13,
+        alignItems: 'right'
+    },
 }
 
 
-class AdminDashboard extends Component {
+class VolunteerDashboard extends Component {
 
     constructor(props) {
         super(props);
         this.state = {}
 
         this.getTeamRequest = this.getTeamRequest.bind(this);
-    }  
-
-    componentDidMount() {
-
-        this.getTeamRequest();
-
+    }
+    componentDidMount(){
+        this.getTeamRequest()
     }
 
-
-    // LINKS
-    redirect_to_AdminManagement = () =>{
-        this.props.history.push("/admin-management"); 
-    }
-    redirect_to_VolunteerManagement = () =>{
-        this.props.history.push("/volunteer-management"); 
-    }
-    redirect_to_SchoolManagement = () =>{
-        this.props.history.push("/schoolmanagement"); 
-    }
-    redirect_to_SchoolPersonnelManagement = () =>{
-        this.props.history.push("/school-personnel-management"); 
-    }
-    redirect_to_TeamManagement = () =>{
-        this.props.history.push("/team-management"); 
-    }
 
     getTeamRequest() {
         const pantherID = this.props.user.pantherID
-        console.log("SEND THIS: ", pantherID)
+        //console.log("SEND THIS: ", pantherID)
         this.props.getTeamRequest(pantherID);
     }
 
-    getthis() {
-        const teams = this.props.teams
-         teams.forEach( team => {
-            console.log(team.endTime)
-         return <Typography>Volunteers</Typography>
-        })
-        
+    displayDays(data) {
+        let days = []
+       
+            if (data['monday']) days.push('Mondays') 
+            if (data['tuesday']) days.push('Tuesdays ')
+            if (data['wednesday']) days.push('Wednesdays')
+            if (data['thursday']) days.push('Thursdays')
+            if (data['friday']) days.push('Fridays')
+
+        return days.join(', ')
     }
 
+
     render(){
-        const teams = this.props.teams
+        const Info = this.props.Info
         return (
             
             <Fragment>
@@ -116,56 +108,68 @@ class AdminDashboard extends Component {
                     </Typography>
                     </Grid>
 
-            <Grid
-                container
-                spacing={0}
-                direction="column"
-                alignItems="center"
-                justify="center">
-                    
+{Info.teams.map( team => {
 
-                    <Box 
-                    borderRadius="3px"
-                    boxShadow={3}
-                    className={this.props.classes.card} 
-                    variant="outlined"
-                    justify="center">
-                        <Grid style={{paddingLeft: '15px', paddingTop: '10px', paddingRight: '15px', paddingBottom: '15px',}}>
+        return ( <p>{team}</p>&&
+                        <Grid
+                        container
+                        spacing={0}
+                        direction="column"
+                        alignItems="center"
+                        justify="center"
+                        key={team._id}>
                             
-                            <Typography
-                            className={this.props.classes.title}
-                            style={{marginBottom: '15px', alignItems: 'left'}}>
-                                Your Team Information:
-                            </Typography>
 
-                            <Grid
-                            container
-                            direction="row"
-                            justify="space-evenly"
-                            alignItems="center"
-                            spacing={3}
-                            >
+                            <Box 
+                            borderRadius="3px"
+                            boxShadow={3}
+                            className={this.props.classes.card} 
+                            variant="outlined"
+                            justify="center">
+                                <Grid style={{paddingLeft: '15px', paddingTop: '10px', paddingRight: '15px', paddingBottom: '15px',}}>
+                                    
+                                    <Typography
+                                    className={this.props.classes.title}
+                                    style={{marginBottom: '15px', alignItems: 'left'}}>
+                                        Your Team Information:
+                                    </Typography>
 
-                                <Grid container item xs >
-                                <Typography>Volunteers {this.props.teams.endTime}</Typography>
-                                {this.getthis()}
-                                
-                               
-                                    {/* <Typography>Volunteers: {this.props.team.volunteerPIs}</Typography> */}
+
+                                            {/* School */}
+                                            <Typography className={this.props.classes.subHeading} color="textPrimary" variant="h6" display="inline" >
+                                                School: &nbsp;
+                                            </Typography>
+                                            <Typography className={this.props.classes.body} color="textPrimary" variant="body1" display="inline" gutterBottom>
+                                                {Info.schools.map( school =>{
+                                                    if (team.schoolCode === school.schoolCode){
+                                                        return (school.schoolName)
+                                                    }
+                                                })}
+                                                <br/>
+                                            </Typography>
+
+                                            {/* Volunteering Date/Time */}
+                                            <Typography className={this.props.classes.subHeading} color="textPrimary" variant="h6" display="inline" >
+                                                Schedule: &nbsp;
+                                            </Typography>
+                                            <Typography className={this.props.classes.body} color="textPrimary" variant="body1" display="inline" gutterBottom>
+                                            {this.displayDays(team.dayOfWeek)} from <strong>{team.startTime}</strong> to <strong>{team.endTime}</strong><br/>
+                                            </Typography>
+                                            
+                                            {/* End Time */}
+                                           {/*  <Typography className={this.props.classes.subHeading} color="textPrimary" variant="h6" display="inline" >
+                                                End Time: &nbsp;
+                                            </Typography>
+                                            <Typography className={this.props.classes.body} color="textPrimary" variant="body1" display="inline" gutterBottom>
+                                                {team.endTime}<br/>
+                                            </Typography> */}
+
+
+
                                 </Grid>
-
-                                <Grid container item xs >
-
-                                </Grid>
-
-                                
-
-                        </Grid>
-
-
-                        </Grid>
-                    </Box>
-            </Grid>
+                            </Box>
+                    </Grid>)
+                    })}
             
             
             
@@ -175,13 +179,13 @@ class AdminDashboard extends Component {
     }
 }
 
-AdminDashboard.propTypes = {
+VolunteerDashboard.propTypes = {
     getTeamRequest: PropTypes.func.isRequired,
   };
 
 const mapStateToProps = state => ({
     user: state.userData.user,
-    teams: state.volunteerRequests.teams,
+    Info: state.volunteerRequests,
     errors: state.errors,
     success: state.success
   });
@@ -190,4 +194,4 @@ const mapStateToProps = state => ({
   export default connect (
     mapStateToProps,
     { getTeamRequest }  
-)(withRouter(withStyles(useStyles)(AdminDashboard)));
+)(withRouter(withStyles(useStyles)(VolunteerDashboard)));
