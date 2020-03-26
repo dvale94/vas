@@ -1,4 +1,4 @@
-import { SET_USER, USER_LOADING } from '../actions/types';
+import { SET_USER, USER_LOADING, RESET_STATE } from '../actions/types';
 
   const initialState = {
     user: {},
@@ -17,6 +17,8 @@ import { SET_USER, USER_LOADING } from '../actions/types';
           ...state,
           loading: true
         };
+        case RESET_STATE:
+          return initialState
       default:
         return state;
     }

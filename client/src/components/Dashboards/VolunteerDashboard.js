@@ -20,7 +20,8 @@ const useStyles = {
         minWidth: '80%',
         maxWidth: 750,
         height: 300,
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        marginBottom: '20px'
     },
     buttons: {
         backgroundColor: blueGrey[700],

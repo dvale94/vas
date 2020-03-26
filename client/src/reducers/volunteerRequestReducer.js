@@ -1,4 +1,4 @@
-import { SET_TEAMS_REQ, SET_VOLUNTEERS_REQ, SET_SCHOOLS_REQ, SET_SCHOOL_PERSONNEL_REQ} from '../actions/types';
+import { SET_TEAMS_REQ, SET_VOLUNTEERS_REQ, SET_SCHOOLS_REQ, SET_SCHOOL_PERSONNEL_REQ, RESET_STATE} from '../actions/types';
 
   const initialState = {
     teams: [],
@@ -29,6 +29,8 @@ import { SET_TEAMS_REQ, SET_VOLUNTEERS_REQ, SET_SCHOOLS_REQ, SET_SCHOOL_PERSONNE
           ...state,
           school_personnel: action.payload
       };
+      case RESET_STATE:
+          return initialState;
       default:
         return state;
     }

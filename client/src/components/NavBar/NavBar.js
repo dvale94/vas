@@ -15,6 +15,7 @@ import Fade from '@material-ui/core/Fade';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import { resetState } from '../../actions/logoutAction'
 
 
 const theme = createMuiTheme({
@@ -88,7 +89,8 @@ redirect_to_Profile = () =>{
       open: false
     });
   
-    this.props.logoutUser(); 
+    this.props.logoutUser();
+    this.props.resetState();
     this.props.history.push("/login"); 
   }
 
@@ -165,6 +167,7 @@ render(){
 NavBar.propTypes = {
   classes: PropTypes.object.isRequired,
   logoutUser: PropTypes.func.isRequired,
+  resetState: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
 };
 
@@ -175,5 +178,5 @@ const mapStateToProps = state => ({
 
 export default connect (
   mapStateToProps,
-  { logoutUser }  
+  { logoutUser, resetState }  
 )(withRouter(withStyles(useStyles)(NavBar)));
