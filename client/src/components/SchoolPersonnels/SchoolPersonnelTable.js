@@ -140,8 +140,9 @@ class SchoolPersonnelTable extends Component {
                           exportButton: true,
                     }}
                     detailPanel={rowData => {
+
                         return (
-                            
+
                             <ThemeProvider theme={theme}>
                             <div className={this.props.classes.all} >
                             <Grid
@@ -183,8 +184,6 @@ class SchoolPersonnelTable extends Component {
                                     <Typography className={this.props.classes.body} variant="h6" display="inline" color={this.setColor(rowData.isActive)} gutterBottom>
                                         {rowData.isActive ? 'Active' : 'Not Active'}<br/>
                                     </Typography>
-
-
 
                                         </CardContent>
                                 </Card>

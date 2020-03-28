@@ -268,11 +268,23 @@ class TeamView extends Component {
         else {
             return (
                 <div>
-                    &#9642; &nbsp; None available at the moment
+                    &#9642; &nbsp; No active personnel at the moment.
                 </div>
             )
         }    
     }
+
+    convertTime(time) {
+        // Check correct time format and split into components
+        time = time.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+    
+        if (time.length > 1) { // If time format correct
+          time = time.slice(1); // Remove full string match value
+          time[5] = +time[0] < 12 ? 'AM' : 'PM'; // Set AM/PM
+          time[0] = +time[0] % 12 || 12; // Adjust hours
+        }
+        return time.join(''); // return adjusted time or original string
+      }
 
     render() {
         return (
@@ -358,8 +370,6 @@ class TeamView extends Component {
                 </Grid>
                 </Grid >
                 
-
-                {/* <div className={this.props.classes.here}> */}
                 <Grid container item xs >
                 <Button
                     className={this.props.classes.buttons}
@@ -373,9 +383,6 @@ class TeamView extends Component {
                 </Button>
                 </Grid>
 
-                
-
-                {/* </div> */}
 
                 </Box>
                 </Box>
@@ -477,7 +484,7 @@ class TeamView extends Component {
                                         Start Time: &nbsp;
                                     </Typography>
                                     <Typography className={this.props.classes.body} color="textPrimary" variant="body1" display="inline" gutterBottom>
-                                        {rowData.startTime}<br/>
+                                        {this.convertTime(rowData.startTime)}<br/>
                                     </Typography>
 
                                     {/* End Time */}
@@ -485,7 +492,7 @@ class TeamView extends Component {
                                         End Time: &nbsp;
                                     </Typography>
                                     <Typography className={this.props.classes.body} color="textPrimary" variant="body1" display="inline" gutterBottom>
-                                        {rowData.endTime}<br/>
+                                        {this.convertTime(rowData.endTime)}<br/>
                                     </Typography>
 
                                     {/* Volunteers */}

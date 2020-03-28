@@ -12,7 +12,7 @@ import isEmpty from 'is-empty';
 const useStyles = {
     all: {
         backgroundColor: '#fafafa',
-        height: '100vh'
+        height: '180vh'
     },
     cell: {
         marginTop: 20,
