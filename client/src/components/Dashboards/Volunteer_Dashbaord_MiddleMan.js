@@ -40,7 +40,6 @@ class VolunteerDashboardMM extends Component {
     }
     
     render() {
-        const { auth } = this.props;
         return (
                 
                 <Grid

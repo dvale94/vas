@@ -40,7 +40,6 @@ class SchoolPersonnelDashboardMM extends Component {
     }
     
     render() {
-        const { auth } = this.props;
         return (
             <div className={this.props.classes.all}
                 style={{backgroundImage: 'url(' + require('../../images/FIU_1_10.png') + ')',
@@ -61,7 +60,7 @@ class SchoolPersonnelDashboardMM extends Component {
                     { !isEmpty(this.props.Info.teams) &&
                       !isEmpty(this.props.Info.volunteers) && 
                       !isEmpty(this.props.Info.school) &&
-                      auth.role === "School Personnel" && <SchoolPersonnelDashboard/>}
+                      <SchoolPersonnelDashboard/>}
 
                     </Grid>
                     
