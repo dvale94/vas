@@ -444,6 +444,7 @@ class AddTeamDialog extends Component {
                             <MenuItem  value={true}>Yes</MenuItem >
                             <MenuItem  value={false}>No</MenuItem >
                         </Select>
+                        <FormHelperText style={{marginBottom : "0"}}>WARNING: Changing the team status is irreversable!</FormHelperText>
                     </FormControl>
 
                     <br></br>

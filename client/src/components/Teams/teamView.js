@@ -417,11 +417,12 @@ class TeamView extends Component {
                     }
                     data={this.state.filteredTeams}
                     actions={[
-                        {
-                        icon: 'edit',
-                        tooltip: 'Edit Team',
-                        onClick: (event, rowData) => {this.setState({selectedTeam: rowData}); this.toggleEditTeamDialog()}
-                        }
+                        rowData => ({
+                            icon: 'edit',
+                            tooltip: 'Edit Team',
+                            onClick: (event, rowData) => {this.setState({selectedTeam: rowData}); this.toggleEditTeamDialog()},
+                            disabled: rowData.isActive === false
+                          })
                     ]}
                     options={{
                         actionsColumnIndex: -1,
