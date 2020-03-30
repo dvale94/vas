@@ -51,8 +51,6 @@ class VolunteerDashboardMM extends Component {
 
                     <Grid item className={this.props.classes.cell}>
 
-                    {/* {console.log(this.props.Info.teams, isEmpty(this.props.Info.teams), isEmpty(this.props.Info.volunteers), isEmpty(this.props.Info.schools))} */}
-
                     { !isEmpty(this.props.Info.teams) &&
                       !isEmpty(this.props.Info.volunteers) && 
                       !isEmpty(this.props.Info.schools) &&

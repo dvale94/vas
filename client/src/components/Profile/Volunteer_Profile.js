@@ -107,16 +107,6 @@ class Volunteer_Profile extends Component {
     componentDidMount() {
         this.setState({
             carAvailable: this.props.user.carAvailable,
-            /* 
-				firstName: this.props.user.firstName,
-				lastName: this.props.user.lastName,
-				email: this.props.user.email,
-				phoneNumber: this.props.user.phoneNumber,
-				pantherID: this.props.user.pantherID,
-				major: this.props.user.major,
-				volunteerStatus: this.props.user.volunteerStatus,
-				isActive: this.props.user.isActive,
-				MDCPS_ID: this.props.user.MDCPS_ID */
         })
     }
 
@@ -156,7 +146,10 @@ class Volunteer_Profile extends Component {
     
     return (
         <ThemeProvider theme={theme}>
-        <div className={this.props.classes.all} >
+        <div className={this.props.classes.all}
+                style={{backgroundImage: 'url(' + require('../../images/FIU_9_10.png') + ')',
+                backgroundPosition: 'center',
+                backgroundSize: 'cover' }}>
         <Grid
         container
         spacing={0}

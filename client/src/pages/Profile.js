@@ -13,6 +13,7 @@ class Profile extends Component{
 
         const { auth } = this.props;
         return (
+          
             <div>
                 { auth.role === "Admin" && <Admin_Profile/>}
                 { auth.role === "Volunteer" && <Volunteer_Profile/>}

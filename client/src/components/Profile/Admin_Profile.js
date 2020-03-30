@@ -147,7 +147,10 @@ class Admin_Profile extends Component {
   
     return (
         <ThemeProvider theme={theme}>
-        <div className={this.props.classes.all} >
+        <div className={this.props.classes.all}
+                style={{backgroundImage: 'url(' + require('../../images/FIU_9_10.png') + ')',
+                backgroundPosition: 'center',
+                backgroundSize: 'cover' }}>
         <Grid
         container
         spacing={0}
