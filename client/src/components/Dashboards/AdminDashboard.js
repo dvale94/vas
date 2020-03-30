@@ -8,6 +8,9 @@ import Typography from '@material-ui/core/Typography';
 import { blueGrey, blue, grey } from '@material-ui/core/colors';
 
 const useStyles = {
+    overall: {
+        width: '95%'
+    },
     all: {
         backgroundColor: '#fafafa',
         height: '100vh'
@@ -46,6 +49,12 @@ const useStyles = {
         alignItems: 'left',
         minWidth: '80%',
       },
+    cell: {
+        marginTop: 20,
+        minWidth: 200,
+        width: '95%',
+        height: 900,
+    }
 }
 
 class AdminDashboard extends Component {
@@ -71,18 +80,17 @@ class AdminDashboard extends Component {
     render(){
         return (
             <Fragment>
-            {/* <div className={this.props.classes.this}> */}
-            
+                  
             <Grid
                 container
                 style={{marginLeft: '10%'}}>
                      <Typography
                         className={this.props.classes.main}
                         style={{marginBottom: '15px'}}>
-                            Dashboard
+                            Admin Dashboard
                     </Typography>
-                    </Grid>
-                    {/* </div> */}
+             </Grid>
+
             <Grid
                 container
                 spacing={0}
@@ -182,8 +190,7 @@ class AdminDashboard extends Component {
                     </Box>
             </Grid>
             
-            
-            
+
             
             </Fragment>
         )

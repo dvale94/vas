@@ -41,12 +41,12 @@ class Dashboard extends Component {
                     justify="center">
 
                     <Grid item className={this.props.classes.cell}>
-                    { auth.role === "Admin" && <AdminDashboard/>}
+                    { auth.role === "Admin" && <AdminDashboard/> }
 
-                    { !isEmpty(this.props.user) && auth.role === "Volunteer" && <Volunteer_Dashbaord_MiddleMan/>}
-                    { !isEmpty(this.props.user) && auth.role === "School Personnel" && <Personnel_Dashbaord_MiddleMan/>}
-
+                    { !isEmpty(this.props.user) && auth.role === "Volunteer" && <Volunteer_Dashbaord_MiddleMan/> }
+                    { !isEmpty(this.props.user) && auth.role === "School Personnel" && <Personnel_Dashbaord_MiddleMan/> }
                     </Grid>
+
                     
                 </Grid>
             </div>

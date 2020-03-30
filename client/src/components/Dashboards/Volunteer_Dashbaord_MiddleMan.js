@@ -40,7 +40,6 @@ class VolunteerDashboardMM extends Component {
     }
     
     render() {
-        const { auth } = this.props;
         return (
                 
                 <Grid
@@ -51,8 +50,6 @@ class VolunteerDashboardMM extends Component {
                     justify="center">
 
                     <Grid item className={this.props.classes.cell}>
-
-                    {/* {console.log(this.props.Info.teams, isEmpty(this.props.Info.teams), isEmpty(this.props.Info.volunteers), isEmpty(this.props.Info.schools))} */}
 
                     { !isEmpty(this.props.Info.teams) &&
                       !isEmpty(this.props.Info.volunteers) && 

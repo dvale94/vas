@@ -1,10 +1,11 @@
-import { RESET_STATE, SET_TEAMS_REQ_SCH, SET_VOLUNTEERS_REQ_SCH, SET_SCHOOL_REQ_SCH, SET_SCHOOL_PERSONNEL_REQ_SCH} from '../actions/types';
+import { RESET_STATE, SET_TEAMS_REQ_SCH, SET_VOLUNTEERS_REQ_SCH, SET_SCHOOL_REQ_SCH, SET_SCHOOL_PERSONNEL_REQ_SCH, SET_ADMINS_REQ_SCH} from '../actions/types';
 
   const initialState = {
     teams: [],
     volunteers: [],
     school: [],
-    school_personnels: []
+    school_personnels: [],
+    admins: []
   };
 
   export default function(state = initialState, action) {
@@ -28,6 +29,11 @@ import { RESET_STATE, SET_TEAMS_REQ_SCH, SET_VOLUNTEERS_REQ_SCH, SET_SCHOOL_REQ_
         return {
           ...state,
           school_personnels: action.payload
+      };
+      case SET_ADMINS_REQ_SCH:
+        return {
+          ...state,
+          admins: action.payload
       };
       case RESET_STATE:
           return initialState;

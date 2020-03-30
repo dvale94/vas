@@ -346,7 +346,7 @@ class VolunteerDashboard extends Component {
                                                                         if (team.schoolCode === school.schoolCode){
                                                                             return ( school.address + ",  " + school.city + ",  " + school.state + "   " + school.zipCode )
                                                                         }
-                                                                    })}-
+                                                                    })}
                                                                     <br/>
                                                                 </Typography>
 
