@@ -6,11 +6,9 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { blueGrey, blue, grey } from '@material-ui/core/colors';
+import AdminCalendar from './AdminCalendar'
 
 const useStyles = {
-    overall: {
-        width: '95%'
-    },
     all: {
         backgroundColor: '#fafafa',
         height: '100vh'
@@ -49,12 +47,6 @@ const useStyles = {
         alignItems: 'left',
         minWidth: '80%',
       },
-    cell: {
-        marginTop: 20,
-        minWidth: 200,
-        width: '95%',
-        height: 900,
-    }
 }
 
 class AdminDashboard extends Component {
@@ -189,6 +181,8 @@ class AdminDashboard extends Component {
                         </Grid>
                     </Box>
             </Grid>
+
+            <AdminCalendar/>
             
 
             
