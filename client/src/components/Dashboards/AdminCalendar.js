@@ -7,7 +7,8 @@ import { withStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import { blueGrey, blue, grey } from '@material-ui/core/colors';
+import { blueGrey, blue, grey, yellow } from '@material-ui/core/colors';
+import EventIcon from '@material-ui/icons/Event';
 
 const useStyles = {
     all: {
@@ -21,7 +22,7 @@ const useStyles = {
         marginTop: 10,
         minWidth: '50%',
         maxWidth: 500,
-        height: 200,
+        height: 400,
         backgroundColor: 'white',
         marginBottom: '20px',
         'overflow-x': 'hidden'
@@ -49,7 +50,6 @@ const useStyles = {
     cardTitle: {
         fontSize: "20px",
         fontWeight: 800,
-        color: 'white',
         alignItems: 'right'
     },
     title: {
@@ -120,14 +120,139 @@ class AdminCalendar extends Component {
         }
     }
 
+    setCalendarColor(dayOfWeek) {
+        const day = dayOfWeek.substring(0, dayOfWeek.length - 1).toLowerCase()
+        var today  = new Date();
+        var weekday = new Array(7);
+
+        weekday[1] = "monday";
+        weekday[2] = "tuesday";
+        weekday[3] = "wednesday";
+        weekday[4] = "thursday";
+        weekday[5] = "friday";
+
+        var weekday = weekday[today.getDay()]
+
+        if (weekday === day){
+            return [yellow[600], "black"];
+        } else {
+            return [blue[500], "white"];
+        }
+    }
+
+    displayTeams(dayOfWeek) {
+        const day = dayOfWeek.substring(0, dayOfWeek.length - 1).toLowerCase()
+        const teams = this.props.teams;
+
+        // DISPLAYS MESSAGE IF THERE IS NO TEAM ON A PARTICULAR DAY
+        if ( day==="monday" && !teams.some(function(o){return o.dayOfWeek.monday===true;})){
+            return (this.displayNoDays(day))
+        }
+        if ( day==="tuesday" && !teams.some(function(o){return o.dayOfWeek.tuesday===true;})){
+            return (this.displayNoDays(day))
+        }
+        if ( day==="wednesday" && !teams.some(function(o){return o.dayOfWeek.wednesday===true;})){
+            return (this.displayNoDays(day))
+        }
+        if ( day==="thursday" && !teams.some(function(o){return o.dayOfWeek.thursday===true;})){
+            return (this.displayNoDays(day))
+        }
+        if ( day==="friday" && !teams.some(function(o){return o.dayOfWeek.friday===true;})){
+            return (this.displayNoDays(day))
+        }
+
+        return (
+            teams.map( team => {
+                if (day==="monday" && team.dayOfWeek.monday){
+                    return (this.displayInfo(team))
+                } else if (day==="tuesday" && team.dayOfWeek.tuesday){
+                    return (this.displayInfo(team))
+                } else if (day==="wednesday" && team.dayOfWeek.wednesday){
+                    return (this.displayInfo(team))
+                } else if (day==="thursday" && team.dayOfWeek.thursday){
+                    return (this.displayInfo(team))
+                } else if (day==="friday" && team.dayOfWeek.friday){
+                    return (this.displayInfo(team))
+                } 
+            })
+            
+        )
+    }
+
+    displayInfo(team) {
+        const volunteers = this.props.volunteers;
+        const schools = this.props.schools;
+        let volunteerList = []
+
+        volunteerList = volunteers.filter( volunteer => team.volunteerPIs.includes((volunteer.pantherID).toString()) && volunteer.isActive)
+
+        /* if (!isEmpty(volunteerList)) { */
+
+        return (
+            <Fragment>
+                <Typography
+                    className={this.props.classes.title}
+                    style={{marginBottom: '1px', alignItems: 'left', marginTop: '1px'}}>
+                    Team:
+                </Typography>
+                <Typography className={this.props.classes.subHeading} color="textPrimary" variant="h6" display="inline" >
+                    School: &nbsp;
+                </Typography>
+
+                {schools.map( school =>{
+                    if (team.schoolCode === school.schoolCode) {
+                        return (
+                            <Typography className={this.props.classes.body} color="textPrimary" variant="body1" display="inline" gutterBottom>
+                                {school.schoolName + " " + school.level} <br/>
+                            </Typography>
+                        )
+                    }
+                })}
+                <Typography className={this.props.classes.subHeading} color="textPrimary" variant="h6" display="inline" >
+                    Time: &nbsp;
+                </Typography>
+                <Typography className={this.props.classes.body} color="textPrimary" variant="body1" display="inline" gutterBottom>
+                    From <strong>{this.convertTime(team.startTime)}</strong> to <strong>{this.convertTime(team.endTime)}</strong><br/>
+                </Typography>
+                <Typography className={this.props.classes.subHeading} color="textPrimary" variant="h6" display="inline" >
+                    Volunteers: &nbsp; <br/>
+                </Typography>
+                {volunteerList.map( volunteer => {
+                    return ( <Fragment>
+                                <Typography className={this.props.classes.body} color="textPrimary" variant="body1" display="inline" gutterBottom>
+                                    &nbsp; &#8226; &nbsp; { volunteer.firstName + "  " + volunteer.lastName + " - "}
+                                </Typography>
+                                <Typography className={this.props.classes.body} style={{fontStyle: 'italic', color:this.setColor(volunteer.carAvailable)}}  variant="body1" display="inline" gutterBottom>
+                                {volunteer.carAvailable ? 'Available for carpool' : 'Not Available for carpool'}<br/>
+                                </Typography>
+                                <Typography className={this.props.classes.body} color="textPrimary" variant="body1" display="inline" gutterBottom v>
+                                    &nbsp; &nbsp; &nbsp; &#9702; &nbsp;{ volunteer.phoneNumber } <br/>
+                                    &nbsp; &nbsp; &nbsp; &#9702; &nbsp;{ volunteer.email } <br/>
+                                </Typography>
+                            </Fragment>
+                            )
+
+                    })}<br/>
+
+            </Fragment>
+        )
+    }
+    displayNoDays(day) {
+        return (    
+            <Typography className={this.props.classes.body} color="textPrimary" variant="body1" display="inline" gutterBottom>
+                &nbsp; &#8226; &nbsp; There are no teams scheduled on {day}s<br/>
+            </Typography>
+        )
+    }
+
 
     render(){
-        const Info =  ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+        const daysOfWeek =  ['Mondays', 'Tuesdays', 'Wednesdays', 'Thursdays', 'Fridays']
         return (
-            
+            <div style={{marginTop: '15px'}}>
             <Fragment>
 
-                    {Info.map( day => {
+                    {daysOfWeek.map( day => {
 
                             return ( <p>{day}</p> &&
 
@@ -152,7 +277,7 @@ class AdminCalendar extends Component {
                                                     borderRadius="10px 10px 0px 0px"
                                                     boxShadow={2}
                                                     className={this.props.classes.cardHeader}
-                                                    style={{backgroundColor: blue[500]}}
+                                                    style={{backgroundColor: this.setCalendarColor(day)[0]}}
                                                     variant="outlined"
                                                     justify="center">
 
@@ -165,9 +290,8 @@ class AdminCalendar extends Component {
 
                                                             <Typography
                                                                 className={this.props.classes.cardTitle}
-                                                                //noWrap
-                                                                style={{ marginTop: '14px', textAlign: 'center' }}>
-                                                                    {day}
+                                                                style={{ marginTop: '14px', textAlign: 'center', color: this.setCalendarColor(day)[1]}}>
+                                                                    <EventIcon/> {day}
                                                                     
                                                             </Typography>
                                                         </Grid>
@@ -178,71 +302,8 @@ class AdminCalendar extends Component {
 
 
                                                     <Grid style={{paddingLeft: '15px', paddingTop: '10px', paddingRight: '15px', paddingBottom: '15px',}}>
-
-                                                         {/* SCHOOL */}
-                                                        <Typography
-                                                            className={this.props.classes.title}
-                                                            style={{marginBottom: '1px', alignItems: 'left'}}>
-                                                                School Information:
-                                                        </Typography>
-
-
-                                                                {/* Adress */}
-                                                                <Typography className={this.props.classes.subHeading} color="textPrimary" variant="h6" display="inline" >
-                                                                    Address: &nbsp;
-                                                                </Typography>
-                                                                <Typography className={this.props.classes.body} color="textPrimary" variant="body1" display="inline" gutterBottom>
-                                                                    hello1
-                                                                    <br/>
-                                                                </Typography>
-
-                                                                {/* Phone Number */}
-                                                                <Typography className={this.props.classes.subHeading} color="textPrimary" variant="h6" display="inline" >
-                                                                    Phone: &nbsp;
-                                                                </Typography>
-                                                                <Typography className={this.props.classes.body} color="textPrimary" variant="body1" display="inline" gutterBottom >
-                                                                    hello2
-                                                                    <br/>
-                                                                </Typography>
-
-                                                                {/* Personnel */}
-                                                                <Typography className={this.props.classes.subHeading} color="textPrimary" variant="h6" display="inline" >
-                                                                    Personnel: &nbsp; <br/>
-                                                                </Typography>
-                                                                
-
-                                                                
-
-
-                                                                
-                                                        <Typography
-                                                            className={this.props.classes.title}
-                                                            style={{marginBottom: '1px', alignItems: 'left', marginTop: '1px'}}>
-                                                            Team Information:
-                                                        </Typography>
-
-                                                                {/* Schedule */}
-                                                                <Typography className={this.props.classes.subHeading} color="textPrimary" variant="h6" display="inline" >
-                                                                    Meeting days: &nbsp;
-                                                                </Typography>
-                                                                <Typography className={this.props.classes.body} color="textPrimary" variant="body1" display="inline" gutterBottom>
-                                                                    hello3
-                                                                </Typography>
-                                                                <Typography className={this.props.classes.subHeading} color="textPrimary" variant="h6" display="inline" >
-                                                                    Time: &nbsp;
-                                                                </Typography>
-                                                                <Typography className={this.props.classes.body} color="textPrimary" variant="body1" display="inline" gutterBottom>
-                                                                    hello4
-                                                                </Typography>
-
-                                                                {/* Team members */}
-                                                                <Typography className={this.props.classes.subHeading} color="textPrimary" variant="h6" display="inline" >
-                                                                    Team Members: &nbsp; <br/>
-                                                                </Typography>
-                                                                
-
-
-
+                                                            
+                                                        { this.displayTeams(day)}
 
                                                     </Grid>
                                                 </Box>
@@ -252,6 +313,7 @@ class AdminCalendar extends Component {
             
             
             </Fragment>
+            </div>
         )
     }
 }
@@ -260,13 +322,13 @@ AdminCalendar.propTypes = {
   };
 
 const mapStateToProps = state => ({
-    user: state.userData.user,
-    errors: state.errors,
-    success: state.success
+    teams: state.calendar.teams,
+    volunteers: state.calendar.volunteers,
+    schools: state.calendar.schools,
   });
 
 
   export default connect (
     mapStateToProps,
-    {  }  
+    {  }
 )(withRouter(withStyles(useStyles)(AdminCalendar)));

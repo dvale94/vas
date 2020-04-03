@@ -267,7 +267,7 @@ class VolunteerDashboard extends Component {
                     className={this.props.classes.custom} 
                     >
                         <Typography className={this.props.classes.subHeading} color="textPrimary" align='center' variant="h6" display="inline" style={{marginBottom: '10px'}}  >
-                            Below is your team information with all of the approirate details. &nbsp;
+                            Below is your team information with all of the appropriate details. &nbsp;
                         </Typography>
                     </Grid>
 

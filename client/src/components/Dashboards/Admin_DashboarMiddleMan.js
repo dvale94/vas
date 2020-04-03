@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { Grid } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import AdminDashboard from './AdminDashboard';
+import isEmpty from 'is-empty';
 
 const useStyles = {
     all: {
@@ -26,6 +27,27 @@ class AdminDashboardMM extends Component {
     }
 
     componentDidMount() {
+        let dateInfo = this.set_Semester_Year()
+
+        this.setState({
+            semester: dateInfo[0].toString(),
+            year: dateInfo[1].toString()
+        })
+    }
+
+    set_Semester_Year() {
+        let semester, year = '';
+        const date = new Date();
+
+        if (date.getMonth() > 6) {
+            semester = 'Fall'
+        } else {
+            semester = 'Spring'
+        }
+        
+        year = date.getFullYear()
+
+        return ([semester, year]);
 
     }
 
@@ -42,7 +64,7 @@ class AdminDashboardMM extends Component {
 
                     <Grid item className={this.props.classes.cell}>
 
-                    { <AdminDashboard/> }
+                    { !isEmpty(this.state) && <AdminDashboard semesterYear= {this.state}/> }
 
                     </Grid>
                     

@@ -102,7 +102,8 @@ function updateTeam (request, response) {
 }
 
 function fetchTeams(request, response) {
-	Team.find({}, (err, result) => {
+  const { body } = request;
+	Team.find(body, (err, result) => {
 		if (err) {
 		  console.log(err);
 		} else {

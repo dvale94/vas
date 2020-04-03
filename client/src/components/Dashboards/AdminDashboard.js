@@ -2,11 +2,15 @@ import React, { Component, Fragment } from 'react';
 import Button from '@material-ui/core/Button';
 import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
+import { connect } from "react-redux";
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { blueGrey, blue, grey } from '@material-ui/core/colors';
 import AdminCalendar from './AdminCalendar'
+import { getTeams } from '../../actions/calendarActions'
+import isEmpty from 'is-empty';
 
 const useStyles = {
     all: {
@@ -50,6 +54,28 @@ const useStyles = {
 }
 
 class AdminDashboard extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {}
+
+        this.getTeams = this.getTeams.bind(this);
+    }
+
+    componentDidMount() {
+        this.getTeams();
+    }
+
+    getTeams() {
+        let form = this.props.semesterYear;
+        this.props.getTeams(form);
+    }
+
+    getTodaysDate() {
+        var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        var today  = new Date();
+        return (today.toLocaleDateString("en-US", options))
+    }
     
     // LINKS
     redirect_to_AdminManagement = () =>{
@@ -182,7 +208,7 @@ class AdminDashboard extends Component {
                     </Box>
             </Grid>
 
-            <AdminCalendar/>
+            { !isEmpty(this.props.teams) && <AdminCalendar/> }
             
 
             
@@ -191,4 +217,16 @@ class AdminDashboard extends Component {
     }
 }
 
-export default (withRouter(withStyles(useStyles)(AdminDashboard)));
+AdminDashboard.propTypes = {
+    getTeams: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = state => ({
+    teams: state.calendar.teams,
+    errors: state.errors
+});
+
+export default connect (
+    mapStateToProps,
+    { getTeams }  
+)(withRouter(withStyles(useStyles)(AdminDashboard)));

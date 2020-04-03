@@ -10,6 +10,7 @@ import teamReducer from './teamReducer'
 import adminReducer from './adminReducers';
 import volunteerRequestReducer from './volunteerRequestReducer';
 import schoolPersonnelRequestReducer from './schoolPersonnelRequestReducers'
+import calendarReducer from './calendarReducer'
 
 export default combineReducers({
   auth: authReducer,
@@ -22,5 +23,6 @@ export default combineReducers({
   errors: errorReducer,
   success: successReducer,
   volunteerRequests: volunteerRequestReducer,
-  schoolPersonnelRequests: schoolPersonnelRequestReducer
+  schoolPersonnelRequests: schoolPersonnelRequestReducer,
+  calendar: calendarReducer
 });

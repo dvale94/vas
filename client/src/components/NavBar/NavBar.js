@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -15,7 +15,8 @@ import Fade from '@material-ui/core/Fade';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import { resetState } from '../../actions/logoutAction'
+import { resetState } from '../../actions/logoutAction';
+import Grid from '@material-ui/core/Grid';
 
 
 const theme = createMuiTheme({
@@ -52,6 +53,15 @@ const useStyles = {
   },
   icon: {
     color: 'white'
+  },
+  logo: {
+    height: "50px",
+    marginTop: "13px",
+    marginBottom: "10px"
+  },
+  bracket: {
+    height: "25px",
+    marginTop: "0px"
   }
 };
 
@@ -100,6 +110,7 @@ redirect_to_Profile = () =>{
         loggedIn: true
       })
     }
+    
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -126,14 +137,21 @@ redirect_to_Profile = () =>{
 }
 
 renderMenu(){
-/* if(this.state.loggedIn && this.state.open){ */
   return(
   <Menu id="fade-menu" anchorEl={this.state.anchorEl} open={this.state.open} onClose={this.handleClose} TransitionComponent={Fade}>
         <MenuItem onClick={this.handleClose && this.redirect_to_Profile}>Profile</MenuItem>
         <MenuItem onClick={this.handleClose && this.submitLogout}>Logout</MenuItem>
     </Menu>
    )
-/*   }  */
+}
+
+getTitle(){
+  let size = document.body.clientWidth
+  if (size < 750) {
+    return ("Google CS First VAS")
+  } else {
+    return ("Google CS First Outreach Volunteer Attendance System")
+  }
 }
 
 
@@ -141,13 +159,35 @@ render(){
   return (
     <ThemeProvider theme={theme}>
     <div className={this.props.classes.root} >
-      <AppBar position='static'>
+      <AppBar position='static' title={<img src="../../images/VAS logo_white.png"/>}>
         <Toolbar className={this.props.classes.toolbar}>
+       
+
+
+
           <Link to='/' className={this.props.classes.link}>
+          
+          <Grid
+          container
+          direction="row"
+          justify="center"
+          alignItems="center"
+        >
+          <Fragment>
+          { (document.body.clientWidth > 750) &&
+            <img
+            className={this.props.classes.logo}
+            src ={require("../../images/logo_shadow.png")}
+            alt = "logo"
+            />}
+            
             <Typography className={this.props.classes.title} variant='h5' >
-            Volunteer Attendance System
-            </Typography>
+             &nbsp;
+             {this.getTitle()}
+            </Typography></Fragment>
+            </Grid>
           </Link>
+          
           
           {this.state.loggedIn &&
           <IconButton aria-owns={this.state.open ? 'fade-menu' : undefined} aria-haspopup="true" onClick={this.handleClick}>

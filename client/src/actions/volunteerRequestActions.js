@@ -25,22 +25,13 @@ export const getTeamRequest = pid => dispatch => {
             let allSchools = []
 
             res.forEach(team => {
-                //console.log("PID ARRAY: ", team.volunteerPIs)
                 allVolunteers.push(team.volunteerPIs)
-
-                //console.log("SCHOOL_CODE ARRAY: ", team.schoolCode)
                 allSchools.push(team.schoolCode)
-
             });
 
-
-            //console.log("THIS IS WHAT NEEDS TO BE REMOVED: ", pid.toString())
             let allVolunteers_INT = allVolunteers.map(String).toString().split(',').map(x=>+x)
-            //console.log(allVolunteers_INT)
 
             var filtered_Volunteers = allVolunteers_INT.filter(item => item !== pid )
-            
-            //console.log("FILTERED: ", filtered_Volunteers)
 
             dispatch(setTeams(res));
             dispatch(getVolunteersRequest(filtered_Volunteers))
@@ -53,17 +44,14 @@ export const getTeamRequest = pid => dispatch => {
 };
 
 export const getVolunteersRequest = pids => dispatch => {
-    //console.log(pids)
+
     let pantherIDs = pids.join()
-    //console.log(pantherIDs)
+
     const endpoint = `${serverConf.uri}${serverConf.endpoints.volunteers.getVolunteerInfo}/${pantherIDs}`;
-    //console.log(endpoint)
 
     request.get(endpoint, (error, response, body) => {
         
         const res = JSON.parse(body);
-
-        //console.log("RES_Volunteers: ", res)
 
         if (error) {
             dispatch({
@@ -87,8 +75,6 @@ export const getSchoolsRequest = schoolCodes => dispatch => {
     request.get(endpoint, (error, response, body) => {
         
         const res = JSON.parse(body);
-
-        //console.log("RES_Schools ", res)
 
         if (error) {
             dispatch({
