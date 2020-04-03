@@ -286,6 +286,25 @@ class TeamView extends Component {
         return time.join(''); // return adjusted time or original string
       }
 
+    displayTimeStamp(stamp) {
+        let date = new Date(stamp)
+
+        return ((date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear())
+    }
+
+    showClosureNotes(notes) {
+        return (
+            <Fragment>
+                <Typography className={this.props.classes.subHeading} color="textPrimary" variant="h6" display="inline" >
+                    Closure Notes: &nbsp;
+                </Typography>
+                <Typography className={this.props.classes.body} color="textPrimary" variant="body1" display="inline" gutterBottom>
+                    {notes}<br/>
+                </Typography>
+            </Fragment>
+        )
+    }
+
     render() {
         return (
             <Fragment>
@@ -519,9 +538,17 @@ class TeamView extends Component {
                                         {rowData.isActive ? 'Active' : 'Not Active'}<br/>
                                     </Typography>
 
+                                    {/* Time Stamp*/}
+                                    <Typography className={this.props.classes.subHeading} color="textPrimary" variant="h6" display="inline" >
+                                        Time Stamp: &nbsp;
+                                    </Typography>
+                                    <Typography className={this.props.classes.body} color="textPrimary" variant="body1" display="inline" gutterBottom>
+                                        {this.displayTimeStamp(rowData.timeStamp)}<br/>
+                                    </Typography>
 
+                                    {!rowData.isActive && this.showClosureNotes(rowData.closureNotes)}
 
-                                        </CardContent>
+                                    </CardContent>
                                 </Card>
                             </Grid>
                             </div>

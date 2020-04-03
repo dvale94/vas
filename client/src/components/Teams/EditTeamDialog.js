@@ -86,6 +86,7 @@ class AddTeamDialog extends Component {
             endTime: '11:00',
             volunteerPIs: [],
             isActive: true,
+            closureNotes: '',
             monday: false,
             tuesday: false,
             wednesday: false,
@@ -144,12 +145,7 @@ class AddTeamDialog extends Component {
         delete form.server
 
         console.log("SUMBITTING THIS: ", form)
-        // check if any of the fields are empty, and remove them so it dosen't get sent to the server update
-        for (let property in form) {
-            if (isEmpty(form[property])) {
-                delete form[property];
-            }
-        }
+        
         this.props.editTeam(this.props.team._id, form);
     }
 
@@ -222,6 +218,24 @@ class AddTeamDialog extends Component {
         if (!isEmpty(this.props.success.message)) {
             return <Alert severity="success">{this.props.success.message}</Alert> 
         }
+    }
+
+    showNotesField() {
+        return (
+            <TextField 
+                        label="Closure Notes"
+                        style={{marginBottom : "15px"}}
+                        margin="dense"
+                        multiline
+                        name="closureNotes"
+                        onChange={this.handleInput}
+                        rows='3'
+                        fullWidth
+                        variant="outlined" 
+                        error={!isEmpty(this.props.errors.closureNotes)}
+                        helperText={this.props.errors.closureNotes}
+                    />
+        )
     }
     
     render() {
@@ -433,6 +447,7 @@ class AddTeamDialog extends Component {
                         <FormHelperText style={{marginBottom : "0"}}>{this.props.errors.volunteerPIs}</FormHelperText>
                     </FormControl>
 
+                    {/* Is Active */}
                     <FormControl fullWidth style={{marginBottom : "15px"}} margin='dense'>
                         <InputLabel id="is-active">Is Active</InputLabel>
                         <Select
@@ -445,6 +460,9 @@ class AddTeamDialog extends Component {
                             <MenuItem  value={false}>No</MenuItem >
                         </Select>
                     </FormControl>
+
+                    {/* Closure Notes */}
+                    {!this.state.isActive && this.showNotesField()}
 
                     <br></br>
                 </DialogContent>

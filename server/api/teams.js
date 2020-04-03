@@ -52,6 +52,7 @@ function createTeam (req, res) {
         newTeam.endTime = endTime;
         newTeam.volunteerPIs = volunteerPIs;
         newTeam.isActive = 'true';
+        newTeam.timeStamp = Date.now()
 
         newTeam.save((err, team) => {
             if (err) {
@@ -81,6 +82,11 @@ function updateTeam (request, response) {
       // check validation
       if (!isValid) {
           return response.status(400).json({success: false, errors});
+      }
+
+      //check if team is being deativated to change timestamp
+      if(body.isActive === 'false') {
+        body.timeStamp = Date.now()
       }
 
       Team.updateOne({_id: request.params.id}, body, (err, result) => {

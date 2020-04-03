@@ -57,6 +57,14 @@ const Team = new mongoose.Schema({
         type: Boolean,
         default: true
     },
+    timeStamp: {
+        type: Number,
+        default: 0
+    },
+    closureNotes: {
+        type: String,
+        default: ''
+    }
 });
 
 module.exports = mongoose.model('team', Team);
