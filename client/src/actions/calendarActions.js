@@ -6,12 +6,10 @@ import { GET_ERRORS, TEAMS_LOADING, SET_TEAMS_CALENDAR, SET_VOLUNTEERS_CALENDAR,
 export const getTeams = form => dispatch => {
 
     const endpoint = `${serverConf.uri}${serverConf.endpoints.team.fetch}`;
-    console.log("Form: ", form)
 
     request.get(endpoint, {form}, (error, response, body) => {
         
         const res = JSON.parse(body);
-        console.log(body)
 
         if (error) {
             dispatch({
@@ -20,10 +18,15 @@ export const getTeams = form => dispatch => {
               })
         }
         else {
+
+            let teams = [];
+
+            teams = res.filter( team => team.semester === form.semester && team.year === form.year)
+
             let allVolunteers = []
             let allSchools = []
 
-            res.forEach(team => {
+            teams.forEach(team => {
                 allVolunteers.push(team.volunteerPIs)
                 allSchools.push(team.schoolCode)
             });
@@ -31,7 +34,7 @@ export const getTeams = form => dispatch => {
             let allVolunteers_INT = allVolunteers.map(String).toString().split(',').map(x=>+x)
 
             // set current teams
-            dispatch(setSemesterTeams(res));
+            dispatch(setSemesterTeams(teams));
             dispatch(getVolunteers(allVolunteers_INT))
             dispatch(getSchools(allSchools))
         }    

@@ -186,8 +186,6 @@ class AdminCalendar extends Component {
 
         volunteerList = volunteers.filter( volunteer => team.volunteerPIs.includes((volunteer.pantherID).toString()) && volunteer.isActive)
 
-        /* if (!isEmpty(volunteerList)) { */
-
         return (
             <Fragment>
                 <Typography
