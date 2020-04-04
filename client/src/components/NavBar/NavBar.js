@@ -159,7 +159,7 @@ render(){
   return (
     <ThemeProvider theme={theme}>
     <div className={this.props.classes.root} >
-      <AppBar position='static' title={<img src="../../images/VAS logo_white.png"/>}>
+      <AppBar position='static'>
         <Toolbar className={this.props.classes.toolbar}>
        
 

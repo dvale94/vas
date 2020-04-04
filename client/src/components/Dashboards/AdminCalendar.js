@@ -1,7 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import Button from '@material-ui/core/Button';
 import { withRouter } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { withStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -131,7 +129,7 @@ class AdminCalendar extends Component {
         weekday[4] = "thursday";
         weekday[5] = "friday";
 
-        var weekday = weekday[today.getDay()]
+        weekday = weekday[today.getDay()]
 
         if (weekday === day){
             return [yellow[600], "black"];
@@ -223,7 +221,7 @@ class AdminCalendar extends Component {
                                 <Typography className={this.props.classes.body} style={{fontStyle: 'italic', color:this.setColor(volunteer.carAvailable)}}  variant="body1" display="inline" gutterBottom>
                                 {volunteer.carAvailable ? 'Available for carpool' : 'Not Available for carpool'}<br/>
                                 </Typography>
-                                <Typography className={this.props.classes.body} color="textPrimary" variant="body1" display="inline" gutterBottom v>
+                                <Typography className={this.props.classes.body} color="textPrimary" variant="body1" display="inline" gutterBottom>
                                     &nbsp; &nbsp; &nbsp; &#9702; &nbsp;{ volunteer.phoneNumber } <br/>
                                     &nbsp; &nbsp; &nbsp; &#9702; &nbsp;{ volunteer.email } <br/>
                                 </Typography>
@@ -247,7 +245,7 @@ class AdminCalendar extends Component {
     render(){
         const daysOfWeek =  ['Mondays', 'Tuesdays', 'Wednesdays', 'Thursdays', 'Fridays']
         return (
-            <div style={{marginTop: '15px'}}>
+            <div style={{marginTop: '10px'}}>
             <Fragment>
 
                     {daysOfWeek.map( day => {
@@ -282,7 +280,7 @@ class AdminCalendar extends Component {
                                                         <Grid
                                                         container
                                                         direction="row"
-                                                        justify="left"
+                                                        justify="flex-start"
                                                         alignItems="center"
                                                         style={{marginLeft: '15px', verticalAlign: 'middle'}}>
 

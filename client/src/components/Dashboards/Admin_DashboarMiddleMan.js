@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from "react-redux";
 import { withRouter } from 'react-router-dom';
 import { Grid } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
@@ -8,14 +6,10 @@ import AdminDashboard from './AdminDashboard';
 import isEmpty from 'is-empty';
 
 const useStyles = {
-    all: {
-        backgroundColor: '#fafafa',
-        height: '100vh'
-    },
     cell: {
         marginTop: 20,
         minWidth: 200,
-        width: '85%'
+        width: '87%'
     }
 }
 

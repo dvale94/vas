@@ -5,7 +5,6 @@ import SchoolTable from '../components/School/SchoolTable';
 
 const useStyles = {
     all: {
-        backgroundColor: '#fafafa',
         height: '100vh'
     },
     table: {

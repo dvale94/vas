@@ -11,7 +11,9 @@ import isEmpty from 'is-empty';
 
 const useStyles = {
     all: {
-        backgroundColor: '#fafafa',
+        //backgroundColor: '#fafafa',
+        //background: 'linear-gradient(to bottom, #33ccff 0%, #ff99cc 100%)',
+
         height: '180vh'
     },
     cell: {

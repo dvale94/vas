@@ -29,7 +29,7 @@ const useStyles = ({
       minWidth: 200,
     },
     all: {
-        backgroundColor: '#fafafa',
+        //backgroundColor: '#fafafa',
         height: 78
     },
     card: {

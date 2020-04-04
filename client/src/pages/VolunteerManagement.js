@@ -5,7 +5,6 @@ import VolunteerTable from '../components/Volunteers/VolunteerTable';
 
 const useStyles = {
     all: {
-        backgroundColor: '#fafafa',
         height: '100vh'
     },
     table: {

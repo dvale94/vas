@@ -5,7 +5,7 @@ import AdminTable from '../components/Admins/AdminTable';
 
 const useStyles = {
     all: {
-        backgroundColor: '#fafafa',
+        //backgroundColor: '#fafafa',
         height: '100vh'
     },
     table: {

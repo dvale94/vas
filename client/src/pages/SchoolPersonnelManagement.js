@@ -5,7 +5,6 @@ import SchoolPersonnelTable from '../components/SchoolPersonnels/SchoolPersonnel
 
 const useStyles = {
     all: {
-        backgroundColor: '#fafafa',
         height: '100vh'
     },
     table: {

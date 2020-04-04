@@ -5,7 +5,6 @@ import TeamView from '../components/Teams/teamView'
 
 const useStyles = {
     all: {
-        backgroundColor: '#fafafa',
         height: '100vh'
     },
     table: {

@@ -11,12 +11,9 @@ import { blueGrey, blue, grey } from '@material-ui/core/colors';
 import AdminCalendar from './AdminCalendar'
 import { getTeams } from '../../actions/calendarActions'
 import isEmpty from 'is-empty';
+import { shadows } from '@material-ui/system';
 
 const useStyles = {
-    all: {
-        backgroundColor: '#fafafa',
-        height: '100vh'
-    },
     card: {
         marginTop: 10,
         minWidth: '80%',
@@ -206,6 +203,23 @@ class AdminDashboard extends Component {
 
                         </Grid>
                     </Box>
+            </Grid>
+
+            <Grid
+            container
+            direction="column"
+            justify="center"
+            alignItems="center"
+            className={this.props.classes.custom} 
+            >
+
+                <Typography Shadow={3} color="textPrimary" align='center' variant="h6" display="inline" style={{marginTop: '30px', fontSize: 30, fontWeight: 800, /* color: blue[500] */}}  >
+                    {this.props.semesterYear.semester + " " + this.props.semesterYear.year}
+                </Typography>
+
+                <Typography color="textPrimary" align='center' variant="h6" display="inline" style={{marginTop: '5px'}}  >
+                    {this.getTodaysDate()} &nbsp;
+                </Typography>
             </Grid>
 
             { !isEmpty(this.props.teams) && <AdminCalendar/> }
