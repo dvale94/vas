@@ -8,19 +8,10 @@ export const getTeams = form => dispatch => {
     const endpoint = `${serverConf.uri}${serverConf.endpoints.team.fetch}`;
     console.log("Form: ", form)
 
-    var options =  {
-        'url': endpoint.toString(),
-        'headers': {
-            'Content-Type': ['application/json', 'text/plain']
-        },
-        body: form
-    };
-
-    console.log("Options: ", options)
-
     request.get(endpoint, {form}, (error, response, body) => {
         
         const res = JSON.parse(body);
+        console.log(body)
 
         if (error) {
             dispatch({
