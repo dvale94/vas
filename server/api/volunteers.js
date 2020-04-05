@@ -1,6 +1,7 @@
 import express from 'express';
 import Volunteer from '../models/Users/volunteer_User';
 import User from '../models/Users/user_Auth';
+import Team from '../models/Teams/team';
 const bcrypt = require('bcrypt')
 
 // input validation
@@ -50,7 +51,8 @@ function updateVolunteer(request, response) {
         volunteerStatus: volunteer_req.volunteerStatus,
         MDCPS_ID: volunteer_req.MDCPS_ID,
         pantherID: volunteer_req.pantherID,
-        prevEmail: volunteer_req.email.toLowerCase(),
+		prevEmail: volunteer_req.email.toLowerCase(),
+		prevPid: volunteer_req.prevPid
 	}
 
 	// Form validation
@@ -64,10 +66,11 @@ function updateVolunteer(request, response) {
 	const email = volunteer.email.toLowerCase();
 	const prevEmail = volunteer.prevEmail.toLowerCase();
 
+	//ADDED changes to Panther ID to both Teams and Volunteer table
 	// check if user made changes to email or password to update both auth table and volunteer table
 	// if no changes to email or password, only update volunteer table
-	if ((prevEmail != email) || !(volunteer.password === '')) {
-		
+	if ((prevEmail != email) || !(volunteer.password === '') || (volunteer.prevPid != volunteer.pantherID)) {
+
 		// both email and password
 		if ((prevEmail != email) && !(volunteer.password === '')) {
 			User.find({email: email}, 
@@ -226,6 +229,81 @@ function updateVolunteer(request, response) {
 						}
 					});
 			});
+		}
+
+		//PantherID needs to be changed on Teams 
+		if (volunteer.prevPid != volunteer.pantherID) {
+			
+			Team.find({volunteerPIs: volunteer.prevPid},
+				(err, teamsWithVolunteer) => {
+					if (err) {
+						return response.send({
+							success: false,
+							errors: {server: 'Server errors'}
+						});
+					} 
+					else if (teamsWithVolunteer.length > 0) {
+						Team.updateMany({volunteerPIs: volunteer.prevPid}, { $set: { "volunteerPIs.$" : volunteer.pantherID }}, (err, result) => {
+
+							if (err) {
+								response.json({
+									success: false,
+									errors: {server: 'Server error'}
+								})
+							} 
+							else {
+								delete volunteer.prevEmail;
+								delete volunteer.prevPid;
+								
+								Volunteer.updateOne({_id: request.params.id}, volunteer, (err, result) => {
+
+									if (err) {
+										console.log(err);
+									} else {
+										if (result.n === 1) {
+											response.json({
+												success: true,
+												message: 'Successfully updated volunteer!'
+											});
+										}
+										else {
+											response.json({
+												success: false,
+												errors: {server: 'Server error'}
+											})
+										}
+									}
+								});
+							}
+						});
+					}
+					else if (teamsWithVolunteer.length === 0) {
+						delete volunteer.prevEmail;
+						delete volunteer.prevPid;
+								
+						Volunteer.updateOne({_id: request.params.id}, volunteer, (err, result) => {
+
+							if (err) {
+								console.log(err);
+							} 
+							else {
+								if (result.n === 1) {
+									response.json({
+										success: true,
+										message: 'Successfully updated volunteer!'
+									});
+								}
+								else {
+									response.json({
+										success: false,
+										errors: {server: 'Server error'}
+									})
+								}
+							}
+						});
+					}
+				}
+			)
 		}
 	}
 	else {
