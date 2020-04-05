@@ -18,6 +18,7 @@ import AdminRoute from './components/Routes/AdminRoute'
 import SchoolPersonnelManagement from './pages/SchoolPersonnelManagement';
 import TeamManagement from './pages/TeamManagement';
 import AdminManagement from './pages/AdminManagement';
+import About from './pages/About'
 
 // check for token to keep user logged in
 if (localStorage.jwt) {
@@ -70,6 +71,7 @@ class App extends Component {
               
                 <Route exact path='/' component={Login}/>
                 <Route path='/login' component={Login}/>
+                <Route path='/about' component={About}/>
                 <PrivateRoute path="/dashboard" component={Dashboard}/>
                 <AdminRoute path="/volunteer-management" component={VolunteerManagement}/>
                 <AdminRoute path="/school-personnel-management" component={SchoolPersonnelManagement}/>

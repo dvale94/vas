@@ -18,7 +18,7 @@ const useStyles = {
     },
     card: {
         marginTop: 10,
-        minWidth: '50%',
+        minWidth: '60%',
         maxWidth: 500,
         height: 400,
         backgroundColor: 'white',

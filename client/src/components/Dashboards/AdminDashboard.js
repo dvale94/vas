@@ -115,7 +115,7 @@ class AdminDashboard extends Component {
                     
 
                     <Box 
-                    borderRadius="3px"
+                    borderRadius="10px"
                     boxShadow={3}
                     className={this.props.classes.card} 
                     variant="outlined"
@@ -136,7 +136,7 @@ class AdminDashboard extends Component {
                             spacing={3}
                             >
 
-                                <Grid container item xs >
+                                <Grid container item xs={12} sm >
                                     <Button
                                     className={this.props.classes.buttons}
                                     onClick={this.redirect_to_AdminManagement}
@@ -148,7 +148,7 @@ class AdminDashboard extends Component {
                                     </Button>
                                 </Grid>
 
-                                <Grid container item xs >
+                                <Grid container item xs={12} sm >
                                     <Button
                                     className={this.props.classes.buttons}
                                     onClick={this.redirect_to_VolunteerManagement}
@@ -160,7 +160,7 @@ class AdminDashboard extends Component {
                                     </Button>
                                 </Grid>
 
-                                <Grid container item xs >
+                                <Grid container item xs={12} sm >
                                     <Button
                                     className={this.props.classes.buttons}
                                     onClick={this.redirect_to_SchoolPersonnelManagement}
@@ -174,7 +174,7 @@ class AdminDashboard extends Component {
                                     </Button>
                                 </Grid>
 
-                                <Grid container item xs >
+                                <Grid container item xs={12} sm >
                                     <Button
                                     className={this.props.classes.buttons}
                                     onClick={this.redirect_to_SchoolManagement}
@@ -186,7 +186,7 @@ class AdminDashboard extends Component {
                                     </Button>
                                 </Grid>
 
-                                <Grid container item xs >
+                                <Grid container item xs={12} sm>
                                     <Button
                                     className={this.props.classes.buttons}
                                     onClick={this.redirect_to_TeamManagement}

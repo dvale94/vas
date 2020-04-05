@@ -11,6 +11,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import { createMuiTheme } from '@material-ui/core/styles';
+import Box from '@material-ui/core/Box';
 
 const theme = createMuiTheme({
     palette: {
@@ -28,7 +29,8 @@ const useStyles = {
         marginTop: 10,
         minWidth: 300,
         maxWidth: 450,
-        height: 500
+        height: 500,
+        backgroundColor: 'white'
     },
     paper: {
         marginTop: theme.spacing(1),
@@ -111,7 +113,8 @@ class SchoolPersonnel_Profile extends Component {
         direction="column"
         alignItems="center"
         justify="center">
-            <Card 
+            <Box
+            borderRadius= "10px" 
             className={this.props.classes.card} 
             variant="outlined"
             justify="center">
@@ -213,7 +216,7 @@ class SchoolPersonnel_Profile extends Component {
                     />
                     </form>
                 </CardContent>
-            </Card>
+            </Box>
         </Grid>
         </div>
       

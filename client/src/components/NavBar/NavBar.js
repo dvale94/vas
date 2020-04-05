@@ -10,13 +10,24 @@ import { Link } from "react-router-dom";
 import { logoutUser } from "../../actions/authActions";
 import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
-import AccountCircle from '@material-ui/icons/AccountCircle';
 import Fade from '@material-ui/core/Fade';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { resetState } from '../../actions/logoutAction';
 import Grid from '@material-ui/core/Grid';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import MenuIcon from '@material-ui/icons/Menu';
+import InfoIcon from '@material-ui/icons/Info';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+
+
+
+
+
+
+
+
 
 
 const theme = createMuiTheme({
@@ -86,8 +97,12 @@ class NavBar extends Component {
   this.setAnchorEl(null);
 };
 
-redirect_to_Profile = () =>{
+redirect_to_Profile = () => {
   this.props.history.push("/profile"); 
+}
+
+redirect_to_AboutPage = () => {
+  this.props.history.push("/about"); 
 }
 
   submitLogout = async (e) =>{
@@ -139,8 +154,9 @@ redirect_to_Profile = () =>{
 renderMenu(){
   return(
   <Menu id="fade-menu" anchorEl={this.state.anchorEl} open={this.state.open} onClose={this.handleClose} TransitionComponent={Fade}>
-        <MenuItem onClick={this.handleClose && this.redirect_to_Profile}>Profile</MenuItem>
-        <MenuItem onClick={this.handleClose && this.submitLogout}>Logout</MenuItem>
+        <MenuItem onClick={this.handleClose && this.redirect_to_Profile}>Profile &nbsp; <AccountCircle/></MenuItem>
+        <MenuItem onClick={this.handleClose && this.redirect_to_AboutPage}>Credits &nbsp; <InfoIcon/></MenuItem>
+        <MenuItem onClick={this.handleClose && this.submitLogout}>Logout &nbsp; <ExitToAppIcon/></MenuItem>
     </Menu>
    )
 }
@@ -191,7 +207,7 @@ render(){
           
           {this.state.loggedIn &&
           <IconButton aria-owns={this.state.open ? 'fade-menu' : undefined} aria-haspopup="true" onClick={this.handleClick}>
-            <AccountCircle className={this.props.classes.icon} />
+            <MenuIcon className={this.props.classes.icon} />
           </IconButton>}
           {this.renderMenu()}
 

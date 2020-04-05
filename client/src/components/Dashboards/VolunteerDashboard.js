@@ -92,7 +92,6 @@ class VolunteerDashboard extends Component {
 
     getTeamRequest() {
         const pantherID = this.props.user.pantherID
-        //console.log("SEND THIS: ", pantherID)
         this.props.getTeamRequest(pantherID);
     }
 

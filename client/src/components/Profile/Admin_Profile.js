@@ -17,6 +17,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
 import { updateAdmin } from "../../actions/userActions";
 import { ThemeProvider } from '@material-ui/core/styles';
+import Box from '@material-ui/core/Box';
 
 
 const theme = createMuiTheme({
@@ -35,7 +36,8 @@ const useStyles = {
         marginTop: 10,
         minWidth: 300,
         maxWidth: 450,
-        height: 500
+        height: 500,
+        backgroundColor: 'white'
     },
     paper: {
         marginTop: theme.spacing(1),
@@ -157,7 +159,8 @@ class Admin_Profile extends Component {
         direction="column"
         alignItems="center"
         justify="center">
-            <Card 
+            <Box 
+            borderRadius= "10px"
             className={this.props.classes.card} 
             variant="outlined"
             justify="center">
@@ -265,7 +268,7 @@ class Admin_Profile extends Component {
                     </Button>
                 </CardActions>
                 </div>
-            </Card>
+            </Box>
 
         </Grid>
         </div>
