@@ -65,6 +65,7 @@ class EditVolunteerDialog extends Component {
             MDCPS_ID: this.props.volunteer.MDCPS_ID,
             pantherID: this.props.volunteer.pantherID,
             prevEmail: this.props.volunteer.email,
+            prevPid: this.props.volunteer.pantherID
         })
     }
 
