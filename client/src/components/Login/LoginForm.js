@@ -51,6 +51,10 @@ const useStyles = {
         backgroundColor: blue[500],
     }
   },
+  logo: {
+    height: '80px',
+    marginBottom: '0px'
+  }
 };
 // Login Styling END
 
@@ -126,11 +130,18 @@ class LoginForm extends Component {
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={this.props.classes.paper}>
-          <Avatar className={this.props.classes.avatar} >
+          {/* <Avatar className={this.props.classes.avatar} >
           <LockRoundedIcon />
-          </Avatar>
+          </Avatar> */}
+
+            <img
+            className={this.props.classes.logo}
+            src ={require("../../images/VAS_shadow.png")}
+            alt = "logo"
+            />
+
           <Typography component="h1" variant="h5">
-            VAS Login
+            Login
           </Typography>
           <form className={this.props.classes.form} onSubmit={this.submitLogin.bind(this)} noValidate>
             <div>

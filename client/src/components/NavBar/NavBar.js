@@ -21,15 +21,6 @@ import MenuIcon from '@material-ui/icons/Menu';
 import InfoIcon from '@material-ui/icons/Info';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 
-
-
-
-
-
-
-
-
-
 const theme = createMuiTheme({
     palette: {
         primary: {
