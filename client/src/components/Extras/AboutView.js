@@ -15,7 +15,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
-import { Link } from "react-router-dom";
+
 
 const useStyles = {
     all: {
@@ -50,8 +50,8 @@ const useStyles = {
         color: grey[800],
     },
     regular: {
-        fontSize: 16,
-        //fontWeight: 800,
+        fontSize: 18,
+        fontWeight: 400,
         color: grey[800],
     },
     names: {
@@ -88,16 +88,95 @@ class AboutView extends Component {
         this.state = {}
     }
 
-    
-
-
-
     render(){
         return (
             <div style={{marginTop: '10px'}}>
             <Fragment>
 
             <Grid
+            container
+            direction="column"
+            justify="center"
+            alignItems="center"
+            >
+
+                    <Typography
+                        className={this.props.classes.main}
+                        display="inline"
+                        style={{marginBottom: '5px'}}>
+                            About
+                    </Typography>
+
+            </Grid>
+
+                <Grid
+                container
+                spacing={0}
+                direction="column"
+                alignItems="center"
+                justify="center">
+                    
+                    {/* CARD */}
+                    <Box 
+                    borderRadius="10px"
+                    boxShadow={3}
+                    className={this.props.classes.card}
+                    style={{width: "300px"}}
+                    variant="outlined"
+                    justify="center">
+
+                        {/* CARD HEADING */}
+                        <Box 
+                        borderRadius="10px 10px 0px 0px"
+                        boxShadow={2}
+                        className={this.props.classes.cardHeader}
+                        style={{backgroundColor: blueGrey[700]}}
+                        variant="outlined"
+                        justify="center">
+
+                            <Grid
+                            container
+                            direction="column"
+                            justify="center"
+                            alignItems="center">
+
+                                <Typography
+                                className={this.props.classes.cardTitle}
+                                style={{marginTop: '14px'}}>
+                                    FIU CS First Outreach Program 
+                                </Typography>
+                            </Grid>
+
+
+                      {/* HERE */}
+                      <Grid style={{paddingLeft: '15px', paddingTop: '10px', paddingRight: '15px', paddingBottom: '15px',}}>
+                            
+                            <Typography
+                            className={this.props.classes.regular}
+                            style={{marginBottom: '15px', marginTop: '15px', alignItems: 'left'}}>
+                                The <strong>CS First</strong> outreach program started at Florida International University's (FIU) School of Computing and Information Sciences (SCIS) 
+                                    in the Spring of 2015, as an attempt to spread the knowledge of coding and Computer Science to elementary and middle schools near FIU. 
+                                    Initially, only 2 elementary schools were involved, Sweetwater Elementary and Coral Park Elementary, with the Women in Computer Science (WICS ) 
+                                    student organization and an SCIS instructor, Ms. Charters, as the only volunteers and organizers of the outreach.  
+                                    Year after year, the outreach program has grown, expanding the number of elementary and middle schools that are served, and recruiting a greater number of FIU student volunteers.
+                                    <br/><br/>
+                                In the Spring of 2018, FIU's Computer Science student organization called  Upsilon Pi Epsilon (UPE), adopted <strong>CS First</strong> as its main outreach program.  
+                                    Through UPE's frequent member meetings each semester, the organization has helped to recruit, train, and manage the volunteers in the outreach, to meet the increasing need for CS education 
+                                    in elementary and middle schools, using the multitude of children's resources now available to teach CS, including Code.org' K-5 curriculum, Google's <strong>CS First</strong> curriculum,  and MIT's Scratch curriculum. 
+                                    <br/><br/>
+                                If you are interested in joining the <strong>CS First</strong> outreach program, go to <a href="https://upe.cs.fiu.edu/google-cs-first/" target="_blank">https://upe.cs.fiu.edu/google-cs-first/</a> to apply.  
+                                    Each December, as a celebration of Computer Science Education week, <strong>CS First</strong> works with SCIS to help organize and run a "mini-hackathon" for the children involved with the outreach.  
+                                    For more details, please go to  <a href="https://www.cis.fiu.edu/codefest-miami-2017-fiu/" target="_blank">https://www.cis.fiu.edu/codefest-miami-2017-fiu/</a>
+                            </Typography>
+
+
+
+                         </Grid>
+                        </Box>
+                    </Box>
+                   </Grid>
+
+           <Grid
             container
             direction="column"
             justify="center"
@@ -153,11 +232,11 @@ class AboutView extends Component {
                       {/* HERE */}
                       <Grid style={{paddingLeft: '15px', paddingTop: '10px', paddingRight: '15px', paddingBottom: '15px',}}>
                             
-                            <Typography
+                            {/* <Typography
                             className={this.props.classes.regular}
                             style={{marginBottom: '15px', marginTop: '15px', alignItems: 'left'}}>
-                                This first iteration of this project was started as part of FIU's Computer Science Senior Project.
-                            </Typography>
+                                The first iteration of this project was started as part of FIU's Computer Science Senior Project.
+                            </Typography> */}
                             <Typography
                             className={this.props.classes.title}
                             style={{marginBottom: '15px', marginTop: '15px', alignItems: 'left'}}>
@@ -274,28 +353,9 @@ class AboutView extends Component {
 
                                 </Grid>
 
-                                </Grid>
-                                </Grid>
-
-
-
-
-
-
-
-
-
-
+                            </Grid>
+                            </Grid>
                         </Box>
-
-
-
-
-
-                        <Grid style={{paddingLeft: '15px', paddingTop: '10px', paddingRight: '15px', paddingBottom: '15px',}}>
-                                
-
-                        </Grid>
                     </Box>
                    </Grid>
 

@@ -146,7 +146,7 @@ renderMenu(){
   return(
   <Menu id="fade-menu" anchorEl={this.state.anchorEl} open={this.state.open} onClose={this.handleClose} TransitionComponent={Fade}>
         <MenuItem onClick={this.handleClose && this.redirect_to_Profile}>Profile &nbsp; <AccountCircle/></MenuItem>
-        <MenuItem onClick={this.handleClose && this.redirect_to_AboutPage}>Credits &nbsp; <InfoIcon/></MenuItem>
+        <MenuItem onClick={this.handleClose && this.redirect_to_AboutPage}>About &nbsp; <InfoIcon/></MenuItem>
         <MenuItem onClick={this.handleClose && this.submitLogout}>Logout &nbsp; <ExitToAppIcon/></MenuItem>
     </Menu>
    )
@@ -155,9 +155,9 @@ renderMenu(){
 getTitle(){
   let size = document.body.clientWidth
   if (size < 750) {
-    return ("Google CS First VAS")
+    return ("FIU CS First VAS")
   } else {
-    return ("Google CS First Outreach Volunteer Attendance System")
+    return ("FIU CS First Outreach Volunteer Attendance System")
   }
 }
 

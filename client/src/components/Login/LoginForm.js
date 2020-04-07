@@ -54,7 +54,7 @@ const useStyles = {
   logo: {
     height: '80px',
     marginBottom: '0px'
-  }
+  },
 };
 // Login Styling END
 
@@ -183,7 +183,9 @@ class LoginForm extends Component {
             >
               Login
             </Button>
+            
           </form>
+
           
         </div>
       </Container>

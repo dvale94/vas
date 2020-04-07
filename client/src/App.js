@@ -8,7 +8,8 @@ import setAuthToken from "./utils/setAuthToken";
 import { logoutUser, setAuth } from "./actions/authActions"
 import { getAdmin, getVolunteer, getSchoolPersonnel } from "./actions/userActions"
 import Login from './pages/Login'
-import NavBar from './components/NavBar/NavBar';
+import NavBar from './components/AppBar/NavBar';
+import Footer from './components/AppBar/Footer';
 import Dashboard from './pages/Dashboard';
 import VolunteerManagement from './pages/VolunteerManagement'
 import Profile from './pages/Profile'
@@ -67,6 +68,8 @@ class App extends Component {
           
             <Fragment>
               <NavBar/>
+              <Footer/>
+              
               <Switch>
               
                 <Route exact path='/' component={Login}/>
