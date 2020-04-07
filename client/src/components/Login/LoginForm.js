@@ -89,12 +89,7 @@ class LoginForm extends Component {
         });
         }
     }
-
-    // working on updating the UNSAFE_componentWillReceiveProps
-    //static getDerivedStateFromProps(nextProps, prevState){
-   //}
-
-
+    
     handleInput = (e) =>{
         const value = e.target.value
         const name = e.target.name
@@ -130,9 +125,6 @@ class LoginForm extends Component {
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={this.props.classes.paper}>
-          {/* <Avatar className={this.props.classes.avatar} >
-          <LockRoundedIcon />
-          </Avatar> */}
 
             <img
             className={this.props.classes.logo}

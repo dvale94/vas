@@ -1,11 +1,9 @@
 import React, { Component, Fragment } from 'react';
 import { withRouter } from 'react-router-dom';
-import { connect } from "react-redux";
 import { withStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
 import { blueGrey, blue, grey, yellow } from '@material-ui/core/colors';
@@ -121,7 +119,7 @@ class AboutView extends Component {
                     borderRadius="10px"
                     boxShadow={3}
                     className={this.props.classes.card}
-                    style={{width: "300px"}}
+                    style={{width: "380px"}}
                     variant="outlined"
                     justify="center">
 
@@ -148,7 +146,6 @@ class AboutView extends Component {
                             </Grid>
 
 
-                      {/* HERE */}
                       <Grid style={{paddingLeft: '15px', paddingTop: '10px', paddingRight: '15px', paddingBottom: '15px',}}>
                             
                             <Typography
@@ -203,7 +200,8 @@ class AboutView extends Component {
                     <Box 
                     borderRadius="10px"
                     boxShadow={3}
-                    className={this.props.classes.card} 
+                    className={this.props.classes.card}
+                    style={{width: "380px"}}
                     variant="outlined"
                     justify="center">
 
@@ -228,15 +226,21 @@ class AboutView extends Component {
                                 </Typography>
                             </Grid>
 
-
-                      {/* HERE */}
                       <Grid style={{paddingLeft: '15px', paddingTop: '10px', paddingRight: '15px', paddingBottom: '15px',}}>
                             
-                            {/* <Typography
+                            <Typography
                             className={this.props.classes.regular}
                             style={{marginBottom: '15px', marginTop: '15px', alignItems: 'left'}}>
-                                The first iteration of this project was started as part of FIU's Computer Science Senior Project.
-                            </Typography> */}
+                                This system was created as a senior project by Aurelien and Daniel at Florida International University (FIU), during the Spring 2020 semester. 
+                                It was designed to automate the tracking of FIU students that volunteer each week to teach elementary and middle school students how to code.  
+                                <br/><br/>
+                                In this first phase, the system gives the administrators of the outreach program the ability to track FIU student volunteers, the teams that they form, 
+                                the schools that they visit, and the school personnel associated with each school.  This system also allows FIU student volunteers and school personnel 
+                                the ability to see each other's contact information and schedule of school visits, thereby facilitating the communication between all parties.
+                                <br/><br/>
+                                Many thanks go to Aurelien and Daniel for developing, testing, and deploying the <strong>CS First</strong> Outreach Volunteer System.
+
+                            </Typography>
                             <Typography
                             className={this.props.classes.title}
                             style={{marginBottom: '15px', marginTop: '15px', alignItems: 'left'}}>

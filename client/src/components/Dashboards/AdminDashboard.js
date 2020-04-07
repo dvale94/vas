@@ -11,7 +11,6 @@ import { blueGrey, blue, grey } from '@material-ui/core/colors';
 import AdminCalendar from './AdminCalendar'
 import { getTeams } from '../../actions/calendarActions'
 import isEmpty from 'is-empty';
-import { shadows } from '@material-ui/system';
 
 const useStyles = {
     card: {

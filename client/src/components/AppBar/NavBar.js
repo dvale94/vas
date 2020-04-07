@@ -45,7 +45,6 @@ const useStyles = {
   title: {
     flexGrow: 1,
     color: 'white',
-    //fontSize: '3vw'
   },
   logout: {
     color: 'white !important'
