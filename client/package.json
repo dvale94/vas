@@ -29,7 +29,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "preinstall": "npx npm-force-resolutions"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -49,5 +50,8 @@
   "devDependencies": {
     "redux-devtools-extension": "^2.13.8",
     "xxxxx": "^1.0.3"
+  },
+  "resolutions": {
+    "@babel/preset-env": "^7.8.7"
   }
 }
