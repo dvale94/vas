@@ -1,5 +1,5 @@
 const config = {
-	uri: `http://${process.env.REACT_APP_SERVER_HOST || 'localhost'}:${process.env.REACT_APP_SERVER_PORT || 4000}/api`,
+	uri: `http://${process.env.REACT_APP_SERVER_HOST}:${process.env.REACT_APP_SERVER_PORT}/api`,
 	endpoints: {
 		account: {
 			fetch: '/account',
