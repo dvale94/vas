@@ -28,6 +28,6 @@
     "redux-thunk": "^2.3.0",
     "underscore": "^1.9.2",
     "validation": "0.0.1",
-    "validator": "^12.1.0"
+    "validator": "^13.7.0"
   }
 }
